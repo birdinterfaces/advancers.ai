@@ -73,7 +73,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               <CardHeader className="p-0">
                 <CardTitle className="text-base">Upgrade</CardTitle>
                 <CardDescription className="text-sm">
-                  Upgrade to Pro and get much more usage than on the Free plan.
+                  Upgrade to Pro and get much more usage vs the Free plan.
                 </CardDescription>
               </CardHeader>
               <CardFooter className="p-0">
