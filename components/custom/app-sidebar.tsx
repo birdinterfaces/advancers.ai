@@ -71,10 +71,9 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 <span className="sr-only">Upgrade</span>
               </a>
               <CardHeader className="p-0">
-                <CardTitle className="text-base">Upgrade to Pro</CardTitle>
+                <CardTitle className="text-base">Upgrade</CardTitle>
                 <CardDescription className="text-sm">
-                  Open Source Chatbot template built with Next.js and the AI SDK
-                  by Vercel.
+                  Upgrade to Pro and get much more usage than on the Free plan.
                 </CardDescription>
               </CardHeader>
               <CardFooter className="p-0">
