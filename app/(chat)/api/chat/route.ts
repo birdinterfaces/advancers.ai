@@ -8,7 +8,6 @@ import { Model, models } from '@/lib/model';
 
 // Create xAI provider instance
 const xai = createOpenAI({
-  name: 'xai',
   baseURL: 'https://api.x.ai/v1',
   apiKey: process.env.XAI_API_KEY ?? '',
 });
