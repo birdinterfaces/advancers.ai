@@ -1,6 +1,6 @@
+import { createOpenAI } from '@ai-sdk/openai';
 import { convertToCoreMessages, Message, streamText } from 'ai';
 import { z } from 'zod';
-import { createOpenAI } from '@ai-sdk/openai';
 
 import { auth } from '@/app/(auth)/auth';
 import { deleteChatById, getChatById, saveChat } from '@/db/queries';
