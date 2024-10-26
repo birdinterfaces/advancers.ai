@@ -3,12 +3,7 @@ export const models = [
   {
     label: 'Grok-beta',
     name: 'Grok-beta',
-    description: 'Real-time data from X and truth seeking AI',
-  },
-  {
-    label: 'GPT 4o mini',
-    name: 'gpt-4o-mini',
-    description: 'Small model for fast, lightweight tasks',
+    description: 'Truth seeking AI and real-time data from X',
   },
 ] as const;
 
