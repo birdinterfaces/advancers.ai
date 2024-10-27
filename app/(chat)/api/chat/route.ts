@@ -1,10 +1,16 @@
+import { createOpenAI } from '@ai-sdk/openai';
 import { convertToCoreMessages, Message, streamText } from 'ai';
 import { z } from 'zod';
 
-import { customModel } from '@/ai';
 import { auth } from '@/app/(auth)/auth';
 import { deleteChatById, getChatById, saveChat } from '@/db/queries';
 import { Model, models } from '@/lib/model';
+
+// Create xAI provider instance
+const xai = createOpenAI({
+  baseURL: 'https://api.x.ai/v1',
+  apiKey: process.env.XAI_API_KEY ?? '',
+});
 
 export async function POST(request: Request) {
   const {
@@ -27,7 +33,7 @@ export async function POST(request: Request) {
   const coreMessages = convertToCoreMessages(messages);
 
   const result = await streamText({
-    model: customModel(model),
+    model: xai('grok-beta'), // Use Grok model from xAI
     system:
       'you are a friendly assistant! keep your responses concise and helpful.',
     messages: coreMessages,

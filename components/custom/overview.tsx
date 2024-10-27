@@ -15,7 +15,6 @@ export const Overview = () => {
     >
       <div className="rounded-xl p-6 flex flex-col gap-8 leading-relaxed text-center max-w-xl">
         <p>
-          Nova
         </p>
       </div>
     </motion.div>
