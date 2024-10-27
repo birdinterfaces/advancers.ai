@@ -1,9 +1,9 @@
 'use client';
 
 import { Plus } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { type User } from 'next-auth';
-import Image from 'next/image';
 
 import { VercelIcon } from '@/components/custom/icons';
 import { SidebarHistory } from '@/components/custom/sidebar-history';
