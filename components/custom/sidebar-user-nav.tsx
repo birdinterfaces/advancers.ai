@@ -41,6 +41,19 @@ export function SidebarUserNav({ user }: { user: User }) {
             side="top"
             className="w-[--radix-popper-anchor-width]"
           >
+            <DropdownMenuItem asChild>
+              <button
+                className="w-full "
+                onClick={() => {
+                  signOut({
+                    redirectTo: '/',
+                  });
+                }}
+              >
+                Your Plan
+              </button>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               onSelect={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             >

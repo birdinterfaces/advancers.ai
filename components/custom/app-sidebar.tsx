@@ -3,6 +3,7 @@
 import { Plus } from 'lucide-react';
 import Link from 'next/link';
 import { type User } from 'next-auth';
+import Image from 'next/image';
 
 import { VercelIcon } from '@/components/custom/icons';
 import { SidebarHistory } from '@/components/custom/sidebar-history';
@@ -40,9 +41,20 @@ export function AppSidebar({ user }: { user: User | undefined }) {
           <SidebarMenuItem>
             <SidebarMenuButton asChild>
               <Link href="/" onClick={() => setOpenMobile(false)}>
-                <span className="text-lg font-semibold font-mono tracking-tighter">
-                  Nova
-                </span>
+                <Image
+                  src="/logodark.png"
+                  alt="Logo"
+                  width={100}
+                  height={30}
+                  className="dark:hidden"
+                />
+                <Image
+                  src="/logowhite.png"
+                  alt="Logo"
+                  width={100}
+                  height={30}
+                  className="hidden dark:block"
+                />
               </Link>
             </SidebarMenuButton>
             <BetterTooltip content="New Chat">
@@ -61,28 +73,6 @@ export function AppSidebar({ user }: { user: User | undefined }) {
       <SidebarFooter className="gap-0">
         <SidebarGroup>
           <SidebarGroupContent>
-          <Card className="p-4 flex flex-col gap-4 relative rounded-md border-none shadow-none hover:shadow transition-shadow">
-              <a
-                href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot&env=AUTH_SECRET,OPENAI_API_KEY&envDescription=Learn%20more%20about%20how%20to%20get%20the%20API%20Keys%20for%20the%20application&envLink=https%3A%2F%2Fgithub.com%2Fvercel%2Fai-chatbot%2Fblob%2Fmain%2F.env.example&demo-title=AI%20Chatbot&demo-description=An%20Open-Source%20AI%20Chatbot%20Template%20Built%20With%20Next.js%20and%20the%20AI%20SDK%20by%20Vercel.&demo-url=https%3A%2F%2Fchat.vercel.ai&stores=[{%22type%22:%22postgres%22},{%22type%22:%22blob%22}]"
-                className="absolute inset-0 rounded-lg outline-none focus-visible:ring-2 focus-visible:ring-sidebar-ring"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <span className="sr-only">Upgrade</span>
-              </a>
-              <CardHeader className="p-0">
-                <CardTitle className="text-base">Upgrade</CardTitle>
-                <CardDescription className="text-sm">
-                  Upgrade to Pro and get much more usage vs the Free plan.
-                </CardDescription>
-              </CardHeader>
-              <CardFooter className="p-0">
-                <Button size="sm" className="w-full h-8 py-0 justify-start">
-                  <VercelIcon size={16} />
-                  Upgrade to Pro
-                </Button>
-              </CardFooter>
-            </Card>
           </SidebarGroupContent>
         </SidebarGroup>
         {user && (
