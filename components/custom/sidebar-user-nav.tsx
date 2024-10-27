@@ -1,10 +1,10 @@
 'use client';
+import Image from 'next/image';
 import { useState } from 'react';
 import { useTheme } from 'next-themes';
 import { type User } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import { ChevronUp } from 'lucide-react';
-import Image from 'next/image';
 
 import {
   DropdownMenu,
