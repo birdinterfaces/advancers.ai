@@ -13,10 +13,18 @@ export const Overview = () => {
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ delay: 0.5 }}
     >
-      <div className="rounded-xl p-6 flex flex-col gap-8 leading-relaxed text-center max-w-xl">
-        <p>
-        </p>
-      </div>
-    </motion.div>
+<div className="rounded-xl flex flex-col leading-relaxed text-center max-w-xl">
+  <h1 className="text-4xl flex flex-col items-center">
+    Nova
+    <img src="/images/blur.png" alt="Blur effect" className="h-[300px] w-[300px]" style={{ filter: 'blur(35px)', marginTop: '4px' }} />
+  </h1>
+  <p className="-mt-10">
+    Optimized AI that helps you be most useful for civilization
+  </p>
+</div>
+</motion.div>
   );
 };
+
+
+
