@@ -43,7 +43,7 @@ export function ModelSelector({
           <ChevronDown className="text-muted-foreground" />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="start" className="min-w-[300px]">
+      <DropdownMenuContent align="start" className="min-w-[300px] z-10">
         {models.map((model) => (
           <DropdownMenuItem
             key={model.name}
