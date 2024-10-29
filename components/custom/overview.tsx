@@ -17,9 +17,6 @@ export const Overview = () => {
   <h1 className="text-4xl flex flex-col items-center">
     <img src="/images/blur.png" alt="Blur effect" className="h-[300px] w-[300px]" style={{ filter: 'blur(35px)' }} />
   </h1>
-  <p className="-mt-10">
-    Optimized AI that helps you be most useful for civilization
-  </p>
 </div>
 </motion.div>
   );
