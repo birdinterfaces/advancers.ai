@@ -42,16 +42,16 @@ export function AppSidebar({ user }: { user: User | undefined }) {
             <SidebarMenuButton asChild>
               <Link href="/" onClick={() => setOpenMobile(false)}>
                 <Image
-                  src="/logodark.png"
+                  src="/images/logodark.png"
                   alt="Logo"
-                  width={100}
+                  width={180}
                   height={30}
                   className="dark:hidden"
                 />
                 <Image
-                  src="/logowhite.png"
+                  src="/images/logowhite.png"
                   alt="Logo"
-                  width={100}
+                  width={180}
                   height={30}
                   className="hidden dark:block"
                 />
