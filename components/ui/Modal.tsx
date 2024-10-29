@@ -1,5 +1,10 @@
+// Modal.tsx
+
+'use client';
+
 import React from 'react';
 import { X } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 interface ModalProps {
   isOpen: boolean;
@@ -12,20 +17,22 @@ interface ModalProps {
 export function Modal({ isOpen, onClose, title, children, className }: ModalProps) {
   if (!isOpen) return null;
 
-  return (
-    <div className={`fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 ${className}`}>
-      <div className="bg-white dark:bg-gray-800 rounded-lg w-11/12 max-w-md p-6 relative">
+  return createPortal(
+    <div className={`fixed inset-0 z-50 flex items-center justify-center ${className}`} style={{ width: '100vw', height: '100vh' }}>
+      <div className="fixed inset-0 bg-black dark:bg-black opacity-80"></div>
+      <div className="w-full h-full bg-white dark:bg-black p-6 relative">
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+          className="absolute top-4 right-4 text-gray-800 dark:text-white hover:text-gray-600 dark:hover:text-gray-300"
         >
           <X size={24} />
         </button>
-        <h2 className="text-xl font-semibold mb-4">{title}</h2>
+        <h2 className="text-3xl font-semibold mb-6 text-white">{title}</h2>
         <div className="space-y-4">
           {children}
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
