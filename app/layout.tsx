@@ -6,8 +6,8 @@ import { ThemeProvider } from '@/components/custom/theme-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://chat.vercel.ai'),
-  title: 'Advancers AI',
+  metadataBase: new URL('https://advancers.ai'),
+  title: 'Nova | Advancers AI',
   description: 'AI that helps you be most useful for civilization',
 };
 

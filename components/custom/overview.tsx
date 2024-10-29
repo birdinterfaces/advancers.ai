@@ -15,8 +15,7 @@ export const Overview = () => {
     >
 <div className="rounded-xl flex flex-col leading-relaxed text-center max-w-xl">
   <h1 className="text-4xl flex flex-col items-center">
-    Nova
-    <img src="/images/blur.png" alt="Blur effect" className="h-[300px] w-[300px]" style={{ filter: 'blur(35px)', marginTop: '4px' }} />
+    <img src="/images/blur.png" alt="Blur effect" className="h-[300px] w-[300px]" style={{ filter: 'blur(35px)' }} />
   </h1>
   <p className="-mt-10">
     Optimized AI that helps you be most useful for civilization

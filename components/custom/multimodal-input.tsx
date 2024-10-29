@@ -21,8 +21,8 @@ import { Textarea } from '../ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'How can I be most useful',
-    label: 'for civilization?',
+    title: 'How can I start with being',
+    label: 'most useful?',
     action: 'How can I be most useful for civilization?',
   },
   {
