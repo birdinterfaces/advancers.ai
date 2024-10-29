@@ -3,6 +3,21 @@ import Link from 'next/link';
 
 import { MessageIcon, VercelIcon } from './icons';
 
+// Preload the image
+const preloadImages = () => {
+  const imagesToPreload = [
+    '/images/blur.png', // Add your image path here
+  ];
+
+  imagesToPreload.forEach((src) => {
+    const img = new Image();
+    img.src = src;
+  });
+};
+
+// Call the preload function
+preloadImages();
+
 export const Overview = () => {
   return (
     <motion.div
@@ -13,12 +28,12 @@ export const Overview = () => {
       exit={{ opacity: 0, scale: 0.98 }}
       transition={{ delay: 0.5 }}
     >
-<div className="rounded-xl flex flex-col leading-relaxed text-center max-w-xl">
-  <h1 className="text-4xl flex flex-col items-center">
-    <img src="/images/blur.png" alt="Blur effect" className="h-[300px] w-[300px]" style={{ filter: 'blur(35px)' }} />
-  </h1>
-</div>
-</motion.div>
+      <div className="rounded-xl flex flex-col leading-relaxed text-center max-w-xl">
+        <h1 className="text-4xl flex flex-col items-center">
+          <img src="/images/blur.png" alt="Blur effect" className="h-[300px] w-[300px]" style={{ filter: 'blur(35px)' }} />
+        </h1>
+      </div>
+    </motion.div>
   );
 };
 
