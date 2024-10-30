@@ -60,6 +60,8 @@ async function handleCheckoutSession(event: Stripe.Event) {
   const checkoutSession = event.data.object as Stripe.Checkout.Session;
   if (checkoutSession.mode === "subscription") {
     const subscriptionId = checkoutSession.subscription as string;
+    console.log("Processing subscription:", subscriptionId);
+    
     await updateStripeCustomer(checkoutSession.client_reference_id as string, subscriptionId, checkoutSession.customer as string);
 
     const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
@@ -67,6 +69,9 @@ async function handleCheckoutSession(event: Stripe.Event) {
     });
 
     const productId = subscription.items.data[0].price.product as string;
-    await manageSubscriptionStatusChange(subscription.id, subscription.customer as string, productId);
+    console.log("Product ID:", productId);
+    
+    const membershipStatus = await manageSubscriptionStatusChange(subscription.id, subscription.customer as string, productId);
+    console.log("Updated membership status:", membershipStatus);
   }
 }
