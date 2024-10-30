@@ -130,6 +130,11 @@ export function SidebarUserNav({ user }: { user: User }) {
                   : 'bg-black text-white dark:bg-white dark:text-black hover:bg-gray-900 dark:hover:bg-gray-100 border-gray-300 dark:border-gray-600'
               }`}
               disabled={selectedPlan === 'free'}
+              onClick={() => {
+                if (selectedPlan === 'pro') {
+                  window.location.href = `${process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_MONTHLY}?client_reference_id=${user.id}`;
+                }
+              }}
             >
               {selectedPlan === 'free' ? 'Your current plan' : 'Upgrade to Pro'}
             </button>
