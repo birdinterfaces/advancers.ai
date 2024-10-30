@@ -7,8 +7,8 @@ export const user = pgTable("User", {
   email: varchar("email", { length: 64 }).notNull(),
   password: varchar("password", { length: 64 }),
   membership: varchar("membership", { length: 64 }).notNull().default('free'),
-  stripeCustomerId: varchar("stripeCustomerId", { length: 256 }),
-  stripeSubscriptionId: varchar("stripeSubscriptionId", { length: 256 }),
+  stripecustomerid: varchar("stripecustomerid", { length: 256 }),
+  stripesubscriptionid: varchar("stripesubscriptionid", { length: 256 }),
 });
 
 export type User = InferSelectModel<typeof user>;

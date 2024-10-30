@@ -1,4 +1,4 @@
-import { updateUser, updateUserByStripeCustomerId } from "@/db/queries";    
+import { updateUser, updateUserBystripecustomerid } from "@/db/queries";    
 import { User } from "@/db/schema";
 import { stripe } from "@/lib/stripe";
 import Stripe from "stripe";
@@ -37,8 +37,8 @@ export const updateStripeCustomer = async (userId: string, subscriptionId: strin
     const subscription = await getSubscription(subscriptionId);
 
     const updatedUser = await updateUser(userId, {
-      stripeCustomerId: customerId,
-      stripeSubscriptionId: subscription.id
+      stripecustomerid: customerId,
+      stripesubscriptionid: subscription.id
     });
 
     if (!updatedUser) {
@@ -68,8 +68,8 @@ export const manageSubscriptionStatusChange = async (subscriptionId: string, cus
 
     const membershipStatus = getMembershipStatus(subscription.status, membership);
 
-    await updateUserByStripeCustomerId(customerId, {
-      stripeSubscriptionId: subscription.id,
+    await updateUserBystripecustomerid(customerId, {
+      stripesubscriptionid: subscription.id,
       membership: membershipStatus
     });
 

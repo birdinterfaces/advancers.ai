@@ -101,7 +101,7 @@ export async function getChatById({ id }: { id: string }) {
 
 export async function updateUser(
   userId: string,
-  data: Partial<Pick<User, "stripeCustomerId" | "stripeSubscriptionId">>
+  data: Partial<Pick<User, "stripecustomerid" | "stripesubscriptionid">>
 ) {
   try {
     const [updatedUser] = await db
@@ -116,15 +116,15 @@ export async function updateUser(
   }
 }
 
-export async function updateUserByStripeCustomerId(
-  stripeCustomerId: string,
-  data: Partial<Pick<User, "stripeSubscriptionId" | "membership">>
+export async function updateUserBystripecustomerid(
+  stripecustomerid: string,
+  data: Partial<Pick<User, "stripesubscriptionid" | "membership">>
 ) {
   try {
     const [updatedUser] = await db
       .update(user)
       .set(data)
-      .where(eq(user.stripeCustomerId, stripeCustomerId))
+      .where(eq(user.stripecustomerid, stripecustomerid))
       .returning();
     return updatedUser;
   } catch (error) {
