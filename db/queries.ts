@@ -98,3 +98,37 @@ export async function getChatById({ id }: { id: string }) {
     throw error;
   }
 }
+
+export async function updateUser(
+  userId: string,
+  data: Partial<Pick<User, "stripeCustomerId" | "stripeSubscriptionId">>
+) {
+  try {
+    const [updatedUser] = await db
+      .update(user)
+      .set(data)
+      .where(eq(user.id, userId))
+      .returning();
+    return updatedUser;
+  } catch (error) {
+    console.error("Failed to update user in database");
+    throw error;
+  }
+}
+
+export async function updateUserByStripeCustomerId(
+  stripeCustomerId: string,
+  data: Partial<Pick<User, "stripeSubscriptionId" | "membership">>
+) {
+  try {
+    const [updatedUser] = await db
+      .update(user)
+      .set(data)
+      .where(eq(user.stripeCustomerId, stripeCustomerId))
+      .returning();
+    return updatedUser;
+  } catch (error) {
+    console.error("Failed to update user by Stripe customer ID in database");
+    throw error;
+  }
+}
