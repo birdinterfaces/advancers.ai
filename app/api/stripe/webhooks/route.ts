@@ -1,7 +1,8 @@
-import { manageSubscriptionStatusChange, updateStripeCustomer } from "@/actions/stripe-actions";
-import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 import Stripe from "stripe";
+
+import { manageSubscriptionStatusChange, updateStripeCustomer } from "@/actions/stripe-actions";
+import { stripe } from "@/lib/stripe";
 
 const relevantEvents = new Set(["checkout.session.completed", "customer.subscription.updated", "customer.subscription.deleted"]);
 
