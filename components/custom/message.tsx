@@ -2,7 +2,6 @@
 
 import { Attachment, ToolInvocation } from 'ai';
 import { motion } from 'framer-motion';
-import { Sparkles } from 'lucide-react';
 import { ReactNode } from 'react';
 
 import { Markdown } from './markdown';
@@ -29,9 +28,12 @@ export const Message = ({
     >
       <div className="flex gap-4 group-data-[role=user]/message:px-5 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-3.5 group-data-[role=user]/message:bg-muted rounded-xl">
         {role === 'assistant' && (
-          <div className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border">
-            <Sparkles className="size-4" />
-          </div>
+          <img
+            src="/images/blur.png"
+            alt="Assistant Icon"
+            className="size-8 flex items-center rounded-full justify-center ring-1 shrink-0 ring-border"
+            style={{ filter: 'blur(4.5px)' }}
+          />
         )}
         <div className="flex flex-col gap-2 w-full">
           {content && (
