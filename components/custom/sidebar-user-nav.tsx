@@ -1,12 +1,7 @@
 'use client';
 import { ChevronUp } from 'lucide-react';
 import Image from 'next/image';
-import { User } from "next-auth"
-
-interface ExtendedUser extends User {
-  membership?: string;
-}
-
+import { User } from "next-auth";
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useState } from 'react';
@@ -24,6 +19,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+
+interface ExtendedUser extends User {
+  membership?: string;
+}
 
 export function SidebarUserNav({ user }: { user: ExtendedUser }) {
   const { setTheme, theme } = useTheme();
