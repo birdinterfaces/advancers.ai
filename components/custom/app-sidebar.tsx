@@ -47,6 +47,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   width={180}
                   height={30}
                   className="dark:hidden"
+                  draggable={false}
                 />
                 <Image
                   src="/images/logowhite.png"
@@ -54,6 +55,7 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   width={180}
                   height={30}
                   className="hidden dark:block"
+                  draggable={false}
                 />
               </Link>
             </SidebarMenuButton>

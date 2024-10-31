@@ -55,6 +55,7 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
                   width={24}
                   height={24}
                   className="rounded-full"
+                  draggable={false}
                 />
                 <span>{user?.email}</span>
                 <ChevronUp className="ml-auto" />
@@ -136,6 +137,7 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
                 width={150}
                 height={30}
                 className="dark:hidden"
+                draggable={false}
               />
               <Image
                 src="/images/logowhite.png"
@@ -143,6 +145,7 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
                 width={150}
                 height={30}
                 className="hidden dark:block"
+                draggable={false}
               />
             </div>
             <div className="text-left mb-6">
