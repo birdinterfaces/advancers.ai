@@ -32,7 +32,7 @@ export const Message = ({
             src="/images/blur.png"
             alt="Assistant Icon"
             className="size-8 flex items-center rounded-full justify-center shrink-0"
-            style={{ filter: 'blur(4px)' }}
+            style={{ filter: 'blur(4.5px)' }}
           />
         )}
         <div className="flex flex-col gap-2 w-full">
