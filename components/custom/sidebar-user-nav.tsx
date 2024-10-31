@@ -102,7 +102,7 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
       <Modal isOpen={isModalOpen} onClose={closeModal} className="border-none shadow-none" title="">
         <div className="flex flex-col items-center justify-center p-4">
           <h2 className="text-3xl font-semibold mb-6">
-            {currentMembership === 'ultimate' ? 'Your Plan' : 'Upgrade your plan'}
+            {user.membership === 'ultimate' ? 'Your Plan' : 'Upgrade your plan'}
           </h2>
           <div className="mb-6">
             {user.membership !== 'ultimate' && (
