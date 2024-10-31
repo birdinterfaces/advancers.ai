@@ -28,14 +28,19 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
   const { setTheme, theme } = useTheme();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState(user.membership || 'free');
+  const [currentMembership, setCurrentMembership] = useState(user.membership || 'free');
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const togglePlan = () => {
     if (user.membership === 'pro') {
-      setSelectedPlan(selectedPlan === 'pro' ? 'ultimate' : 'pro');
+      const newPlan = selectedPlan === 'pro' ? 'ultimate' : 'pro';
+      setSelectedPlan(newPlan);
+      setCurrentMembership(newPlan);
     } else {
-      setSelectedPlan(selectedPlan === 'free' ? 'pro' : 'free');
+      const newPlan = selectedPlan === 'free' ? 'pro' : 'free';
+      setSelectedPlan(newPlan);
+      setCurrentMembership(newPlan);
     }
   };
 
@@ -96,30 +101,34 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
 
       <Modal isOpen={isModalOpen} onClose={closeModal} className="border-none shadow-none" title="">
         <div className="flex flex-col items-center justify-center p-4">
-          <h2 className="text-3xl font-semibold mb-6">Upgrade your plan</h2>
+          <h2 className="text-3xl font-semibold mb-6">
+            {currentMembership === 'ultimate' ? 'Your Plan' : 'Upgrade your plan'}
+          </h2>
           <div className="mb-6">
-            <div 
-              className="relative inline-flex items-center cursor-pointer w-[160px] h-8"
-              onClick={togglePlan}
-            >
-              <div className={`w-full h-full bg-gray-100 border border-gray-300 rounded-full dark:bg-[#282b2e] dark:border-gray-700`}>
-                <div className={`absolute top-1/2 left-[4px] transform -translate-y-1/2 bg-[#d3dee8] rounded-full h-6 w-[76px] transition-all ${
-                  user.membership === 'pro' 
-                    ? (selectedPlan === 'ultimate' ? 'translate-x-[76px]' : '') 
-                    : (selectedPlan === 'pro' ? 'translate-x-[76px]' : '')
-                } dark:bg-[#3a3f43]`}></div>
+            {user.membership !== 'ultimate' && (
+              <div 
+                className="relative inline-flex items-center cursor-pointer w-[160px] h-8"
+                onClick={togglePlan}
+              >
+                <div className={`w-full h-full bg-gray-100 border border-gray-300 rounded-full dark:bg-[#282b2e] dark:border-gray-700`}>
+                  <div className={`absolute top-1/2 left-[4px] transform -translate-y-1/2 bg-[#d3dee8] rounded-full h-6 w-[76px] transition-all ${
+                    user.membership === 'pro' 
+                      ? (selectedPlan === 'ultimate' ? 'translate-x-[76px]' : '') 
+                      : (selectedPlan === 'pro' ? 'translate-x-[76px]' : '')
+                  } dark:bg-[#3a3f43]`}></div>
+                </div>
+                <span className={`absolute left-0 w-[80px] text-xs font-medium text-gray-700 dark:text-gray-300 transition-opacity duration-200 ease-in ${
+                  selectedPlan === (user.membership === 'pro' ? 'pro' : 'free') ? 'opacity-100' : 'opacity-50'
+                } flex items-center justify-center h-full`}>
+                  {user.membership === 'pro' ? 'Pro' : 'Free'}
+                </span>
+                <span className={`absolute right-0 w-[80px] text-xs font-medium text-gray-700 dark:text-gray-300 transition-opacity duration-200 ease-in ${
+                  selectedPlan === (user.membership === 'pro' ? 'ultimate' : 'pro') ? 'opacity-100' : 'opacity-50'
+                } flex items-center justify-center h-full`}>
+                  {user.membership === 'pro' ? 'Ultimate' : 'Pro'}
+                </span>
               </div>
-              <span className={`absolute left-0 w-[80px] text-xs font-medium text-gray-700 dark:text-gray-300 transition-opacity duration-200 ease-in ${
-                selectedPlan === (user.membership === 'pro' ? 'pro' : 'free') ? 'opacity-100' : 'opacity-50'
-              } flex items-center justify-center h-full`}>
-                {user.membership === 'pro' ? 'Pro' : 'Free'}
-              </span>
-              <span className={`absolute right-0 w-[80px] text-xs font-medium text-gray-700 dark:text-gray-300 transition-opacity duration-200 ease-in ${
-                selectedPlan === (user.membership === 'pro' ? 'ultimate' : 'pro') ? 'opacity-100' : 'opacity-50'
-              } flex items-center justify-center h-full`}>
-                {user.membership === 'pro' ? 'Ultimate' : 'Pro'}
-              </span>
-            </div>
+            )}
           </div>
           <div className={`w-full sm:w-[400px] border rounded-lg p-4 sm:p-6 flex flex-col bg-white dark:bg-[#000000] ${
             selectedPlan === user.membership 
