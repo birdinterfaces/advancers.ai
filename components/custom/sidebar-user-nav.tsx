@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { User } from "next-auth";
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 import {
   DropdownMenu,
@@ -30,15 +30,77 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
   const [selectedPlan, setSelectedPlan] = useState(user.membership || 'free');
   const [currentMembership, setCurrentMembership] = useState(user.membership || 'free');
 
+  useEffect(() => {
+    const fetchMembership = async () => {
+      try {
+        const response = await fetch(`/api/user?email=${encodeURIComponent(user.email!)}`);
+        const data = await response.json();
+        
+        if (data.membership) {
+          setCurrentMembership(data.membership);
+          setSelectedPlan(data.membership);
+        }
+      } catch (error) {
+        console.error('Failed to fetch membership status:', error);
+      }
+    };
+
+    fetchMembership();
+  }, [user.email]);
+
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
   const togglePlan = () => {
-    if (user.membership === 'free') {
+    if (currentMembership === 'free') {
       const newPlan = selectedPlan === 'free' ? 'pro' : 'free';
       setSelectedPlan(newPlan);
-    } else if (user.membership === 'ultimate' || user.membership === 'pro') {
+    } else if (currentMembership === 'ultimate' || currentMembership === 'pro') {
       const newPlan = selectedPlan === 'pro' ? 'ultimate' : 'pro';
       setSelectedPlan(newPlan);
+    }
+  };
+
+  const handleManageSubscription = async () => {
+    try {
+      const response = await fetch('/api/stripe/create-portal-session', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: user.email }),
+      });
+
+      const { url, error } = await response.json();
+      if (error) throw new Error(error);
+      
+      // Redirect to Stripe Customer Portal
+      window.location.href = url;
+    } catch (error) {
+      console.error('Failed to create portal session:', error);
+    }
+  };
+
+  const handleSubscriptionChange = async (newPlan: string) => {
+    try {
+      // First, cancel existing subscription if any
+      if (currentMembership !== 'free') {
+        await fetch('/api/stripe/cancel-subscription', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: user.email }),
+        });
+      }
+
+      // Then redirect to new subscription checkout
+      if (newPlan === 'pro') {
+        window.location.href = `${process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_MONTHLY}?client_reference_id=${user.id}`;
+      } else if (newPlan === 'ultimate') {
+        window.location.href = `${process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_ULTIMATE}?client_reference_id=${user.id}`;
+      }
+    } catch (error) {
+      console.error('Failed to handle subscription change:', error);
     }
   };
 
@@ -101,7 +163,7 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
       <Modal isOpen={isModalOpen} onClose={closeModal} className="border-none shadow-none" title="">
         <div className="flex flex-col items-center justify-center p-4">
           <h2 className="text-3xl font-semibold mb-6">
-            {user.membership === 'ultimate' ? 'Your Plan' : 'Upgrade your plan'}
+            {currentMembership === 'ultimate' ? 'Your Plan' : 'Upgrade your plan'}
           </h2>
           <div className="mb-6">
             <div 
@@ -110,23 +172,23 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
             >
               <div className={`w-full h-full bg-gray-100 border border-gray-300 rounded-full dark:bg-[#282b2e] dark:border-gray-700`}>
                 <div className={`absolute top-1/2 left-[4px] transform -translate-y-1/2 bg-[#d3dee8] rounded-full h-6 w-[76px] transition-all ${
-                  selectedPlan === (user.membership === 'free' ? 'pro' : 'ultimate') ? 'translate-x-[76px]' : ''
+                  selectedPlan === (currentMembership === 'free' ? 'pro' : 'ultimate') ? 'translate-x-[76px]' : ''
                 } dark:bg-[#3a3f43]`}></div>
               </div>
               <span className={`absolute left-0 w-[80px] text-xs font-medium text-gray-700 dark:text-gray-300 transition-opacity duration-200 ease-in ${
-                selectedPlan === (user.membership === 'free' ? 'free' : 'pro') ? 'opacity-100' : 'opacity-50'
+                selectedPlan === (currentMembership === 'free' ? 'free' : 'pro') ? 'opacity-100' : 'opacity-50'
               } flex items-center justify-center h-full`}>
-                {user.membership === 'free' ? 'Free' : 'Pro'}
+                {currentMembership === 'free' ? 'Free' : 'Pro'}
               </span>
               <span className={`absolute right-0 w-[80px] text-xs font-medium text-gray-700 dark:text-gray-300 transition-opacity duration-200 ease-in ${
-                selectedPlan === (user.membership === 'free' ? 'pro' : 'ultimate') ? 'opacity-100' : 'opacity-50'
+                selectedPlan === (currentMembership === 'free' ? 'pro' : 'ultimate') ? 'opacity-100' : 'opacity-50'
               } flex items-center justify-center h-full`}>
-                {user.membership === 'free' ? 'Pro' : 'Ultimate'}
+                {currentMembership === 'free' ? 'Pro' : 'Ultimate'}
               </span>
             </div>
           </div>
           <div className={`w-full sm:w-[400px] border rounded-lg p-4 sm:p-6 flex flex-col bg-white dark:bg-[#000000] ${
-            selectedPlan === user.membership 
+            selectedPlan === currentMembership 
               ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
               : 'border-gray-300 dark:border-gray-700'
           }`}>
@@ -159,22 +221,20 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
             </div>
             <button 
               className={`w-full px-6 py-3 mb-6 rounded-full text-base font-medium transition-colors border ${
-                selectedPlan === user.membership
+                selectedPlan === currentMembership
                   ? 'bg-gray-300 text-gray-500 dark:bg-[#616161] dark:text-gray-400 cursor-not-allowed'
                   : 'bg-black text-white dark:bg-white dark:text-black hover:bg-gray-900 dark:hover:bg-gray-100 border-gray-300 dark:border-gray-600'
               }`}
-              disabled={selectedPlan === user.membership}
+              disabled={selectedPlan === currentMembership}
               onClick={() => {
-                if (selectedPlan === 'pro') {
-                  window.location.href = `${process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_MONTHLY}?client_reference_id=${user.id}`;
-                } else if (selectedPlan === 'ultimate') {
-                  window.location.href = `${process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK_ULTIMATE}?client_reference_id=${user.id}`;
+                if (selectedPlan !== currentMembership) {
+                  handleSubscriptionChange(selectedPlan);
                 }
               }}
             >
-              {selectedPlan === user.membership 
+              {selectedPlan === currentMembership 
                 ? 'Your current plan' 
-                : selectedPlan === 'pro' && user.membership === 'ultimate'
+                : selectedPlan === 'pro' && currentMembership === 'ultimate'
                   ? `Downgrade to Pro`
                   : `Upgrade to ${selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1)}`
               }
@@ -219,14 +279,14 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
                 </>
               )}
             </ul>
-            {(user.membership === 'pro' || user.membership === 'ultimate') && 
-             selectedPlan === user.membership && (
-              <a 
-                href="#" 
-                className="text-gray-500 mb-3 dark:text-gray-400 underline hover:text-gray-700 dark:hover:text-gray-200 text-sm transition-colors"
+            {(currentMembership === 'pro' || currentMembership === 'ultimate') && 
+             selectedPlan === currentMembership && (
+              <button 
+                onClick={handleManageSubscription}
+                className="text-gray-500 mb-3 dark:text-gray-400 underline hover:text-gray-700 dark:hover:text-gray-200 text-sm transition-colors text-left w-full"
               >
                 Manage my subscription
-              </a>
+              </button>
             )}
           </div>
         </div>
