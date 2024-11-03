@@ -3,9 +3,7 @@
 import { type User } from 'next-auth';
 
 import { SidebarUserNavContent } from './sidebar-user-nav';
-
 import { useModal } from '../context/modal-context';
-
 import { Modal } from '../ui/Modal';
 
 export function SubscriptionModal({ user }: { user: User }) {

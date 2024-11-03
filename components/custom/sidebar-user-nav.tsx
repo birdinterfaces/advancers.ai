@@ -5,7 +5,6 @@ import { User } from "next-auth";
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
-
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,6 +18,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+
 import { useModal } from '../context/modal-context';  
 
 interface ExtendedUser extends User {
