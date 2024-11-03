@@ -1,8 +1,10 @@
 'use client';
 
 import { type User } from 'next-auth';
+
 import { useModal } from '../context/modal-context';
 import { Modal } from '../ui/Modal';
+
 import { SidebarUserNavContent } from './sidebar-user-nav';
 
 export function SubscriptionModal({ user }: { user: User }) {
