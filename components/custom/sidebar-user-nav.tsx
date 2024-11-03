@@ -5,7 +5,7 @@ import Image from 'next/image';
 import { User } from "next-auth";
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import {
   DropdownMenu,
@@ -29,25 +29,7 @@ interface ExtendedUser extends User {
 // Extract the modal content into a separate component
 export function SidebarUserNavContent({ user }: { user: ExtendedUser }) {
   const [selectedPlan, setSelectedPlan] = useState(user.membership || 'free');
-  const [currentMembership, setCurrentMembership] = useState(user.membership || 'free');
-
-  useEffect(() => {
-    const fetchMembership = async () => {
-      try {
-        const response = await fetch(`/api/user?email=${encodeURIComponent(user.email!)}`);
-        const data = await response.json();
-        
-        if (data.membership) {
-          setCurrentMembership(data.membership);
-          setSelectedPlan(data.membership);
-        }
-      } catch (error) {
-        console.error('Failed to fetch membership status:', error);
-      }
-    };
-
-    fetchMembership();
-  }, [user.email]);
+  const currentMembership = user.membership || 'free';
 
   const togglePlan = () => {
     if (currentMembership === 'free') {

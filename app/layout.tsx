@@ -46,35 +46,29 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
+  let userData = null;
+  
+  if (session?.user?.email) {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user?email=${encodeURIComponent(session.user.email)}`);
+    const data = await response.json();
+    userData = {
+      ...session.user,
+      membership: data.membership
+    };
+  }
 
   return (
-    <html
-      lang="en"
-      // `next-themes` injects an extra classname to the body element to avoid
-      // visual flicker before hydration. Hence the `suppressHydrationWarning`
-      // prop is necessary to avoid the React hydration mismatch warning.
-      // https://github.com/pacocoursey/next-themes?tab=readme-ov-file#with-app
-      suppressHydrationWarning
-    >
+    <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: THEME_COLOR_SCRIPT,
-          }}
-        />
+        <script dangerouslySetInnerHTML={{ __html: THEME_COLOR_SCRIPT }} />
       </head>
       <body className="antialiased">
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           <ModalProvider>
             <Toaster position="top-center" />
             <SessionProvider>
               {children}
-              {session?.user && <SubscriptionModal user={session.user as User} />}  
+              {userData && <SubscriptionModal user={userData} />}  
             </SessionProvider>
           </ModalProvider>
         </ThemeProvider>
