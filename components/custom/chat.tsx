@@ -1,19 +1,19 @@
 'use client';
 
+import { useTheme } from 'next-themes';
+import { useState } from 'react';
 import { Attachment, Message } from 'ai';
 import { useChat } from 'ai/react';
-import { useState } from 'react';
 import { toast } from 'sonner';
-import { useTheme } from 'next-themes';
 
 import { ChatHeader } from '@/components/custom/chat-header';
 import { Message as PreviewMessage } from '@/components/custom/message';
 import { useScrollToBottom } from '@/components/custom/use-scroll-to-bottom';
 import { Model } from '@/lib/model';
 
+import { useModal } from '../context/modal-context';
 import { MultimodalInput } from './multimodal-input';
 import { Overview } from './overview';
-import { useModal } from '../context/modal-context';
 
 export function Chat({
   id,

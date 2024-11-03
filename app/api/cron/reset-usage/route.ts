@@ -1,6 +1,9 @@
 import { NextResponse } from 'next/server';
+
+
 import { db } from '@/db/queries';
 import { user } from '@/db/schema';
+
 
 export async function POST(request: Request) {
   const authHeader = request.headers.get('authorization');

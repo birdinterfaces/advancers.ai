@@ -1,13 +1,14 @@
 import { Metadata } from 'next';
-import { Toaster } from 'sonner';
-import { auth } from '@/app/(auth)/auth';
+import { type User } from 'next-auth';
 import { SessionProvider } from 'next-auth/react';
+import { Toaster } from 'sonner';
 
-import { ThemeProvider } from '@/components/custom/theme-provider';
+import { auth } from '@/app/(auth)/auth';
 import { ModalProvider } from '@/components/context/modal-context';
 import { SubscriptionModal } from '@/components/custom/subscription-modal';
+import { ThemeProvider } from '@/components/custom/theme-provider';
+
 import './globals.css';
-import { type User } from 'next-auth';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://advancers.ai'),
