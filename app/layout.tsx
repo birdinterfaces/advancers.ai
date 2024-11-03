@@ -10,6 +10,10 @@ import { ThemeProvider } from '@/components/custom/theme-provider';
 
 import './globals.css';
 
+interface ExtendedUser extends User {
+  membership?: string;
+}
+
 export const metadata: Metadata = {
   metadataBase: new URL('https://advancers.ai'),
   title: 'Nova | Advancers AI',
@@ -46,7 +50,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const session = await auth();
-  let userData = null;
+  let userData: ExtendedUser | null = null;
   
   if (session?.user?.email) {
     const response = await fetch(`${process.env.NEXT_PUBLIC_APP_URL}/api/user?email=${encodeURIComponent(session.user.email)}`);
