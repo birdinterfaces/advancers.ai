@@ -3,8 +3,9 @@ import { convertToCoreMessages, Message, streamText } from 'ai';
 import { z } from 'zod';
 
 import { auth } from '@/app/(auth)/auth';
-import { deleteChatById, getChatById, saveChat } from '@/db/queries';
+import { deleteChatById, getChatById, saveChat, updateUser, getUser, updateUserUsage } from '@/db/queries';
 import { Model, models } from '@/lib/model';
+import { calculateCost, hasExceededLimit, getNextResetDate } from '@/lib/usage';
 
 // Create xAI provider instance
 const xai = createOpenAI({
@@ -13,29 +14,37 @@ const xai = createOpenAI({
 });
 
 export async function POST(request: Request) {
-  const {
-    id,
-    messages,
-    model,
-  }: { id: string; messages: Array<Message>; model: Model['name'] } =
-    await request.json();
-
+  const { id, messages, model } = await request.json();
   const session = await auth();
 
-  if (!session) {
-    return new Response('Unauthorized', { status: 401 });
+  if (!session?.user?.email) {
+    return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  if (!models.find((m) => m.name === model)) {
-    return new Response('Model not found', { status: 404 });
+  // Get user's current usage - now we know email is defined
+  const [user] = await getUser(session.user.email);
+  
+  if (!user) {
+    return Response.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  // Check if user has exceeded their limit
+  if (hasExceededLimit(Number(user.usage), user.membership)) {
+    const resetDate = getNextResetDate();
+    return Response.json(
+      { 
+        error: `You've reached the usage limit for your current plan. Limit resets on ${resetDate}.` 
+      }, 
+      { status: 402 }
+    );
   }
 
   const coreMessages = convertToCoreMessages(messages);
-
+  const inputTokens = JSON.stringify(messages).length / 4;
+  
   const result = await streamText({
-    model: xai('grok-beta'), // Use Grok model from xAI
-    system:
-      'you are a friendly assistant! keep your responses concise and helpful.',
+    model: xai('grok-beta'),
+    system: 'you are a friendly assistant! keep your responses concise and helpful.',
     messages: coreMessages,
     maxSteps: 5,
     tools: {
@@ -56,21 +65,33 @@ export async function POST(request: Request) {
       },
     },
     onFinish: async ({ responseMessages }) => {
-      if (session.user && session.user.id) {
+      if (session.user?.id && session.user?.email) { // Add email check here
         try {
+          const outputTokens = JSON.stringify(responseMessages).length / 4;
+          const cost = calculateCost(inputTokens, outputTokens);
+          
+          console.log('Current usage:', user.usage);
+          console.log('New cost:', cost);
+          console.log('Total usage:', (Number(user.usage) + cost).toFixed(4));
+
+          await updateUserUsage(
+            session.user.id, 
+            (Number(user.usage) + cost).toFixed(4)
+          );
+
+          // Log after update to verify
+          const [updatedUser] = await getUser(session.user.email);
+          console.log('Updated usage in DB:', updatedUser?.usage);
+
           await saveChat({
             id,
             messages: [...coreMessages, ...responseMessages],
             userId: session.user.id,
           });
         } catch (error) {
-          console.error('Failed to save chat');
+          console.error('Failed to save chat or update usage:', error);
         }
       }
-    },
-    experimental_telemetry: {
-      isEnabled: true,
-      functionId: 'stream-text',
     },
   });
 

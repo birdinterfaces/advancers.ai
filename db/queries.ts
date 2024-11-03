@@ -7,11 +7,9 @@ import postgres from "postgres";
 
 import { user, chat, User } from "./schema";
 
-// Optionally, if not using email/pass login, you can
-// use the Drizzle adapter for Auth.js / NextAuth
-// https://authjs.dev/reference/adapter/drizzle
+// Create and export the database instance
 let client = postgres(`${process.env.POSTGRES_URL!}?sslmode=require`);
-let db = drizzle(client);
+export const db = drizzle(client);
 
 export async function getUser(email: string): Promise<Array<User>> {
   try {
@@ -99,17 +97,14 @@ export async function getChatById({ id }: { id: string }) {
   }
 }
 
-export async function updateUser(
-  userId: string,
-  data: Partial<Pick<User, "stripecustomerid" | "stripesubscriptionid">>
-) {
+type UpdateUserData = Partial<Pick<User, 'stripecustomerid' | 'stripesubscriptionid' | 'membership' | 'usage'>>;
+
+export async function updateUser(userId: string, data: UpdateUserData) {
   try {
-    const [updatedUser] = await db
+    return await db
       .update(user)
       .set(data)
-      .where(eq(user.id, userId))
-      .returning();
-    return updatedUser;
+      .where(eq(user.id, userId));
   } catch (error) {
     console.error("Failed to update user in database");
     throw error;
@@ -129,6 +124,18 @@ export async function updateUserBystripecustomerid(
     return updatedUser;
   } catch (error) {
     console.error("Failed to update user by Stripe customer ID in database");
+    throw error;
+  }
+}
+
+export async function updateUserUsage(userId: string, newUsage: string) {
+  try {
+    return await db
+      .update(user)
+      .set({ usage: newUsage })
+      .where(eq(user.id, userId));
+  } catch (error) {
+    console.error("Failed to update user usage in database");
     throw error;
   }
 }

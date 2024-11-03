@@ -1,9 +1,12 @@
 import { Metadata } from 'next';
 import { Toaster } from 'sonner';
+import { auth } from '@/app/(auth)/auth';
 
 import { ThemeProvider } from '@/components/custom/theme-provider';
-
+import { ModalProvider } from '@/components/context/modal-context';
+import { SubscriptionModal } from '@/components/custom/subscription-modal';
 import './globals.css';
+import { type User } from 'next-auth';
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://advancers.ai'),
@@ -40,6 +43,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await auth();
+
   return (
     <html
       lang="en"
@@ -63,8 +68,11 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Toaster position="top-center" />
-          {children}
+          <ModalProvider>
+            <Toaster position="top-center" />
+            {children}
+            {session?.user && <SubscriptionModal user={session.user as User} />}  
+          </ModalProvider>
         </ThemeProvider>
       </body>
     </html>

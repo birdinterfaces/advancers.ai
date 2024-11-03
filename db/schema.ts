@@ -1,6 +1,6 @@
 import { Message } from "ai";
 import { InferSelectModel } from "drizzle-orm";
-import { pgTable, varchar, timestamp, json, uuid } from "drizzle-orm/pg-core";
+import { pgTable, varchar, timestamp, json, uuid, decimal } from "drizzle-orm/pg-core";
 
 export const user = pgTable("User", {
   id: uuid("id").primaryKey().notNull().defaultRandom(),
@@ -9,6 +9,7 @@ export const user = pgTable("User", {
   membership: varchar("membership", { length: 64 }).notNull().default('free'),
   stripecustomerid: varchar("stripecustomerid", { length: 256 }),
   stripesubscriptionid: varchar("stripesubscriptionid", { length: 256 }),
+  usage: decimal("usage", { precision: 10, scale: 4 }).notNull().default('0.0000'),
 });
 
 export type User = InferSelectModel<typeof user>;

@@ -3,6 +3,8 @@
 import { Attachment, Message } from 'ai';
 import { useChat } from 'ai/react';
 import { useState } from 'react';
+import { toast } from 'sonner';
+import { useTheme } from 'next-themes';
 
 import { ChatHeader } from '@/components/custom/chat-header';
 import { Message as PreviewMessage } from '@/components/custom/message';
@@ -11,6 +13,7 @@ import { Model } from '@/lib/model';
 
 import { MultimodalInput } from './multimodal-input';
 import { Overview } from './overview';
+import { useModal } from '../context/modal-context';
 
 export function Chat({
   id,
@@ -21,12 +24,58 @@ export function Chat({
   initialMessages: Array<Message>;
   selectedModelName: Model['name'];
 }) {
-  const { messages, handleSubmit, input, setInput, append, isLoading, stop } =
+  const { theme } = useTheme();
+  const { openModal } = useModal();
+
+  const { messages, append, reload, stop, isLoading, input, setInput, handleSubmit } =
     useChat({
-      body: { id, model: selectedModelName },
+      id,
       initialMessages,
-      onFinish: () => {
-        window.history.replaceState({}, '', `/chat/${id}`);
+      body: {
+        id,
+        model: selectedModelName,
+      },
+      onError: (error) => {
+        // Handle the error response
+        let errorMessage = '';
+        try {
+          // If it's a JSON string, parse it
+          if (typeof error.message === 'string' && error.message.startsWith('{')) {
+            const parsed = JSON.parse(error.message);
+            errorMessage = parsed.error;
+          } else {
+            errorMessage = error.message;
+          }
+        } catch (e) {
+          errorMessage = error.message;
+        }
+
+        if (errorMessage.toLowerCase().includes('usage limit')) {
+          toast(
+            <div className="flex items-center justify-between gap-4">
+              <span>{errorMessage}</span>
+              <button
+                onClick={() => {
+                  openModal();
+                  toast.dismiss();
+                }}
+                className="px-4 py-1.5 rounded-md text-sm font-medium transition-colors whitespace-nowrap flex-shrink-0 bg-black text-white hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200"
+              >
+                Upgrade
+              </button>
+            </div>,
+            {
+              duration: 8000,
+              style: {
+                background: theme === 'dark' ? 'black' : 'white',
+                border: theme === 'dark' ? '1px solid rgb(31,41,55)' : '1px solid rgb(229,231,235)',
+                color: theme === 'dark' ? 'white' : 'black',
+              }
+            }
+          );
+        } else {
+          toast.error(errorMessage);
+        }
       },
     });
 
@@ -59,7 +108,7 @@ export function Chat({
           className="shrink-0 min-w-[24px] min-h-[24px]"
         />
       </div>
-      <form className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-3xl">
+      <div className="flex mx-auto px-4 bg-background pb-4 md:pb-6 gap-2 w-full md:max-w-3xl">
         <MultimodalInput
           input={input}
           setInput={setInput}
@@ -71,7 +120,7 @@ export function Chat({
           messages={messages}
           append={append}
         />
-      </form>
+      </div>
     </div>
   );
 }
