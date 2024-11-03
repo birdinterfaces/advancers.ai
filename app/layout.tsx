@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { Toaster } from 'sonner';
 import { auth } from '@/app/(auth)/auth';
+import { SessionProvider } from 'next-auth/react';
 
 import { ThemeProvider } from '@/components/custom/theme-provider';
 import { ModalProvider } from '@/components/context/modal-context';
@@ -70,8 +71,10 @@ export default async function RootLayout({
         >
           <ModalProvider>
             <Toaster position="top-center" />
-            {children}
-            {session?.user && <SubscriptionModal user={session.user as User} />}  
+            <SessionProvider>
+              {children}
+              {session?.user && <SubscriptionModal user={session.user as User} />}  
+            </SessionProvider>
           </ModalProvider>
         </ThemeProvider>
       </body>
