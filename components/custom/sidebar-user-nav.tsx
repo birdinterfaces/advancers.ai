@@ -1,10 +1,12 @@
 'use client';
+
 import { ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import { User } from "next-auth";
 import { signOut } from 'next-auth/react';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,14 +14,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-import { useModal } from '../context/modal-context';  
+import { useModal } from '../context/modal-context';
 
 interface ExtendedUser extends User {
   membership?: string;
