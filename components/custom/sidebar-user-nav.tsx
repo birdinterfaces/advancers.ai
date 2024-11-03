@@ -13,14 +13,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Modal } from '@/components/ui/Modal';
 
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { useModal } from '../context/modal-context';
+import { useModal } from '../context/modal-context';  
 
 interface ExtendedUser extends User {
   membership?: string;
