@@ -26,8 +26,6 @@ export default function Page() {
       toast.error("Account already exists");
     } else if (state.status === "failed") {
       toast.error("Failed to create account");
-    } else if (state.status === "invalid_data") {
-      toast.error("Failed validating your submission!");
     } else if (state.status === "success") {
       toast.success("Account created successfully");
       router.refresh();

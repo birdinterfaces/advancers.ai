@@ -196,7 +196,13 @@ export const LogoOpenAI = ({ size = 16 }: { size?: number }) => {
   );
 };
 
-export const LogoGoogle = ({ size = 16 }: { size?: number }) => {
+export const LogoGoogle = ({ 
+  size = 16, 
+  className = '' 
+}: { 
+  size?: number;
+  className?: string;
+}) => {
   return (
     <svg
       data-testid="geist-icon"
@@ -205,6 +211,7 @@ export const LogoGoogle = ({ size = 16 }: { size?: number }) => {
       viewBox="0 0 16 16"
       width={size}
       style={{ color: "currentcolor" }}
+      className={className}
     >
       <path
         d="M8.15991 6.54543V9.64362H12.4654C12.2763 10.64 11.709 11.4837 10.8581 12.0509L13.4544 14.0655C14.9671 12.6692 15.8399 10.6182 15.8399 8.18188C15.8399 7.61461 15.789 7.06911 15.6944 6.54552L8.15991 6.54543Z"
