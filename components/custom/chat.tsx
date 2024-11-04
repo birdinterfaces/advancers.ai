@@ -38,11 +38,13 @@ export function Chat({
       onError: (error) => {
         // Handle the error response
         let errorMessage = '';
+        let lastMessage = '';
         try {
           // If it's a JSON string, parse it
           if (typeof error.message === 'string' && error.message.startsWith('{')) {
             const parsed = JSON.parse(error.message);
             errorMessage = parsed.error;
+            lastMessage = parsed.lastMessage;
           } else {
             errorMessage = error.message;
           }
@@ -51,6 +53,11 @@ export function Chat({
         }
 
         if (errorMessage.toLowerCase().includes('usage limit')) {
+          // Set the input back to the last message
+          if (lastMessage) {
+            setInput(lastMessage);
+          }
+          
           toast(
             <div className="flex items-center justify-between gap-4">
               <span>{errorMessage}</span>

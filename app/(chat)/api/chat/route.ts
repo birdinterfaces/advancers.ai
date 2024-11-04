@@ -33,7 +33,8 @@ export async function POST(request: Request) {
     const resetDate = getNextResetDate();
     return Response.json(
       { 
-        error: `You've reached the usage limit for your current plan. Limit resets on ${resetDate}.` 
+        error: `You've reached the usage limit for your current plan. Limit resets on ${resetDate}.`,
+        lastMessage: messages[messages.length - 1]?.content || '' 
       }, 
       { status: 402 }
     );
