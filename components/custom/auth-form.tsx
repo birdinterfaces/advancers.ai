@@ -1,10 +1,10 @@
 import Form from 'next/form';
 import { useState } from 'react';
 
+import { SignInWithGoogle } from './sign-in-with-google';
+import { Button } from '../ui/button';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { Button } from '../ui/button';
-import { SignInWithGoogle } from './sign-in-with-google';
 
 export function AuthForm({
   action,

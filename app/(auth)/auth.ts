@@ -5,6 +5,7 @@ import Google from "next-auth/providers/google";
 
 import { getUser, createUser } from "@/db/queries";
 import { User as DbUser } from "@/db/schema";
+
 import { authConfig } from "./auth.config";
 
 interface ExtendedUser extends User {
