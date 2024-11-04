@@ -61,28 +61,44 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const router = useRouter();
   const handleDelete = async () => {
-    const deletePromise = fetch(`/api/chat?id=${deleteId}`, {
-      method: 'DELETE',
-    });
+    try {
+      await fetch(`/api/chat?id=${deleteId}`, {
+        method: 'DELETE',
+      }).then(res => {
+        if (!res.ok) throw new Error('Failed to delete');
+      });
 
-    toast.promise(deletePromise, {
-      loading: 'Deleting chat...',
-      success: () => {
-        mutate((history) => {
-          if (history) {
-            return history.filter((h) => h.id !== id);
-          }
-        });
-        return 'Chat deleted successfully';
-      },
-      error: 'Failed to delete chat',
-    });
+      mutate((history) => {
+        if (history) {
+          return history.filter((h) => h.id !== deleteId);
+        }
+      }, false);
 
-    setShowDeleteDialog(false);
-    if (deleteId === id) {
-      router.push('/');
+      toast.success('Chat deleted successfully');
+
+      if (deleteId === id) {
+        router.push('/');
+      }
+    } catch (error) {
+      toast.error('Failed to delete chat');
+    } finally {
+      setShowDeleteDialog(false);
+      setDeleteId(null);
     }
   };
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // or whatever breakpoint you use
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   if (!user) {
     return (
@@ -160,7 +176,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                       <span>{getTitleFromChat(chat)}</span>
                     </Link>
                   </SidebarMenuButton>
-                  <DropdownMenu modal={true}>
+                  <DropdownMenu modal={isMobile}>
                     <DropdownMenuTrigger asChild>
                       <SidebarMenuAction
                         className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
