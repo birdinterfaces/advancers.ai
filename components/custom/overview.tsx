@@ -6,7 +6,9 @@ import { MessageIcon, VercelIcon } from './icons';
 // Preload the image
 const preloadImages = () => {
   const imagesToPreload = [
-    '/images/blur.png', // Add your image path here
+    '/images/blur.png',
+    '/images/logodark.png',
+    '/images/logowhite.png'
   ];
 
   imagesToPreload.forEach((src) => {
