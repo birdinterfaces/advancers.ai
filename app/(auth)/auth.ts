@@ -1,5 +1,5 @@
 import { compare } from "bcrypt-ts";
-import NextAuth, { User, Session } from "next-auth";
+import NextAuth, { DefaultSession, User } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
 
@@ -8,12 +8,17 @@ import { User as DbUser } from "@/db/schema";
 
 import { authConfig } from "./auth.config";
 
-interface ExtendedUser extends User {
-  membership?: string;
-}
+declare module "next-auth" {
+  interface User {
+    membership?: string;
+  }
 
-interface ExtendedSession extends Session {
-  user: ExtendedUser;
+  interface Session {
+    user: {
+      id: string;
+      membership?: string;
+    } & DefaultSession["user"]
+  }
 }
 
 export const {
@@ -30,17 +35,17 @@ export const {
     }),
     Credentials({
       credentials: {},
-      async authorize({ email, password }: any): Promise<ExtendedUser | null> {
+      async authorize({ email, password }: any) {
         let users = await getUser(email);
         if (users.length === 0) return null;
         let passwordsMatch = await compare(password, users[0].password!);
         if (passwordsMatch) {
-          const user: ExtendedUser = {
+          return {
             id: users[0].id,
             email: users[0].email,
-            membership: users[0].membership
+            membership: users[0].membership,
+            name: users[0].name || "",
           };
-          return user;
         }
         return null;
       },
@@ -51,30 +56,25 @@ export const {
       if (account?.provider === "google") {
         const users = await getUser(user.email!);
         if (users.length === 0) {
-          // Create a new user if they don't exist
           await createUser(user.email!, "", user.name || "");
         }
         return true;
       }
       return true;
     },
-    async jwt({ token, user }: { token: any, user: any }) {
+    async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
         token.membership = user.membership;
+        token.name = user.name || "";
       }
       return token;
     },
-    async session({
-      session,
-      token,
-    }: {
-      session: ExtendedSession;
-      token: any;
-    }) {
+    async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.membership = token.membership;
+        session.user.membership = token.membership as string | undefined;
+        session.user.name = token.name || "";
       }
       return session;
     },
