@@ -237,7 +237,7 @@ export function SidebarUserNav({ user }: { user: ExtendedUser }) {
                 className="rounded-full"
                 draggable={false}
               />
-              <span>{user?.email}</span>
+              <span>{user?.name || user?.email}</span>
               <ChevronUp className="ml-auto" />
             </SidebarMenuButton>
           </DropdownMenuTrigger>
