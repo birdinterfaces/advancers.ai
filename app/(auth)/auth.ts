@@ -54,11 +54,19 @@ export const {
   callbacks: {
     async signIn({ user, account }) {
       if (account?.provider === "google") {
-        const users = await getUser(user.email!);
-        if (users.length === 0) {
-          await createUser(user.email!, "", user.name || "");
+        try {
+          const dbUser = await getUser(user.email!);
+          if (dbUser.length === 0) {
+            await createUser(
+              user.email!,
+              '',
+              user.name || ''
+            );
+          }
+        } catch (error) {
+          console.error("Error during Google sign in:", error);
+          return false;
         }
-        return true;
       }
       return true;
     },

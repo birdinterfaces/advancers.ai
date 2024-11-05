@@ -11,6 +11,7 @@ export const user = pgTable("User", {
   stripecustomerid: varchar("stripecustomerid", { length: 256 }),
   stripesubscriptionid: varchar("stripesubscriptionid", { length: 256 }),
   usage: decimal("usage", { precision: 10, scale: 4 }).notNull().default('0.0000'),
+  provider: varchar("provider", { length: 20 }).notNull().default('credentials'),
 });
 
 export type User = InferSelectModel<typeof user>;
