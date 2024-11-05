@@ -38,13 +38,21 @@ export const {
       async authorize({ email, password }: any) {
         let users = await getUser(email);
         if (users.length === 0) return null;
-        let passwordsMatch = await compare(password, users[0].password!);
+        
+        const user = users[0];
+        
+        if (!user.password) {
+          console.log("This is a Google account, please sign in with Google");
+          return null;
+        }
+        
+        let passwordsMatch = await compare(password, user.password);
         if (passwordsMatch) {
           return {
-            id: users[0].id,
-            email: users[0].email,
-            membership: users[0].membership,
-            name: users[0].name || "",
+            id: user.id,
+            email: user.email,
+            membership: user.membership,
+            name: user.name || "",
           };
         }
         return null;
@@ -59,7 +67,7 @@ export const {
           if (dbUser.length === 0) {
             await createUser(
               user.email!,
-              '',
+              null,
               user.name || ''
             );
           }
