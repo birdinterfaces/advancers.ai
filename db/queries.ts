@@ -51,6 +51,11 @@ export async function saveChat({
   userId: string;
 }) {
   try {
+    const users = await db.select().from(user).where(eq(user.id, userId));
+    if (users.length === 0) {
+      throw new Error("User not found");
+    }
+
     const selectedChats = await db.select().from(chat).where(eq(chat.id, id));
 
     if (selectedChats.length > 0) {
@@ -59,7 +64,8 @@ export async function saveChat({
         .set({
           messages: JSON.stringify(messages),
         })
-        .where(eq(chat.id, id));
+        .where(eq(chat.id, id))
+        .returning();
     }
 
     return await db.insert(chat).values({
@@ -67,9 +73,9 @@ export async function saveChat({
       createdAt: new Date(),
       messages: JSON.stringify(messages),
       userId,
-    });
+    }).returning();
   } catch (error) {
-    console.error("Failed to save chat in database");
+    console.error("Failed to save chat in database:", error);
     throw error;
   }
 }
@@ -110,10 +116,12 @@ type UpdateUserData = Partial<Pick<User, 'stripecustomerid' | 'stripesubscriptio
 
 export async function updateUser(userId: string, data: UpdateUserData) {
   try {
-    return await db
+    const [updatedUser] = await db
       .update(user)
       .set(data)
-      .where(eq(user.id, userId));
+      .where(eq(user.id, userId))
+      .returning();
+    return updatedUser;
   } catch (error) {
     console.error("Failed to update user in database");
     throw error;

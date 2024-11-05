@@ -10,13 +10,20 @@ import { authConfig } from "./auth.config";
 
 declare module "next-auth" {
   interface User {
+    id?: string;
     membership?: string;
+    stripecustomerid?: string;
+    stripesubscriptionid?: string;
+    usage?: string;
   }
 
   interface Session {
     user: {
-      id: string;
+      id?: string;
       membership?: string;
+      stripecustomerid?: string;
+      stripesubscriptionid?: string;
+      usage?: string;
     } & DefaultSession["user"]
   }
 }
@@ -70,6 +77,19 @@ export const {
               null,
               user.name || ''
             );
+            const [newUser] = await getUser(user.email!);
+            user.id = newUser.id;
+            user.membership = newUser.membership;
+            user.stripecustomerid = newUser.stripecustomerid || undefined;
+            user.stripesubscriptionid = newUser.stripesubscriptionid || undefined;
+            user.usage = newUser.usage;
+          } else {
+            const existingUser = dbUser[0];
+            user.id = existingUser.id;
+            user.membership = existingUser.membership;
+            user.stripecustomerid = existingUser.stripecustomerid || undefined;
+            user.stripesubscriptionid = existingUser.stripesubscriptionid || undefined;
+            user.usage = existingUser.usage;
           }
         } catch (error) {
           console.error("Error during Google sign in:", error);
@@ -78,19 +98,31 @@ export const {
       }
       return true;
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
         token.membership = user.membership;
         token.name = user.name || "";
+        token.stripecustomerid = user.stripecustomerid || undefined;
+        token.stripesubscriptionid = user.stripesubscriptionid || undefined;
+        token.usage = user.usage;
+      }
+      if (trigger === "update" && session?.user) {
+        token.membership = session.user.membership;
+        token.stripecustomerid = session.user.stripecustomerid || undefined;
+        token.stripesubscriptionid = session.user.stripesubscriptionid || undefined;
+        token.usage = session.user.usage;
       }
       return token;
     },
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.membership = token.membership as string | undefined;
+        session.user.membership = token.membership as string;
         session.user.name = token.name || "";
+        session.user.stripecustomerid = token.stripecustomerid as string | undefined;
+        session.user.stripesubscriptionid = token.stripesubscriptionid as string | undefined;
+        session.user.usage = token.usage as string;
       }
       return session;
     },
