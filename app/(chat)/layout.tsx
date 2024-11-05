@@ -1,4 +1,6 @@
 import { cookies } from 'next/headers';
+import Image from 'next/image';
+import { UserCircle } from 'lucide-react'; // For fallback icon
 
 import { AppSidebar } from '@/components/custom/app-sidebar';
 import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
