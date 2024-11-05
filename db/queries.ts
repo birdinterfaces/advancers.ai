@@ -27,7 +27,13 @@ export async function createUser(email: string, password: string | null, name: s
     return await db.insert(user).values({ 
       email, 
       password: passwordHash, 
-      name 
+      name,
+      membership: 'free',
+      usage: '0.0000',
+      stripecustomerid: null,
+      stripesubscriptionid: null,
+      previoussubscriptionid: null,
+      provider: 'google',
     });
   } catch (error) {
     console.error("Failed to create user in database");
@@ -139,6 +145,18 @@ export async function updateUserUsage(userId: string, newUsage: string) {
       .where(eq(user.id, userId));
   } catch (error) {
     console.error("Failed to update user usage in database");
+    throw error;
+  }
+}
+
+export async function updateUserData(userId: string, data: Partial<Pick<User, 'membership' | 'usage' | 'stripecustomerid' | 'stripesubscriptionid' | 'previoussubscriptionid'>>) {
+  try {
+    return await db
+      .update(user)
+      .set(data)
+      .where(eq(user.id, userId));
+  } catch (error) {
+    console.error("Failed to update user data in database");
     throw error;
   }
 }

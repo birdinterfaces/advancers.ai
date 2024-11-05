@@ -10,6 +10,7 @@ export const user = pgTable("User", {
   membership: varchar("membership", { length: 64 }).notNull().default('free'),
   stripecustomerid: varchar("stripecustomerid", { length: 256 }),
   stripesubscriptionid: varchar("stripesubscriptionid", { length: 256 }),
+  previoussubscriptionid: varchar("previoussubscriptionid", { length: 256 }),
   usage: decimal("usage", { precision: 10, scale: 4 }).notNull().default('0.0000'),
   provider: varchar("provider", { length: 20 }).notNull().default('credentials'),
 });
