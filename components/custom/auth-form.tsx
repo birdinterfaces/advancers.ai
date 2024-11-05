@@ -10,10 +10,12 @@ export function AuthForm({
   action,
   children,
   defaultEmail = '',
+  showNameField = false,
 }: {
   action: any;
   children: React.ReactNode;
   defaultEmail?: string;
+  showNameField?: boolean;
 }) {
   const [showEmailForm, setShowEmailForm] = useState(false);
 
@@ -43,6 +45,25 @@ export function AuthForm({
 
       {showEmailForm && (
         <div className="flex flex-col gap-4 mt-4">
+          {showNameField && (
+            <div className="flex flex-col gap-2">
+              <Label
+                htmlFor="name"
+                className="text-zinc-600 font-normal dark:text-zinc-400"
+              >
+                Full Name
+              </Label>
+              <Input
+                id="name"
+                name="name"
+                className="bg-muted text-md md:text-sm"
+                type="text"
+                placeholder=""
+                required
+              />
+            </div>
+          )}
+
           <div className="flex flex-col gap-2">
             <Label
               htmlFor="email"
@@ -50,7 +71,6 @@ export function AuthForm({
             >
               Email Address
             </Label>
-
             <Input
               id="email"
               name="email"
@@ -70,7 +90,6 @@ export function AuthForm({
             >
               Password
             </Label>
-
             <Input
               id="password"
               name="password"

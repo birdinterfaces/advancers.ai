@@ -7,8 +7,11 @@ import { createUser, getUser } from "@/db/queries";
 import { signIn } from "./auth";
 
 const authFormSchema = z.object({
+  name: z.string().min(2),
   email: z.string().email(),
   password: z.string().min(6),
+}).partial({
+  name: true,
 });
 
 export interface LoginActionState {
@@ -57,16 +60,25 @@ export const register = async (
 ): Promise<RegisterActionState> => {
   try {
     const validatedData = authFormSchema.parse({
-      email: formData.get("email"),
-      password: formData.get("password"),
+      name: formData.get("name")?.toString() || "",
+      email: formData.get("email")?.toString(),
+      password: formData.get("password")?.toString(),
     });
+
+    if (!validatedData.email || !validatedData.password) {
+      return { status: "invalid_data" };
+    }
 
     let [user] = await getUser(validatedData.email);
 
     if (user) {
-      return { status: "user_exists" } as RegisterActionState;
+      return { status: "user_exists" };
     } else {
-      await createUser(validatedData.email, validatedData.password);
+      await createUser(
+        validatedData.email,
+        validatedData.password,
+        validatedData.name || ""
+      );
       await signIn("credentials", {
         email: validatedData.email,
         password: validatedData.password,
@@ -79,7 +91,6 @@ export const register = async (
     if (error instanceof z.ZodError) {
       return { status: "invalid_data" };
     }
-
     return { status: "failed" };
   }
 };

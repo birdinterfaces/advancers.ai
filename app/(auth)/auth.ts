@@ -52,7 +52,7 @@ export const {
         const users = await getUser(user.email!);
         if (users.length === 0) {
           // Create a new user if they don't exist
-          await createUser(user.email!, "");
+          await createUser(user.email!, "", user.name || "");
         }
         return true;
       }
