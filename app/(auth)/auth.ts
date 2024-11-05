@@ -103,6 +103,7 @@ export const {
         token.id = user.id;
         token.membership = user.membership;
         token.name = user.name || "";
+        token.picture = user.image;
         token.stripecustomerid = user.stripecustomerid || undefined;
         token.stripesubscriptionid = user.stripesubscriptionid || undefined;
         token.usage = user.usage;
@@ -120,6 +121,7 @@ export const {
         session.user.id = token.id as string;
         session.user.membership = token.membership as string;
         session.user.name = token.name || "";
+        session.user.image = token.picture as string;
         session.user.stripecustomerid = token.stripecustomerid as string | undefined;
         session.user.stripesubscriptionid = token.stripesubscriptionid as string | undefined;
         session.user.usage = token.usage as string;
