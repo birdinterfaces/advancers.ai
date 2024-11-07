@@ -25,9 +25,6 @@ export async function POST(request: Request) {
         previoussubscriptionid: user.stripesubscriptionid
       });
 
-      // Cancel the subscription at Stripe
-      await stripe.subscriptions.cancel(user.stripesubscriptionid);
-      
       // Update user in database to remove subscription ID
       await updateUserData(user.id, {
         stripesubscriptionid: null
