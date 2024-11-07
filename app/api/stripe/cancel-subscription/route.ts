@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 
-import { getUser, updateUser } from '@/db/queries';
+import { getUser, updateUserData } from '@/db/queries';
 import { stripe } from '@/lib/stripe';
 
 export async function POST(request: Request) {
@@ -20,11 +20,16 @@ export async function POST(request: Request) {
     const user = users[0];
 
     if (user.stripesubscriptionid) {
+      // Save current subscription ID to previous subscription ID
+      await updateUserData(user.id, {
+        previoussubscriptionid: user.stripesubscriptionid
+      });
+
       // Cancel the subscription at Stripe
       await stripe.subscriptions.cancel(user.stripesubscriptionid);
       
       // Update user in database to remove subscription ID
-      await updateUser(user.id, {
+      await updateUserData(user.id, {
         stripesubscriptionid: null
       });
     }
