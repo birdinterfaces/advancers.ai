@@ -24,11 +24,6 @@ export async function POST(request: Request) {
       await updateUserData(user.id, {
         previoussubscriptionid: user.stripesubscriptionid
       });
-
-      // Update user in database to remove subscription ID
-      await updateUserData(user.id, {
-        stripesubscriptionid: null
-      });
     }
 
     return NextResponse.json({ success: true });
