@@ -36,16 +36,25 @@ export const updateStripeCustomer = async (userId: string, subscriptionId: strin
 
     const subscription = await getSubscription(subscriptionId);
 
-    const updatedUser = await updateUser(userId, {
+    const user = await updateUser(userId, {
       stripecustomerid: customerId,
       stripesubscriptionid: subscription.id
     });
 
-    if (!updatedUser) {
+    if (!user) {
       throw new Error("Failed to update customer profile");
     }
 
-    return updatedUser;
+    if (user.previoussubscriptionid) {
+      try {
+        await stripe.subscriptions.cancel(user.previoussubscriptionid);
+        console.log(`Canceled previous subscription: ${user.previoussubscriptionid}`);
+      } catch (error) {
+        console.error(`Failed to cancel previous subscription: ${user.previoussubscriptionid}`, error);
+      }
+    }
+
+    return user;
   } catch (error) {
     console.error("Error in updateStripeCustomer:", error);
     throw error instanceof Error ? error : new Error("Failed to update Stripe customer");
