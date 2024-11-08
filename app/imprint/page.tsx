@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect } from 'react';
 import Head from 'next/head';
+import { useEffect } from 'react';
 import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
