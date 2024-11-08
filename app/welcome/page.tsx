@@ -127,7 +127,7 @@ const Welcome = () => {
                                       <div>Pay with browser.</div>
                                     </a>
                                   </div>
-                                  <a href="checkout.html" data-node-type="cart-checkout-button" className="w-commerce-commercecartcheckoutbutton button add-to-cart" data-loading-text="Hang Tight...">Checkout</a>
+                                  <a href="/checkout" data-node-type="cart-checkout-button" className="w-commerce-commercecartcheckoutbutton button add-to-cart" data-loading-text="Hang Tight...">Checkout</a>
                                 </div>
                               </div>
                             </form>

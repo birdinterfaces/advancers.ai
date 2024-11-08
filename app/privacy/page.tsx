@@ -208,13 +208,13 @@ const Privacy = () => {
               <div className="footer-divider">
                 <div className="footerleft">
                   <div className="footer-copyright-holder">
-                    <a href="terms.html" className="link-2">Terms </a>
+                    <a href="/terms" className="link-2">Terms </a>
                   </div>
                   <div className="footer-copyright-holder">
-                    <a href="imprint.html" className="link-2">Imprint</a>
+                    <a href="/imprint" className="link-2">Imprint</a>
                   </div>
                   <div className="footer-copyright-holder">
-                    <a href="privacy.html" aria-current="page" className="link-2 w--current">Privacy</a>
+                    <a href="/privacy" aria-current="page" className="link-2 w--current">Privacy</a>
                   </div>
                 </div>
                 <div className="footermiddle"></div>

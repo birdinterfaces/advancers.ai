@@ -122,7 +122,7 @@ const Imprint = () => {
                                   </a>
                                 </div>
                                 <a
-                                  href="checkout.html"
+                                  href="/checkout"
                                   data-node-type="cart-checkout-button"
                                   className="w-commerce-commercecartcheckoutbutton button add-to-cart"
                                   data-loading-text="Hang Tight..."
@@ -240,19 +240,19 @@ const Imprint = () => {
               <div className="footer-divider">
                 <div className="footerleft">
                   <div className="footer-copyright-holder">
-                    <a href="terms.html" className="link-2">Terms </a>
+                    <a href="/terms" className="link-2">Terms </a>
                   </div>
                   <div className="footer-copyright-holder">
-                    <a href="imprint.html" aria-current="page" className="link-2 w--current">Imprint</a>
+                    <a href="/imprint" aria-current="page" className="link-2 w--current">Imprint</a>
                   </div>
                   <div className="footer-copyright-holder">
-                    <a href="privacy.html" className="link-2">Privacy</a>
+                    <a href="/privacy" className="link-2">Privacy</a>
                   </div>
                 </div>
                 <div className="footermiddle"></div>
                 <div className="footerright">
                   <div className="footer-copyright-holder">
-                    <a href="index.html" className="link-20 pagelink">© 2024 Bird Interfaces, GmbH.</a>
+                    <a href="/" className="link-20 pagelink">© 2024 Bird Interfaces, GmbH.</a>
                   </div>
                 </div>
               </div>
