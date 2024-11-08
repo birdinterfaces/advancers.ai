@@ -61,8 +61,8 @@ const Terms = () => {
                   <div className="nav-menu-link-holder">
                     <div className="nav-menu-link-container adjustingmiddlemobilenav">
                       <div className="nav-links">
-                        <a href="#" className="nav-link _2 w-nav-link">Features</a>
-                        <a href="#" className="nav-link w-nav-link">Plans</a>
+                        <a href="/welcome#features" className="nav-link _2 w-nav-link">Features</a>
+                        <a href="/welcome#plans" className="nav-link w-nav-link">Plans</a>
                       </div>
                     </div>
                   </div>
