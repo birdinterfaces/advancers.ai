@@ -46,6 +46,7 @@ export default function Page() {
             width={180}
             height={40}
             className="dark:hidden"
+            draggable={false}
           />
           <Image
             src="/images/logowhite.png"
@@ -53,6 +54,7 @@ export default function Page() {
             width={180}
             height={40}
             className="hidden dark:block"
+            draggable={false}
           />
           <div className="flex flex-col gap-2">
             <h3 className="text-xl font-semibold dark:text-zinc-50">Sign In</h3>
