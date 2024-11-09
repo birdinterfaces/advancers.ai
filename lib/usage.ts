@@ -3,7 +3,7 @@ const COST_PER_OUTPUT_TOKEN = 0.000015; // $15 per million tokens
 
 export const USAGE_LIMITS = {
   free: 0.10,     // $0.10 per month
-  pro: 0.02,      // $3.00 per month
+  pro: 3.00,      // $3.00 per month
   ultimate: 6.00  // $6.00 per month
 } as const;
 
