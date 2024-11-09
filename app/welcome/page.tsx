@@ -438,17 +438,25 @@ const Welcome = () => {
           }
 
           .text-block-34 {
-            font-size: 24px;
+            font-size: 20px;
             line-height: 1.3;
           }
 
           .text-block-35 {
-            font-size: 16px;
+            font-size: 14px;
             line-height: 1.4;
           }
 
           .totalvaluetext {
             font-size: 28px;
+          }
+
+          .price {
+            font-size: 16px;
+          }
+          
+          .price .annualy {
+            font-size: 16px;
           }
         }
       `}</style>

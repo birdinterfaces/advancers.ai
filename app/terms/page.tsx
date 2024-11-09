@@ -143,8 +143,8 @@ const Terms = () => {
                     </div>
                   </div>
                   <div className="nav-menu-button-holder clerkplus">
-                    <a href="/login" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button">Sign in</a>
-                    <a href="#" id="chameleonbutton" className="button navbar-button w-button">Sign in</a>
+                    <a href="/login" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button" style={{ fontWeight: 400 }}>Sign in</a>
+                    <a href="#" id="chameleonbutton" className="button navbar-button w-button" style={{ fontWeight: 400 }}>Sign in</a>
                     <div id="user-button" className="user-button homepage"></div>
                   </div>
                 </div>
