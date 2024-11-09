@@ -173,7 +173,10 @@ const Welcome = () => {
                       href="/login" 
                       id="chameleonbutton" 
                       className="button navbar-button w-button"
-                      style={{ display: isHeroSignInVisible ? 'none' : 'block' }}
+                      style={{ 
+                        display: isHeroSignInVisible ? 'none' : 'block',
+                        fontWeight: 400
+                      }}
                     >
                       Sign in
                     </a>
@@ -422,6 +425,33 @@ const Welcome = () => {
           </div>
         </div>
       </div>
+      <style jsx>{`
+        @media screen and (max-width: 479px) {
+          .hero-title {
+            font-size: 32px;
+            line-height: 1.2;
+          }
+
+          .paragraph-4 {
+            font-size: 18px;
+            line-height: 1.4;
+          }
+
+          .text-block-34 {
+            font-size: 24px;
+            line-height: 1.3;
+          }
+
+          .text-block-35 {
+            font-size: 16px;
+            line-height: 1.4;
+          }
+
+          .totalvaluetext {
+            font-size: 28px;
+          }
+        }
+      `}</style>
     </>
   );
 };
