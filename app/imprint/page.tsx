@@ -56,9 +56,9 @@ const Imprint = () => {
           <div className="container navbar-container">
             <div className="navbar-holder">
               <div className="navbar-container">
-                <a href="/" className="brand w-nav-brand"><img src="/images/file.png" loading="lazy" alt="" className="brand-image" /></a>
+                <a href="/welcome" className="brand w-nav-brand"><img src="/images/file.png" loading="eager" alt="" className="brand-image" /></a>
                 <nav role="navigation" className="nav-menu w-nav-menu">
-                  <div className="nav-menu-link-holder">
+                  <div className="nav-menu-link-holder" style={{ display: 'none' }}>
                     <div className="nav-menu-link-container adjustingmiddlemobilenav">
                       <div className="nav-links">
                         <a href="/welcome#features" className="nav-link _2 w-nav-link">Features</a>
@@ -73,7 +73,7 @@ const Imprint = () => {
                       <div role="dialog" data-node-type="commerce-cart-container" className="w-commerce-commercecartcontainer cart-container">
                         <div className="w-commerce-commercecartheader cart-header">
                           <h4 className="w-commerce-commercecartheading">Your Cart</h4>
-                          <a href="#" data-node-type="commerce-cart-close-link" role="button" aria-label="Close cart" className="w-commerce-commercecartcloselink w-inline-block"><img src="/images/X-Icon.svg" loading="lazy" alt="" className="x-icon" /></a>
+                          <a href="#" data-node-type="commerce-cart-close-link" role="button" aria-label="Close cart" className="w-commerce-commercecartcloselink w-inline-block"><img src="/images/X-Icon.svg" loading="eager" alt="" className="x-icon" /></a>
                         </div>
                         <div className="w-commerce-commercecartformwrapper cart-form-wrapper">
                           <form data-node-type="commerce-cart-form" style={{ display: 'none' }} className="w-commerce-commercecartform">
@@ -142,11 +142,11 @@ const Imprint = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="menu-button menubuttonnav w-nav-button">
+                  <div className="menu-button menubuttonnav w-nav-button" style={{ display: 'none' }}>
                     <div className="menubuttontext homepagemenu">Menu</div>
                   </div>
                   <div className="nav-menu-button-holder clerkplus">
-                    <a href="#Early-Access" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button">Sign in</a>
+                    <a href="/login" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button">Sign in</a>
                     <a href="#" id="chameleonbutton" className="button navbar-button w-button">Sign in</a>
                     <div id="user-button" className="user-button homepage"></div>
                   </div>
@@ -252,7 +252,7 @@ const Imprint = () => {
                 <div className="footermiddle"></div>
                 <div className="footerright">
                   <div className="footer-copyright-holder">
-                    <a href="/" className="link-20 pagelink">© 2024 Bird Interfaces, GmbH.</a>
+                    <a href="/welcome" className="link-20 pagelink">© 2024 Bird Interfaces, GmbH.</a>
                   </div>
                 </div>
               </div>

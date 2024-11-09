@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -38,11 +39,27 @@ export default function Page() {
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-background">
       <div className="w-full max-w-md overflow-hidden rounded-2xl flex flex-col gap-12">
-        <div className="flex flex-col items-center justify-center gap-2 px-4 text-center sm:px-16">
-          <h3 className="text-xl font-semibold dark:text-zinc-50">Sign In</h3>
-          <p className="text-sm text-gray-500 dark:text-zinc-400">
-            Use your email and password to sign in
-          </p>
+        <div className="flex flex-col items-center justify-center gap-6 px-4 text-center sm:px-16">
+          <Image
+            src="/images/logodark.png"
+            alt="Logo"
+            width={180}
+            height={40}
+            className="dark:hidden"
+          />
+          <Image
+            src="/images/logowhite.png"
+            alt="Logo"
+            width={180}
+            height={40}
+            className="hidden dark:block"
+          />
+          <div className="flex flex-col gap-2">
+            <h3 className="text-xl font-semibold dark:text-zinc-50">Sign In</h3>
+            <p className="text-sm text-gray-500 dark:text-zinc-400">
+              Use your email and password to sign in
+            </p>
+          </div>
         </div>
         <AuthForm action={handleSubmit} defaultEmail={email}>
           <SubmitButton>Sign in</SubmitButton>
@@ -57,6 +74,14 @@ export default function Page() {
             {" for free."}
           </p>
         </AuthForm>
+        <div className="text-center">
+          <Link
+            href="/welcome"
+            className="text-sm text-gray-500 hover:text-gray-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+          >
+            Learn more about Advancers AI →
+          </Link>
+        </div>
       </div>
     </div>
   );

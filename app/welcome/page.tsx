@@ -6,6 +6,7 @@ import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
 import '../../public/css/stars.css';
+import { Bold } from 'lucide-react';
 
 const Welcome = () => {
   useEffect(() => {
@@ -58,8 +59,8 @@ const Welcome = () => {
             <div className="container navbar-container">
               <div className="navbar-holder">
                 <div className="navbar-container">
-                  <a href="/" aria-current="page" className="brand w-nav-brand w--current">
-                    <img src="/images/file.png" loading="lazy" alt="" className="brand-image" />
+                  <a href="/welcome" aria-current="page" className="brand w-nav-brand w--current">
+                    <img src="/images/file.png" loading="eager" alt="" className="brand-image" />
                   </a>
                   <nav role="navigation" className="nav-menu w-nav-menu">
                     <div className="nav-menu-link-holder">
@@ -78,7 +79,7 @@ const Welcome = () => {
                           <div className="w-commerce-commercecartheader cart-header">
                             <h4 className="w-commerce-commercecartheading">Your Cart</h4>
                             <a href="#" data-node-type="commerce-cart-close-link" role="button" aria-label="Close cart" className="w-commerce-commercecartcloselink w-inline-block">
-                              <img src="/images/X-Icon.svg" loading="lazy" alt="" className="x-icon" />
+                              <img src="/images/X-Icon.svg" loading="eager" alt="" className="x-icon" />
                             </a>
                           </div>
                           <div className="w-commerce-commercecartformwrapper cart-form-wrapper">
@@ -142,11 +143,8 @@ const Welcome = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="menu-button menubuttonnav w-nav-button">
-                    <div className="menubuttontext homepagemenu">Menu</div>
-                  </div>
                   <div className="nav-menu-button-holder clerkplus">
-                    <a href="#Early-Access" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button">Sign in</a>
+                    <a href="/login" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button">Sign in</a>
                     <a href="#signin" id="chameleonbutton" className="button navbar-button w-button">Sign in</a>
                     <div id="user-button" className="user-button homepage"></div>
                   </div>
@@ -156,7 +154,12 @@ const Welcome = () => {
           </div>
         </div>
         <div id="signin" className="section hero-section">
-          <div className="container hero-container">
+          <div className="container hero-container" style={{ 
+            minHeight: '100vh',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
             <div className="hero-section-holder">
               <div className="hero-section-container sneakpeakspace">
                 <div className="animate-on-load-01">
@@ -166,20 +169,16 @@ const Welcome = () => {
                 </div>
                 <div className="hero-section-header-holder">
                   <div className="animate-on-load-02">
-                    <h1 className="hero-title">AI that helps you <br />be most useful <br />for civilization</h1>
+                    <h1 className="hero-title">AI that helps you be most useful <br />‍for civilization</h1>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
                   <p className="paragraph-4">Trained on fundamental knowledge from <br />‍<a href="http://advancers.org" target="_blank" className="link-24">The Advancers Platform</a>.</p>
                 </div>
-                <div className="learnmore-div animate-on-load-04">
-                  <div className="text-block-35">Scroll down to learn more</div>
-                  <img src="/images/Vector_2Vector.png" loading="lazy" alt="" className="image-11" />
+                <div className="animate-on-load-04">
+                  <a href="/login" className="button w-button"><span style={{ fontWeight: 600 }}>Sign in</span></a>
                 </div>
               </div>
-            </div>
-            <div className="signinwrapper">
-              <div id="signinblock" className="signinblock"></div>
             </div>
           </div>
           <div data-w-id="526c4d65-fc15-6ad7-ed13-afa9bccb5ee3" className="hero-bacgkround"></div>
@@ -244,7 +243,7 @@ const Welcome = () => {
                         <div id="w-node-_2cf8f3e6-80d6-c6d4-9830-3fbe7772c3ba-f0e18ac1" className="pricingcard center procard">
                           <div className="content">
                             <div className="herologoholder">
-                              <img src="/images/Unbenannt-6.png" loading="lazy" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
+                              <img src="/images/Unbenannt-6.png" loading="eager" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
                             </div>
                             <div className="fade-in-on-scroll">
                               <div className="totalvalue">
@@ -260,13 +259,13 @@ const Welcome = () => {
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="lazy" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
                                   <div className="list-text">Much more usage than Free</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="lazy" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
                                   <div className="list-text">Early access to new features</div>
                                 </div>
                               </li>
@@ -276,7 +275,7 @@ const Welcome = () => {
                         <div id="w-node-_780484ad-a70b-6b78-eb15-bb60b06b31ec-f0e18ac1" className="pricingcard center">
                           <div className="content">
                             <div className="herologoholder">
-                              <img src="/images/Unbenannt-6.png" loading="lazy" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
+                              <img src="/images/Unbenannt-6.png" loading="eager" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
                             </div>
                             <div className="fade-in-on-scroll">
                               <div className="totalvalue">
@@ -287,19 +286,19 @@ const Welcome = () => {
                             <ul role="list" className="list-2 w-list-unstyled">
                               <li>
                                 <div className="list">
-                                  <img loading="lazy" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
                                   <div className="list-text">Helps you to be most useful</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="lazy" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
                                   <div className="list-text">Runs on Grok from xAI</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="lazy" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
                                   <div className="list-text">Trained with our data</div>
                                 </div>
                               </li>
@@ -330,25 +329,25 @@ const Welcome = () => {
                             <ul role="list" className="list-2 w-list-unstyled">
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="lazy" className="list-icon" />
+                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
                                   <div className="list-text">Unlimited access to courses</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="lazy" className="list-icon" />
+                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
                                   <div className="list-text">Receive all course updates</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="lazy" className="list-icon" />
+                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
                                   <div className="list-text">Access the community forums</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="lazy" className="list-icon" />
+                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
                                   <div className="list-text">Save $250k+ in software deals</div>
                                 </div>
                               </li>
@@ -384,7 +383,7 @@ const Welcome = () => {
                 <div className="footermiddle"></div>
                 <div className="footerright">
                   <div className="footer-holder">
-                    <a href="/" className="link-20 pagelink w--current">© 2024 Bird Interfaces, GmbH.</a>
+                    <a href="/welcome" className="link-20 pagelink w--current">© 2024 Bird Interfaces, GmbH.</a>
                   </div>
                 </div>
               </div>

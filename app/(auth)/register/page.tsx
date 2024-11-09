@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useActionState, useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -40,11 +41,27 @@ export default function Page() {
   return (
     <div className="flex h-screen w-screen items-center justify-center bg-background">
       <div className="w-full max-w-md overflow-hidden rounded-2xl gap-12 flex flex-col">
-        <div className="flex flex-col items-center justify-center gap-2 px-4 text-center sm:px-16">
-          <h3 className="text-xl font-semibold dark:text-zinc-50">Sign Up</h3>
-          <p className="text-sm text-gray-500 dark:text-zinc-400">
-            Create an account with your email and password
-          </p>
+        <div className="flex flex-col items-center justify-center gap-6 px-4 text-center sm:px-16">
+          <Image
+            src="/images/logodark.png"
+            alt="Logo"
+            width={180}
+            height={40}
+            className="dark:hidden"
+          />
+          <Image
+            src="/images/logowhite.png"
+            alt="Logo"
+            width={180}
+            height={40}
+            className="hidden dark:block"
+          />
+          <div className="flex flex-col gap-2">
+            <h3 className="text-xl font-semibold dark:text-zinc-50">Sign Up</h3>
+            <p className="text-sm text-gray-500 dark:text-zinc-400">
+              Create an account with your email and password
+            </p>
+          </div>
         </div>
         <AuthForm action={handleSubmit} defaultEmail={email} showNameField={true}>
           <SubmitButton>Sign Up</SubmitButton>
@@ -59,6 +76,14 @@ export default function Page() {
             {" instead."}
           </p>
         </AuthForm>
+        <div className="text-center">
+          <Link
+            href="/welcome"
+            className="text-sm text-gray-500 hover:text-gray-800 dark:text-zinc-400 dark:hover:text-zinc-200"
+          >
+            Learn more about Advancers AI →
+          </Link>
+        </div>
       </div>
     </div>
   );
