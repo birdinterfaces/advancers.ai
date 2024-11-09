@@ -57,7 +57,7 @@ export default function Page() {
           <div className="flex flex-col gap-2">
             <h3 className="text-xl font-semibold dark:text-zinc-50">Sign In</h3>
             <p className="text-sm text-gray-500 dark:text-zinc-400">
-              Use your email and password to sign in
+              Welcome back! Please sign in to continue
             </p>
           </div>
         </div>
