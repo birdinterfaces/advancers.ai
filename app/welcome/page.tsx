@@ -2,13 +2,38 @@
 
 import { Bold } from 'lucide-react';
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
 import '../../public/css/stars.css';
 
 const Welcome = () => {
+  const [isHeroSignInVisible, setIsHeroSignInVisible] = useState(true);
+
+  useEffect(() => {
+    const heroSignInButton = document.querySelector('.animate-on-load-04');
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsHeroSignInVisible(entry.isIntersecting);
+      },
+      {
+        threshold: 0
+      }
+    );
+
+    if (heroSignInButton) {
+      observer.observe(heroSignInButton);
+    }
+
+    return () => {
+      if (heroSignInButton) {
+        observer.unobserve(heroSignInButton);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     // Load external scripts
     const webFontScript = document.createElement('script');
@@ -144,8 +169,14 @@ const Welcome = () => {
                     </div>
                   </div>
                   <div className="nav-menu-button-holder clerkplus">
-                    <a href="/login" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button">Sign in</a>
-                    <a href="#signin" id="chameleonbutton" className="button navbar-button w-button">Sign in</a>
+                    <a 
+                      href="/login" 
+                      id="chameleonbutton" 
+                      className="button navbar-button w-button"
+                      style={{ display: isHeroSignInVisible ? 'none' : 'block' }}
+                    >
+                      Sign in
+                    </a>
                     <div id="user-button" className="user-button homepage"></div>
                   </div>
                 </div>
@@ -176,7 +207,7 @@ const Welcome = () => {
                   <p className="paragraph-4">Trained on fundamental knowledge from <br />‍<a href="http://advancers.org" target="_blank" className="link-24">The Advancers Platform</a>.</p>
                 </div>
                 <div className="animate-on-load-04">
-                  <a href="/login" className="button w-button"><span style={{ fontWeight: 600 }}>Sign in</span></a>
+                  <a href="/login" className="button w-button"><span style={{ fontWeight: 400 }}>Sign in</span></a>
                 </div>
               </div>
             </div>
