@@ -1,12 +1,14 @@
 "use client";
 
 import Head from 'next/head';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
 
 const Imprint = () => {
+  const [isHeroSignInVisible, setIsHeroSignInVisible] = useState(false);
+
   useEffect(() => {
     // Load external scripts
     const webFontScript = document.createElement('script');
@@ -146,8 +148,20 @@ const Imprint = () => {
                     <div className="menubuttontext homepagemenu">Menu</div>
                   </div>
                   <div className="nav-menu-button-holder clerkplus">
-                    <a href="/login" id="chameleonbutton2" className="buttonmobile navbar-button chameleonbutton2 w-button" style={{ fontWeight: 400 }}>Sign in</a>
-                    <a href="#" id="chameleonbutton" className="button navbar-button w-button" style={{ fontWeight: 400 }}>Sign in</a>
+                    <a 
+                      href="/login" 
+                      id="chameleonbutton" 
+                      className="button w-button"
+                      style={{ 
+                        display: isHeroSignInVisible ? 'none' : 'block',
+                        fontWeight: 400,
+                        whiteSpace: 'nowrap',
+                        padding: '7px 20px',
+                        fontSize: '16px'
+                      }}
+                    >
+                      <span style={{ fontWeight: 400 }}>Sign in</span>
+                    </a>
                     <div id="user-button" className="user-button homepage"></div>
                   </div>
                 </div>
