@@ -172,13 +172,16 @@ const Welcome = () => {
                     <a 
                       href="/login" 
                       id="chameleonbutton" 
-                      className="button navbar-button w-button"
+                      className="button w-button"
                       style={{ 
                         display: isHeroSignInVisible ? 'none' : 'block',
-                        fontWeight: 400
+                        fontWeight: 400,
+                        whiteSpace: 'nowrap',
+                        padding: '7px 20px',
+                        fontSize: '16px'
                       }}
                     >
-                      Sign in
+                      <span style={{ fontWeight: 400 }}>Sign in</span>
                     </a>
                     <div id="user-button" className="user-button homepage"></div>
                   </div>
@@ -194,23 +197,33 @@ const Welcome = () => {
             alignItems: 'center',
             justifyContent: 'center'
           }}>
-            <div className="hero-section-holder">
-              <div className="hero-section-container sneakpeakspace">
+            <div className="hero-section-holder" style={{ marginTop: '-40px' }}>
+              <div className="hero-section-container sneakpeakspace" style={{ 
+                textAlign: 'center',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                maxWidth: '800px'
+              }}>
                 <div className="animate-on-load-01">
-                  <div className="quick-news">
-                    <div className="quick-news-text">AdvancersAI</div>
-                  </div>
                 </div>
                 <div className="hero-section-header-holder">
                   <div className="animate-on-load-02">
-                    <h1 className="hero-title">AI that helps you be most useful <br />‍for civilization</h1>
+                    <h1 className="hero-title" style={{
+                      textAlign: 'center',
+                      maxWidth: '800px',
+                      margin: '0 auto'
+                    }}>AI that helps you be most useful ‍for civilization</h1>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
                   <p className="paragraph-4">Trained on fundamental knowledge from <a href="http://advancers.org" target="_blank" className="link-24">The Advancers Platform</a></p>
                 </div>
-                <div className="animate-on-load-04">
-                  <a href="/login" className="button w-button"><span style={{ fontWeight: 400 }}>Sign in</span></a>
+                <div className="animate-on-load-04" style={{ display: 'flex', justifyContent: 'center' }}>
+                  <a href="/login" className="button w-button" style={{ 
+                    minWidth: '160px',
+                    textAlign: 'center'
+                  }}><span style={{ fontWeight: 400 }}>Try now</span></a>
                 </div>
               </div>
             </div>
@@ -274,7 +287,7 @@ const Welcome = () => {
                   <div className="tabs-content w-tab-content">
                     <div data-w-tab="Tab 1" className="w-tab-pane w--tab-active">
                       <div className="pricing-content">
-                        <div id="w-node-_2cf8f3e6-80d6-c6d4-9830-3fbe7772c3ba-f0e18ac1" className="pricingcard center procard">
+                        <div id="w-node-_2cf8f3e6-80d6-c6d4-9830-3fbe7772c3ba-f0e18ac1" className="pricingcard center procard" style={{ width: '100%' }}>
                           <div className="content">
                             <div className="herologoholder">
                               <img src="/images/Unbenannt-6.png" loading="eager" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
@@ -306,7 +319,7 @@ const Welcome = () => {
                             </ul>
                           </div>
                         </div>
-                        <div id="w-node-_780484ad-a70b-6b78-eb15-bb60b06b31ec-f0e18ac1" className="pricingcard center">
+                        <div id="w-node-_780484ad-a70b-6b78-eb15-bb60b06b31ec-f0e18ac1" className="pricingcard center" style={{ width: '100%' }}>
                           <div className="content">
                             <div className="herologoholder">
                               <img src="/images/Unbenannt-6.png" loading="eager" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
@@ -321,7 +334,7 @@ const Welcome = () => {
                               <li>
                                 <div className="list">
                                   <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
-                                  <div className="list-text">Helps you to be most useful</div>
+                                  <div className="list-text">Optimized for innovation</div>
                                 </div>
                               </li>
                               <li>
