@@ -22,15 +22,15 @@ export function getNextResetDate(): string {
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
   
-  // Set to 22nd of current month
-  let resetDate = new Date(currentYear, currentMonth, 22);
+  // Set to 11th of current month
+  let resetDate = new Date(currentYear, currentMonth, 11);
   
-  // If we're past the 22nd, show next month's date
-  if (now.getDate() > 22) {
-    resetDate = new Date(currentYear, currentMonth + 1, 22);
+  // If we're past the 11th, show next month's date
+  if (now.getDate() > 11) {
+    resetDate = new Date(currentYear, currentMonth + 1, 11);
   }
   
-  // Format date as "22 March" (without year)
+  // Format date as "11 March" (without year)
   return resetDate.toLocaleDateString('en-US', { 
     day: 'numeric',
     month: 'long'
