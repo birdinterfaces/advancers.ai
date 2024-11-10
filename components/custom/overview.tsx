@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { useEffect } from 'react';
-import { preloadImages, preloadDataUrls } from '../../utils/preloadImages';
+
 import { MessageIcon, VercelIcon } from './icons';
+import { preloadImages, preloadDataUrls } from '../../utils/preloadImages';
 
 // Call the preload function
 preloadImages();
