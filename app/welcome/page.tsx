@@ -66,11 +66,11 @@ const Welcome = () => {
   return (
     <>
       <Head>
-        <title>Advancers AI</title>
+        <title>AdvancersAI</title>
         <meta name="description" content="AI that helps you be most useful for civilization. Trained on fundamental knowledge from The Advancers Platform." />
-        <meta property="og:title" content="Advancers AI" />
+        <meta property="og:title" content="AdvancersAI" />
         <meta property="og:description" content="AI that helps you be most useful for civilization. Trained on fundamental knowledge from The Advancers Platform." />
-        <meta property="twitter:title" content="Advancers AI" />
+        <meta property="twitter:title" content="AdvancersAI" />
         <meta property="twitter:description" content="AI that helps you be most useful for civilization. Trained on fundamental knowledge from The Advancers Platform." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
@@ -198,7 +198,7 @@ const Welcome = () => {
               <div className="hero-section-container sneakpeakspace">
                 <div className="animate-on-load-01">
                   <div className="quick-news">
-                    <div className="quick-news-text">Advancers AI Nova</div>
+                    <div className="quick-news-text">AdvancersAI</div>
                   </div>
                 </div>
                 <div className="hero-section-header-holder">
@@ -230,7 +230,7 @@ const Welcome = () => {
         <div className="section">
           <div id="features" className="container sneakpeakcontainer">
             <div className="titlenova">
-              <div className="text-block-33">Introducing Nova</div>
+              <div className="text-block-33">Introducing AdvancersAI</div>
             </div>
             <div className="holdingnova">
               <div className="textholdernova">
