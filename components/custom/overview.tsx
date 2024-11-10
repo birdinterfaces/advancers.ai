@@ -1,26 +1,19 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-
+import { useEffect } from 'react';
+import { preloadImages, preloadDataUrls } from '../../utils/preloadImages';
 import { MessageIcon, VercelIcon } from './icons';
-
-// Preload the image
-const preloadImages = () => {
-  const imagesToPreload = [
-    '/images/blur.png',
-    '/images/logodark.png',
-    '/images/logowhite.png'
-  ];
-
-  imagesToPreload.forEach((src) => {
-    const img = new Image();
-    img.src = src;
-  });
-};
 
 // Call the preload function
 preloadImages();
+preloadDataUrls();
 
 export const Overview = () => {
+  useEffect(() => {
+    preloadImages();
+    preloadDataUrls();
+  }, []);
+
   return (
     <motion.div
       key="overview"
