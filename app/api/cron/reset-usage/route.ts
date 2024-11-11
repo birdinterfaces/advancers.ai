@@ -5,9 +5,10 @@ import { db } from '@/db/queries';
 import { user } from '@/db/schema';
 
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
   const authHeader = request.headers.get('authorization');
   
+  // Ensure the authorization header is present
   if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
     return new Response('Unauthorized', { status: 401 });
   }
