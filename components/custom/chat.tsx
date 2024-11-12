@@ -27,7 +27,7 @@ export function Chat({
   const { theme } = useTheme();
   const { openModal } = useModal();
 
-  const { messages, append, reload, stop, isLoading, input, setInput, handleSubmit } =
+  const { messages, append, reload, stop, isLoading, input, setInput, handleSubmit, setMessages } =
     useChat({
       id,
       initialMessages,
@@ -91,6 +91,33 @@ export function Chat({
 
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
 
+  const handleMessageEdit = async (messageId: string, newContent: string): Promise<boolean> => {
+    const messageIndex = messages.findIndex(msg => msg.id === messageId);
+    if (messageIndex === -1) {
+      toast.error('Message not found');
+      return false;
+    }
+
+    // Create a new array with messages up to (but not including) the edited message
+    const updatedMessages = messages.slice(0, messageIndex).map(message => message);
+
+    // Update the messages state immediately
+    setMessages(updatedMessages);
+
+    // Create a new prompt with the edited message
+    try {
+      // This will add the edited message as a new message
+      append({
+        role: 'user',
+        content: newContent,
+      });
+      return true;
+    } catch (error) {
+      toast.error('Failed to update conversation');
+      return false;
+    }
+  };
+
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
       <ChatHeader selectedModelName={selectedModelName} />
@@ -107,6 +134,7 @@ export function Chat({
             content={message.content}
             attachments={message.experimental_attachments}
             toolInvocations={message.toolInvocations}
+            onEdit={async (newContent) => handleMessageEdit(message.id, newContent)}
           />
         ))}
 
