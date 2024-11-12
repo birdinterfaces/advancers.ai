@@ -7,9 +7,9 @@ import { z } from 'zod';
 
 import { auth } from '@/app/(auth)/auth';
 import { deleteChatById, getChatById, saveChat, updateUser, getUser, updateUserUsage } from '@/db/queries';
+import { getRelevantKnowledge } from '@/lib/knowledge';
 import { Model, models } from '@/lib/model';
 import { calculateCost, hasExceededLimit, getNextResetDate } from '@/lib/usage';
-import { getRelevantKnowledge } from '@/lib/knowledge';
 
 // Create xAI provider instance
 const xai = createOpenAI({
