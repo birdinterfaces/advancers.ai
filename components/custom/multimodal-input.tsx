@@ -38,7 +38,7 @@ const suggestedActions = [
   {
     title: "Tell me about the",
     label: 'Misaligend Structures',
-    action: "Tell me about the Misaligend Structures",
+    action: "Tell me about the Misaligend Structures in our civilization",
   },
 ];
 
