@@ -217,7 +217,7 @@ const Welcome = () => {
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
-                  <p className="paragraph-4">Trained on fundamental knowledge from <a href="http://advancers.org" target="_blank" className="link-24">The Advancers Platform</a></p>
+                  <p className="paragraph-4">Prompt engineered with fundamental knowledge from <a href="http://advancers.org" target="_blank" className="link-24">The Advancers Platform</a></p>
                 </div>
                 <div className="animate-on-load-04" style={{ display: 'flex', justifyContent: 'center' }}>
                   <a href="/login" className="button w-button" style={{ 
