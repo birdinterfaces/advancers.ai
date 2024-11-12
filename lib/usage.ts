@@ -5,9 +5,9 @@ const COST_PER_OUTPUT_TOKEN = 0.000015; // $15 per million tokens
 const SYSTEM_PROMPT_TOKENS = 100; // Approximate tokens in base system prompt
 
 export const USAGE_LIMITS = {
-  free: 0.10,     // $0.10 per month
-  pro: 3.00,      // $3.00 per month
-  ultimate: 6.00  // $6.00 per month
+  free: 0.15,     // $0.10 per month
+  pro: 4.00,      // $3.00 per month
+  ultimate: 10.00  // $6.00 per month
 } as const;
 
 export function calculateCost(
