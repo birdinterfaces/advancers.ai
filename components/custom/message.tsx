@@ -1,17 +1,17 @@
 'use client';
 
-import { Attachment, ToolInvocation } from 'ai';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { ReactNode } from 'react';
+import { PencilIcon } from 'lucide-react';
+import { ReactNode, useState } from 'react';
 import { toast } from 'sonner';
 
+import { Attachment, ToolInvocation } from 'ai';
+
+import { Button } from '../ui/button';
+import { Textarea } from '../ui/textarea';
 import { Markdown } from './markdown';
 import { PreviewAttachment } from './preview-attachment';
 import { Weather } from './weather';
-import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
-import { PencilIcon } from 'lucide-react';
 
 export const Message = ({
   role,
