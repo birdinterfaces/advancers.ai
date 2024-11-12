@@ -11,6 +11,7 @@ import { PreviewAttachment } from './preview-attachment';
 import { Weather } from './weather';
 import { Button } from '../ui/button';
 import { Textarea } from '../ui/textarea';
+import { cn } from '@/lib/utils';
 
 export const Message = ({
   role,
@@ -52,7 +53,13 @@ export const Message = ({
       animate={{ y: 0, opacity: 1 }}
       data-role={role}
     >
-      <div className="flex gap-4 group-data-[role=user]/message:px-5 w-full group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl group-data-[role=user]/message:py-3.5 group-data-[role=user]/message:bg-muted rounded-xl relative">
+      <div className={cn(
+        "flex gap-4 group-data-[role=user]/message:px-5 w-full",
+        isEditing 
+          ? "group-data-[role=user]/message:w-full group-data-[role=user]/message:max-w-3xl" 
+          : "group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl",
+        "group-data-[role=user]/message:py-3.5 group-data-[role=user]/message:bg-muted rounded-xl relative"
+      )}>
         {role === 'assistant' && (
           <img
             src="/images/blur.png"
