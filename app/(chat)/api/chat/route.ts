@@ -16,11 +16,35 @@ const xai = createOpenAI({
   apiKey: process.env.XAI_API_KEY ?? '',
 });
 
+// User-specific knowledge content cache
+const userKnowledgeCache = new Map<string, string>();
+
+// Function to get summarized/processed knowledge content for a specific user
+async function getProcessedKnowledgeContent(userId: string) {
+  if (userKnowledgeCache.has(userId)) {
+    return userKnowledgeCache.get(userId)!;
+  }
+  
+  const knowledgeBasePath = path.join(process.cwd(), 'data', 'knowledgeAdvancers');
+  try {
+    const content = await fs.readFile(knowledgeBasePath, 'utf8');
+    // Here you could add processing to reduce token usage, for example:
+    // - Summarize key points
+    // - Extract relevant sections
+    // - Remove redundant information
+    userKnowledgeCache.set(userId, content);
+    return content;
+  } catch (error) {
+    console.error('Failed to load knowledge base:', error);
+    return '';
+  }
+}
+
 export async function POST(request: Request) {
   const { id, messages, model } = await request.json();
   const session = await auth();
 
-  if (!session?.user?.email) {
+  if (!session?.user?.email || !session?.user?.id) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
@@ -31,15 +55,8 @@ export async function POST(request: Request) {
     return Response.json({ error: 'User not found' }, { status: 404 });
   }
 
-  // Load knowledge base content
-  const knowledgeBasePath = path.join(process.cwd(), 'data', 'knowledgeAdvancers');
-  let knowledgeContent;
-  
-  try {
-    knowledgeContent = await fs.readFile(knowledgeBasePath, 'utf8');
-  } catch (error) {
-    console.error('Failed to load knowledge base:', error);
-  }
+  // Get the cached knowledge content for this user
+  const knowledgeContent = await getProcessedKnowledgeContent(session.user.id);
 
   // Check if user has exceeded their limit
   if (hasExceededLimit(Number(user.usage), user.membership)) {
@@ -79,7 +96,7 @@ export async function POST(request: Request) {
       },
     },
     onFinish: async ({ responseMessages }) => {
-      if (session.user?.id && session.user?.email) { // Add email check here
+      if (session.user?.id && session.user?.email) {
         try {
           const outputTokens = JSON.stringify(responseMessages).length / 4;
           const cost = calculateCost(inputTokens, outputTokens);
