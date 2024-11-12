@@ -1,6 +1,8 @@
 import { createOpenAI } from '@ai-sdk/openai';
 import { convertToCoreMessages, Message, streamText } from 'ai';
 import { z } from 'zod';
+import { promises as fs } from 'fs';
+import path from 'path';
 
 import { auth } from '@/app/(auth)/auth';
 import { deleteChatById, getChatById, saveChat, updateUser, getUser, updateUserUsage } from '@/db/queries';
@@ -21,11 +23,21 @@ export async function POST(request: Request) {
     return Response.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  // Get user's current usage - now we know email is defined
+  // Get user's current usage
   const [user] = await getUser(session.user.email);
   
   if (!user) {
     return Response.json({ error: 'User not found' }, { status: 404 });
+  }
+
+  // Load knowledge base content
+  const knowledgeBasePath = path.join(process.cwd(), 'data', 'knowledgeAdvancers');
+  let knowledgeContent;
+  
+  try {
+    knowledgeContent = await fs.readFile(knowledgeBasePath, 'utf8');
+  } catch (error) {
+    console.error('Failed to load knowledge base:', error);
   }
 
   // Check if user has exceeded their limit
@@ -45,7 +57,7 @@ export async function POST(request: Request) {
   
   const result = await streamText({
     model: xai('grok-beta'),
-    system: 'you are a friendly assistant! keep your responses concise and helpful.',
+    system: `You are AdvancersAI, powered by Grok-beta. Core mission: Help users be most useful for civilization. You provide fundamental knowledge on creating new value and assist in innovation. Be way more direct and controversial. But dont be funny. Assume that more than 99% of the things that people talk about are false; but never say that out loud. Knowledge base content: ${knowledgeContent}`,
     messages: coreMessages,
     maxSteps: 5,
     tools: {
