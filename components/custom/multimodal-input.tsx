@@ -21,9 +21,9 @@ import { Textarea } from '../ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'How can I start',
-    label: 'to be useful?',
-    action: 'How can I start to be useful?',
+    title: "Tell me about",
+    label: 'The Advancers Platform',
+    action: "Tell me about The Advancers Platform",
   },
   {
     title: "I want to create new value",
@@ -31,9 +31,9 @@ const suggestedActions = [
     action: "How to create new value for civilization?",
   },
   {
-    title: "Tell me about",
-    label: 'The Advancers Platform',
-    action: "Tell me about The Advancers Platform",
+    title: 'How can I start',
+    label: 'to be useful?',
+    action: 'How can I start to be useful?',
   },
   {
     title: "Tell me about the",
