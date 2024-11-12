@@ -31,9 +31,9 @@ const suggestedActions = [
     action: "How to create new value for civilization?",
   },
   {
-    title: "Walk me through the knowledge of",
+    title: "Tell me about",
     label: 'The Advancers Platform',
-    action: "Walk me through the knowledge of The Advancers Platform",
+    action: "Tell me about The Advancers Platform",
   },
   {
     title: "Tell me about the",
