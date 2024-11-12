@@ -5,13 +5,11 @@ import { motion } from 'framer-motion';
 import { PencilIcon } from 'lucide-react';
 import { ReactNode, useState } from 'react';
 import { toast } from 'sonner';
-
-import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
-
 import { Markdown } from './markdown';
 import { PreviewAttachment } from './preview-attachment';
 import { Weather } from './weather';
+import { Button } from '../ui/button';
+import { Textarea } from '../ui/textarea';
 
 export const Message = ({
   role,
