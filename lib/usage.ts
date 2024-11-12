@@ -1,14 +1,23 @@
 const COST_PER_INPUT_TOKEN = 0.000005; // $5 per million tokens
 const COST_PER_OUTPUT_TOKEN = 0.000015; // $15 per million tokens
 
+// Add system prompt token count
+const SYSTEM_PROMPT_TOKENS = 100; // Approximate tokens in base system prompt
+
 export const USAGE_LIMITS = {
   free: 0.10,     // $0.10 per month
   pro: 3.00,      // $3.00 per month
   ultimate: 6.00  // $6.00 per month
 } as const;
 
-export function calculateCost(inputTokens: number, outputTokens: number): number {
-  const cost = (inputTokens * COST_PER_INPUT_TOKEN) + (outputTokens * COST_PER_OUTPUT_TOKEN);
+export function calculateCost(
+  inputTokens: number, 
+  outputTokens: number, 
+  knowledgeTokens: number // New parameter for knowledge base tokens
+): number {
+  const totalInputTokens = inputTokens + SYSTEM_PROMPT_TOKENS + knowledgeTokens;
+  const cost = (totalInputTokens * COST_PER_INPUT_TOKEN) + 
+               (outputTokens * COST_PER_OUTPUT_TOKEN);
   return Number(cost.toFixed(4));
 }
 

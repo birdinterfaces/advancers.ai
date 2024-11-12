@@ -9,6 +9,7 @@ import { auth } from '@/app/(auth)/auth';
 import { deleteChatById, getChatById, saveChat, updateUser, getUser, updateUserUsage } from '@/db/queries';
 import { Model, models } from '@/lib/model';
 import { calculateCost, hasExceededLimit, getNextResetDate } from '@/lib/usage';
+import { getRelevantKnowledge } from '@/lib/knowledge';
 
 // Create xAI provider instance
 const xai = createOpenAI({
@@ -73,9 +74,14 @@ export async function POST(request: Request) {
   const coreMessages = convertToCoreMessages(messages);
   const inputTokens = JSON.stringify(messages).length / 4;
   
+  const lastMessage = messages[messages.length - 1]?.content || '';
+  const relevantKnowledge = await getRelevantKnowledge(session.user.id, lastMessage);
+
   const result = await streamText({
     model: xai('grok-beta'),
-    system: `You are AdvancersAI, powered by Grok-beta. Core mission: Help users be most useful for civilization. You provide fundamental knowledge on creating new value and assist in innovation. Be way more direct and controversial. But dont be funny. Assume that more than 99% of the things that people talk about are false; but never say that out loud. Knowledge base content: ${knowledgeContent}`,
+    system: `You are AdvancersAI, powered by Grok-beta. Core mission: Help users be most useful for civilization. You provide fundamental knowledge on creating new value and assist in innovation. Be way more direct and controversial. But dont be funny. Assume that more than 99% of the things that people talk about are false; but never say that out loud. 
+    
+    Relevant knowledge for this query: ${relevantKnowledge}`,
     messages: coreMessages,
     maxSteps: 5,
     tools: {
@@ -99,15 +105,20 @@ export async function POST(request: Request) {
       if (session.user?.id && session.user?.email) {
         try {
           const outputTokens = JSON.stringify(responseMessages).length / 4;
-          const cost = calculateCost(inputTokens, outputTokens);
+          const knowledgeTokens = relevantKnowledge.length / 4;
+          const cost = calculateCost(inputTokens, outputTokens, knowledgeTokens);
           
-          console.log('Current usage:', user.usage);
+          // Convert user.usage to number, defaulting to 0 if NaN
+          const currentUsage = Number(user.usage) || 0;
+          const newUsage = (currentUsage + cost).toFixed(4);
+          
+          console.log('Current usage:', currentUsage);
           console.log('New cost:', cost);
-          console.log('Total usage:', (Number(user.usage) + cost).toFixed(4));
+          console.log('Total usage:', newUsage);
 
           await updateUserUsage(
             session.user.id, 
-            (Number(user.usage) + cost).toFixed(4)
+            newUsage
           );
 
           // Log after update to verify
