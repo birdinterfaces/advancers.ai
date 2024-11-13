@@ -7,6 +7,7 @@ import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
 import '../../public/css/stars.css';
+import Image from 'next/image';
 
 const Welcome = () => {
   const [isHeroSignInVisible, setIsHeroSignInVisible] = useState(true);
@@ -85,7 +86,14 @@ const Welcome = () => {
               <div className="navbar-holder">
                 <div className="navbar-container">
                   <a href="/welcome" aria-current="page" className="brand w-nav-brand w--current">
-                    <img src="/images/file.png" loading="eager" alt="" className="brand-image" />
+                    <Image
+                      src="/images/file.png"
+                      alt="Brand logo"
+                      width={150}
+                      height={50}
+                      priority={true}
+                      className="brand-image"
+                    />
                   </a>
                   <nav role="navigation" className="nav-menu w-nav-menu">
                     <div className="nav-menu-link-holder">
@@ -104,7 +112,13 @@ const Welcome = () => {
                           <div className="w-commerce-commercecartheader cart-header">
                             <h4 className="w-commerce-commercecartheading">Your Cart</h4>
                             <a href="#" data-node-type="commerce-cart-close-link" role="button" aria-label="Close cart" className="w-commerce-commercecartcloselink w-inline-block">
-                              <img src="/images/X-Icon.svg" loading="eager" alt="" className="x-icon" />
+                              <Image
+                                src="/images/X-Icon.svg"
+                                alt="Close cart"
+                                width={24}
+                                height={24}
+                                className="x-icon"
+                              />
                             </a>
                           </div>
                           <div className="w-commerce-commercecartformwrapper cart-form-wrapper">
@@ -257,7 +271,14 @@ const Welcome = () => {
                 </div>
               </div>
               <div className="diamondholdernnova">
-                <img src="/images/AI-Star-2.png" loading="eager" sizes="(max-width: 479px) 100vw, (max-width: 767px) 250px, (max-width: 1279px) 24vw, 250px" srcSet="/images/AI-Star-2-p-500.png 500w, /images/AI-Star-2.png 600w" alt="" className="image-13" />
+                <Image
+                  src="/images/AI-Star-2.png"
+                  alt="AI Star"
+                  width={250}
+                  height={250}
+                  className="image-13"
+                  priority={true}
+                />
               </div>
               <div className="textholdernova">
                 <div className="textpoint">
@@ -290,7 +311,13 @@ const Welcome = () => {
                         <div id="w-node-_2cf8f3e6-80d6-c6d4-9830-3fbe7772c3ba-f0e18ac1" className="pricingcard center procard" style={{ width: '100%' }}>
                           <div className="content">
                             <div className="herologoholder">
-                              <img src="/images/Unbenannt-6.png" loading="eager" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
+                              <Image
+                                src="/images/Unbenannt-6.png"
+                                alt="Pricing logo"
+                                width={125}
+                                height={125}
+                                className="lgoholer"
+                              />
                             </div>
                             <div className="fade-in-on-scroll">
                               <div className="totalvalue">
@@ -306,13 +333,25 @@ const Welcome = () => {
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <Image
+                                    src="/images/Vector_1Vector.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Much more usage than Free</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <Image
+                                    src="/images/Vector_1Vector.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Early access to new features</div>
                                 </div>
                               </li>
@@ -322,7 +361,13 @@ const Welcome = () => {
                         <div id="w-node-_780484ad-a70b-6b78-eb15-bb60b06b31ec-f0e18ac1" className="pricingcard center" style={{ width: '100%' }}>
                           <div className="content">
                             <div className="herologoholder">
-                              <img src="/images/Unbenannt-6.png" loading="eager" sizes="125px" srcSet="/images/Unbenannt-6-p-500.png 500w, /images/Unbenannt-6-p-800.png 800w, /images/Unbenannt-6-p-1080.png 1080w, /images/Unbenannt-6.png 1500w" alt="" className="lgoholer" />
+                              <Image
+                                src="/images/Unbenannt-6.png"
+                                alt="Pricing logo"
+                                width={125}
+                                height={125}
+                                className="lgoholer"
+                              />
                             </div>
                             <div className="fade-in-on-scroll">
                               <div className="totalvalue">
@@ -333,19 +378,37 @@ const Welcome = () => {
                             <ul role="list" className="list-2 w-list-unstyled">
                               <li>
                                 <div className="list">
-                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <Image
+                                    src="/images/Vector_1Vector.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Optimized for innovation</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <Image
+                                    src="/images/Vector_1Vector.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Runs on Grok from xAI</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img loading="eager" src="/images/Vector_1Vector.png" alt="" className="list-icon" />
+                                  <Image
+                                    src="/images/Vector_1Vector.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Trained with our data</div>
                                 </div>
                               </li>
@@ -376,25 +439,49 @@ const Welcome = () => {
                             <ul role="list" className="list-2 w-list-unstyled">
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
+                                  <Image
+                                    src="/images/check-p-500.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Unlimited access to courses</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
+                                  <Image
+                                    src="/images/check-p-500.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Receive all course updates</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
+                                  <Image
+                                    src="/images/check-p-500.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Access the community forums</div>
                                 </div>
                               </li>
                               <li>
                                 <div className="list">
-                                  <img sizes="(max-width: 767px) 18px, (max-width: 991px) 2vw, (max-width: 1279px) 18px, 1vw" srcSet="/images/check-p-500.png 500w, /images/check.png 512w" alt="" src="/images/check.png" loading="eager" className="list-icon" />
+                                  <Image
+                                    src="/images/check-p-500.png"
+                                    alt="Check icon"
+                                    width={18}
+                                    height={18}
+                                    className="list-icon"
+                                  />
                                   <div className="list-text">Save $250k+ in software deals</div>
                                 </div>
                               </li>
