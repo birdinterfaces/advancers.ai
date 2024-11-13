@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
+import { PreloadImages } from '@/components/PreloadImages';
+import { criticalImages } from '@/lib/images';
 
 const Imprint = () => {
   const [isHeroSignInVisible, setIsHeroSignInVisible] = useState(false);
@@ -41,6 +43,7 @@ const Imprint = () => {
 
   return (
     <>
+      <PreloadImages />
       <Head>
         <title>Imprint | The Advancers Platform</title>
         <meta name="description" content="Learn how to be useful. Fundamental knowledge on creating new value and improving yourself." />
@@ -61,10 +64,8 @@ const Imprint = () => {
               <div className="navbar-container">
                 <a href="/welcome" className="brand w-nav-brand">
                   <Image
-                    src="/images/file.png"
+                    {...criticalImages.logo}
                     alt="Brand logo"
-                    width={150}
-                    height={50}
                     priority={true}
                     className="brand-image"
                   />

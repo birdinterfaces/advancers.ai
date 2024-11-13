@@ -8,6 +8,8 @@ import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
 import '../../public/css/stars.css';
+import { PreloadImages } from '@/components/PreloadImages';
+import { criticalImages } from '@/lib/images';
 
 const Welcome = () => {
   const [isHeroSignInVisible, setIsHeroSignInVisible] = useState(true);
@@ -66,6 +68,7 @@ const Welcome = () => {
 
   return (
     <>
+      <PreloadImages />
       <Head>
         <title>AdvancersAI</title>
         <meta name="description" content="AI that helps you be most useful for civilization. Trained on fundamental knowledge from The Advancers Platform." />
@@ -87,10 +90,8 @@ const Welcome = () => {
                 <div className="navbar-container">
                   <a href="/welcome" aria-current="page" className="brand w-nav-brand w--current">
                     <Image
-                      src="/images/file.png"
+                      {...criticalImages.logo}
                       alt="Brand logo"
-                      width={150}
-                      height={50}
                       priority={true}
                       className="brand-image"
                     />
@@ -272,10 +273,8 @@ const Welcome = () => {
               </div>
               <div className="diamondholdernnova">
                 <Image
-                  src="/images/AI-Star-2.png"
+                  {...criticalImages.aiStar}
                   alt="AI Star"
-                  width={250}
-                  height={250}
                   className="image-13"
                   priority={true}
                 />
@@ -312,10 +311,8 @@ const Welcome = () => {
                           <div className="content">
                             <div className="herologoholder">
                               <Image
-                                src="/images/Unbenannt-6.png"
+                                {...criticalImages.pricingLogo}
                                 alt="Pricing logo"
-                                width={125}
-                                height={125}
                                 className="lgoholer"
                               />
                             </div>
@@ -362,10 +359,8 @@ const Welcome = () => {
                           <div className="content">
                             <div className="herologoholder">
                               <Image
-                                src="/images/Unbenannt-6.png"
+                                {...criticalImages.pricingLogo}
                                 alt="Pricing logo"
-                                width={125}
-                                height={125}
                                 className="lgoholer"
                               />
                             </div>
