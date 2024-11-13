@@ -1,4 +1,5 @@
 import Image from 'next/image';
+
 import { criticalImages } from '@/lib/images';
 
 export function PreloadImages() {
