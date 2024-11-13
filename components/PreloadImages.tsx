@@ -1,19 +1,18 @@
-import Head from 'next/head';
-
+import Image from 'next/image';
 import { criticalImages } from '@/lib/images';
 
 export function PreloadImages() {
   return (
-    <Head>
+    <div style={{ display: 'none' }}>
       {Object.values(criticalImages).map((image) => (
-        <link
+        <Image
           key={image.src}
-          rel="preload"
-          as="image"
-          href={image.src}
-          imageSrcSet={`${image.src} 1x, ${image.src} 2x`}
+          {...image}
+          priority={true}
+          alt=""
+          loading="eager"
         />
       ))}
-    </Head>
+    </div>
   );
 } 
