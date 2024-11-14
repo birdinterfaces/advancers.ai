@@ -102,6 +102,10 @@ export function MultimodalInput({
 
     setAttachments([]);
 
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
+
     if (width && width > 768) {
       textareaRef.current?.focus();
     }
