@@ -230,7 +230,7 @@ const Welcome = () => {
                       textAlign: 'center',
                       maxWidth: '800px',
                       margin: '0 auto'
-                    }}>AI that helps you be most useful ‍for civilization</h1>
+                    }}>AI that helps you build new amazing things</h1>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
