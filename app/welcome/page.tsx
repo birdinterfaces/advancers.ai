@@ -73,11 +73,11 @@ const Welcome = () => {
       <PreloadImages />
       <Head>
         <title>AdvancersAI</title>
-        <meta name="description" content="AI that helps you be most useful for civilization. Trained on fundamental knowledge from The Advancers Platform." />
+        <meta name="description" content="AI that helps you build new amazing things. Trained on fundamental knowledge from The Advancers Platform." />
         <meta property="og:title" content="AdvancersAI" />
-        <meta property="og:description" content="AI that helps you be most useful for civilization. Trained on fundamental knowledge from The Advancers Platform." />
+        <meta property="og:description" content="AI that helps you build new amazing things. Trained on fundamental knowledge from The Advancers Platform." />
         <meta property="twitter:title" content="AdvancersAI" />
-        <meta property="twitter:description" content="AI that helps you be most useful for civilization. Trained on fundamental knowledge from The Advancers Platform." />
+        <meta property="twitter:description" content="AI that helps you build new amazing things. Trained on fundamental knowledge from The Advancers Platform." />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />

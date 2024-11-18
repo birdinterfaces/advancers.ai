@@ -17,7 +17,7 @@ interface ExtendedUser extends User {
 export const metadata: Metadata = {
   metadataBase: new URL('https://advancers.ai'),
   title: 'AdvancersAI',
-  description: 'AI that helps you be most useful for civilization',
+  description: 'AI that helps you build new amazing things',
 };
 
 export const viewport = {
