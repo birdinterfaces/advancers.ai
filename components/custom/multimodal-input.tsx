@@ -21,24 +21,14 @@ import { Textarea } from '../ui/textarea';
 
 const suggestedActions = [
   {
-    title: "Tell me about",
-    label: 'The Advancers Platform',
-    action: "Tell me about The Advancers Platform",
+    title: 'How can I start to be useful',
+    label: 'and create new value?',
+    action: 'How can I start to be useful and create new value for civilization?',
   },
   {
-    title: "I want to create new value",
-    label: 'for civilization',
-    action: "How to create new value for civilization?",
-  },
-  {
-    title: 'How can I start',
-    label: 'to be useful?',
-    action: 'How can I start to be useful?',
-  },
-  {
-    title: "Tell me about the",
-    label: 'Misaligend Structures',
-    action: "Tell me about the Misaligend Structures in our civilization",
+    title: "What is currently going wrong",
+    label: 'in our civilization?',
+    action: "What is currently going wrong in our civilization?",
   },
 ];
 
