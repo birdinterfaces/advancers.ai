@@ -73,11 +73,11 @@ const Welcome = () => {
       <PreloadImages />
       <Head>
         <title>AdvancersAI</title>
-        <meta name="description" content="AI that helps you build new amazing things. Trained on fundamental knowledge from The Advancers Platform." />
+        <meta name="description" content="AI that accelerates the unlock of human potential" />
         <meta property="og:title" content="AdvancersAI" />
-        <meta property="og:description" content="AI that helps you build new amazing things. Trained on fundamental knowledge from The Advancers Platform." />
+        <meta property="og:description" content="AI that accelerates the unlock of human potential" />
         <meta property="twitter:title" content="AdvancersAI" />
-        <meta property="twitter:description" content="AI that helps you build new amazing things. Trained on fundamental knowledge from The Advancers Platform." />
+        <meta property="twitter:description" content="AI that accelerates the unlock of human potential" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -230,11 +230,11 @@ const Welcome = () => {
                       textAlign: 'center',
                       maxWidth: '800px',
                       margin: '0 auto'
-                    }}>AI that helps you build new amazing things</h1>
+                    }}>AI that accelerates the unlock of human potential</h1>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
-                  <p className="paragraph-4">Prompt engineered with fundamental knowledge from <a href="http://advancers.org" target="_blank" className="link-24">The Advancers Platform</a></p>
+                  <p className="paragraph-4"></p>
                 </div>
                 <div className="animate-on-load-04" style={{ display: 'flex', justifyContent: 'center' }}>
                   <a href="/login" className="button w-button" style={{ 
@@ -265,11 +265,11 @@ const Welcome = () => {
             <div className="holdingnova">
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Innovator</div>
-                  <div className="text-block-35">Optimized for problem-solving and innovation</div>
+                  <div className="text-block-34">Output focused</div>
+                  <div className="text-block-35">Tries to make you most productive for civilization</div>
                 </div>
                 <div className="textpoint">
-                  <div className="text-block-34">Truth Seeking</div>
+                  <div className="text-block-34">Truth-seeking</div>
                   <div className="text-block-35">Aspires to understand the nature of things</div>
                 </div>
               </div>
@@ -382,7 +382,7 @@ const Welcome = () => {
                                     height={18}
                                     className="list-icon"
                                   />
-                                  <div className="list-text">Optimized for innovation</div>
+                                  <div className="list-text">Full functionality</div>
                                 </div>
                               </li>
                               <li>
@@ -406,7 +406,7 @@ const Welcome = () => {
                                     height={18}
                                     className="list-icon"
                                   />
-                                  <div className="list-text">Trained with our data</div>
+                                  <div className="list-text">Prompt engineered</div>
                                 </div>
                               </li>
                             </ul>

@@ -169,11 +169,15 @@ export function SidebarUserNavContent({ user }: { user: ExtendedUser }) {
             <>
               <li className="flex items-center mb-2">
                 <svg className="w-5 h-5 mr-3 text-black dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
-                Optimized with our data
+                Full functionality
               </li>
               <li className="flex items-center mb-2">
                 <svg className="w-5 h-5 mr-3 text-black dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 Runs on Grok from xAI
+              </li>
+              <li className="flex items-center mb-2">
+                <svg className="w-5 h-5 mr-3 text-black dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+                Prompt engineered
               </li>
             </>
           ) : selectedPlan === 'pro' ? (
