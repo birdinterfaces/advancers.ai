@@ -224,8 +224,8 @@ export function MultimodalInput({
         placeholder="Send a message..."
         value={input}
         onChange={handleInput}
-        className="min-h-[24px] overflow-hidden resize-none rounded-xl p-4 focus-visible:ring-0 focus-visible:ring-offset-0 text-base bg-muted border-none"
-        rows={3}
+        className="min-h-[24px] overflow-hidden resize-none rounded-xl p-4 pb-12 focus-visible:ring-0 focus-visible:ring-offset-0 text-base bg-muted border-none"
+        rows={2}
         onKeyDown={(event) => {
           if (event.key === 'Enter' && !event.shiftKey) {
             event.preventDefault();
