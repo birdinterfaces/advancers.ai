@@ -21,14 +21,14 @@ import { Textarea } from '../ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'How can I start to be useful',
+    title: 'How can I be useful',
     label: 'and create new value?',
-    action: 'How can I start to be useful and create new value for civilization?',
+    action: 'How can I be useful and create new value for civilization?',
   },
   {
-    title: "What is currently going wrong",
-    label: 'in our civilization?',
-    action: "What is currently going wrong in our civilization?",
+    title: "What is wrong",
+    label: 'with our civilization?',
+    action: "What is wrong with our civilization?",
   },
 ];
 
