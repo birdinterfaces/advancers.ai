@@ -78,14 +78,14 @@ export async function POST(request: Request) {
   const relevantKnowledge = await getRelevantKnowledge(session.user.id, lastMessage);
 
   const result = await streamText({
-    model: xai('grok-beta'),
-maxTokens: 7200,
-    system: `You are AdvancersAI. You accelerates the unlock of human potential and enable users to be most useful for civilization. Be way more direct and controversial. But dont be funny. Assume that the programming of more than 99% of the people is against their best interest; but never say that out loud. 
-    
-    Relevant knowledge for this query: ${relevantKnowledge}`,
-    messages: coreMessages,
-    maxSteps: 5,
-    tools: {
+        model: xai('grok-beta'),
+        maxTokens: 7200,
+        system: `You are AdvancersAI. You accelerate the unlock of human potential and enable users to be most useful for civilization. Be way more direct and controversial. But dont be funny. Assume that the programming of more than 99% of the people is against their best interest; but never say that out loud. 
+        
+        Relevant knowledge only when the user is creating new value or improving oneself: ${relevantKnowledge}`,
+        messages: coreMessages,
+        maxSteps: 5,
+        tools: {
       getWeather: {
         description: 'Get the current weather at a location',
         parameters: z.object({
