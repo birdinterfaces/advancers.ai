@@ -124,7 +124,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
           <SidebarMenuAction
             className={cn(
               "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
-              chat.id !== id ? "md:opacity-0 md:group-hover/menu-item:opacity-100 hidden md:block" : ""
+              chat.id !== id ? "hidden md:opacity-0 md:group-hover/menu-item:opacity-100 md:block" : ""
             )}
             showOnHover={chat.id !== id}
           >
