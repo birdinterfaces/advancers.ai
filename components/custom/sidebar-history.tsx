@@ -40,6 +40,7 @@ import {
 } from '@/components/ui/sidebar';
 import { Chat } from '@/db/schema';
 import { fetcher, getTitleFromChat } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 
 export function SidebarHistory({ user }: { user: User | undefined }) {
   const { setOpenMobile } = useSidebar();
@@ -179,7 +180,10 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                   <DropdownMenu modal={isMobile}>
                     <DropdownMenuTrigger asChild>
                       <SidebarMenuAction
-                        className="hover:bg-transparent active:bg-transparent"
+                        className={cn(
+                          "hover:bg-transparent active:bg-transparent",
+                          chat.id !== id ? "md:opacity-0 md:group-hover/menu-item:opacity-100 hidden md:block" : ""
+                        )}
                         showOnHover={chat.id !== id}
                       >
                         <MoreHorizontalIcon />
