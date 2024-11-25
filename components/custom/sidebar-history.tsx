@@ -111,7 +111,8 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
         isActive={chat.id === id}
         className={cn(
           "min-h-[38px] py-0",
-          "md:hover:bg-sidebar-accent hover:bg-transparent"
+          "@media (hover: hover) and (pointer: fine) {hover:bg-sidebar-accent}",
+          "@media (hover: none) {active:bg-transparent hover:bg-transparent}"
         )}
       >
         <Link
