@@ -109,7 +109,10 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
       <SidebarMenuButton 
         asChild 
         isActive={chat.id === id}
-        className="min-h-[38px] py-0"
+        className={cn(
+          "min-h-[38px] py-0",
+          "md:hover:bg-sidebar-accent hover:bg-transparent"
+        )}
       >
         <Link
           href={`/chat/${chat.id}`}
