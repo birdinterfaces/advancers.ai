@@ -26,9 +26,9 @@ const suggestedActions = [
     action: 'How can I be useful and create new value for civilization?',
   },
   {
-    title: "What is wrong",
-    label: 'with our civilization?',
-    action: "What is wrong with our civilization?",
+    title: "What are the areas where",
+    label: 'I can innovate the most right now?',
+    action: "What are the areas where I can innovate the most right now?",
   },
 ];
 
