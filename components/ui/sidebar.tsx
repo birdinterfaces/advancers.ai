@@ -526,9 +526,9 @@ const sidebarMenuButtonVariants = cva(
   {
     variants: {
       variant: {
-        default: '@media (hover: hover) and (pointer: fine) {hover:bg-sidebar-accent hover:text-sidebar-accent-foreground} @media (hover: none) {-webkit-tap-highlight-color: transparent}',
+        default: '[&:hover]:md:bg-sidebar-accent [&:hover]:md:text-sidebar-accent-foreground @media (hover: none) {-webkit-tap-highlight-color: transparent}',
         outline:
-          'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] @media (hover: hover) and (pointer: fine) {hover:bg-sidebar-accent hover:text-sidebar-accent-foreground hover:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))]} @media (hover: none) {-webkit-tap-highlight-color: transparent}',
+          'bg-background shadow-[0_0_0_1px_hsl(var(--sidebar-border))] [&:hover]:md:bg-sidebar-accent [&:hover]:md:text-sidebar-accent-foreground [&:hover]:md:shadow-[0_0_0_1px_hsl(var(--sidebar-accent))] @media (hover: none) {-webkit-tap-highlight-color: transparent}',
       },
       size: {
         default: 'h-8 text-sm',
