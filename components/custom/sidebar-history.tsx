@@ -172,12 +172,12 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                   <SidebarMenuButton 
                     asChild 
                     isActive={chat.id === id}
-                    className="min-h-[38px]"
+                    className="min-h-[38px] py-0"
                   >
                     <Link
                       href={`/chat/${chat.id}`}
                       onClick={() => setOpenMobile(false)}
-                      className="py-2"
+                      className="py-2 w-full"
                     >
                       <span>{getTitleFromChat(chat)}</span>
                     </Link>
