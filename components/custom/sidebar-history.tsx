@@ -179,7 +179,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                   <DropdownMenu modal={isMobile}>
                     <DropdownMenuTrigger asChild>
                       <SidebarMenuAction
-                        className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-transparent active:bg-transparent"
+                        className="hover:bg-transparent active:bg-transparent"
                         showOnHover={chat.id !== id}
                       >
                         <MoreHorizontalIcon />
