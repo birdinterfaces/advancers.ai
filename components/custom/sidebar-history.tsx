@@ -39,7 +39,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Chat } from '@/db/schema';
-import { fetcher, getTitleFromChat } from '@/lib/utils';
+import { fetcher, getTitleFromChat, groupChatsByDate } from '@/lib/utils';
 import { cn } from '@/lib/utils';
 
 export function SidebarHistory({ user }: { user: User | undefined }) {
@@ -101,10 +101,56 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  const groupedHistory = history ? groupChatsByDate(history) : {};
+
+  // Render function for chat items
+  const renderChatItem = (chat: Chat) => (
+    <SidebarMenuItem key={chat.id}>
+      <SidebarMenuButton 
+        asChild 
+        isActive={chat.id === id}
+        className="min-h-[38px] py-0"
+      >
+        <Link
+          href={`/chat/${chat.id}`}
+          onClick={() => setOpenMobile(false)}
+          className="py-2 w-full"
+        >
+          <span>{getTitleFromChat(chat)}</span>
+        </Link>
+      </SidebarMenuButton>
+      <DropdownMenu modal={isMobile}>
+        <DropdownMenuTrigger asChild>
+          <SidebarMenuAction
+            className={cn(
+              "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
+              chat.id !== id ? "md:opacity-0 md:group-hover/menu-item:opacity-100 hidden md:block" : ""
+            )}
+            showOnHover={chat.id !== id}
+          >
+            <MoreHorizontalIcon />
+            <span className="sr-only">More</span>
+          </SidebarMenuAction>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent side="bottom" align="end">
+          <DropdownMenuItem
+            className="text-destructive focus:bg-destructive/15 focus:text-destructive"
+            onSelect={() => {
+              setDeleteId(chat.id);
+              setShowDeleteDialog(true);
+            }}
+          >
+            <TrashIcon />
+            <span>Delete</span>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </SidebarMenuItem>
+  );
+
   if (!user) {
     return (
       <SidebarGroup>
-        <SidebarGroupLabel>History</SidebarGroupLabel>
         <SidebarGroupContent>
           <div className="text-zinc-500 h-dvh w-full flex flex-row justify-center items-center text-sm gap-2">
             <InfoIcon />
@@ -118,7 +164,6 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
   if (isLoading) {
     return (
       <SidebarGroup>
-        <SidebarGroupLabel>History</SidebarGroupLabel>
         <SidebarGroupContent>
           <div className="flex flex-col">
             {[44, 32, 28, 64, 52].map((item) => (
@@ -145,7 +190,6 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
   if (history?.length === 0) {
     return (
       <SidebarGroup>
-        <SidebarGroupLabel>History</SidebarGroupLabel>
         <SidebarGroupContent>
           <SidebarMenu>
             <SidebarMenuItem>
@@ -162,54 +206,19 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
   return (
     <>
-      <SidebarGroup>
-        <SidebarGroupLabel>History</SidebarGroupLabel>
+      <SidebarGroup className="mt-3">
         <SidebarGroupContent>
           <SidebarMenu>
-            {history &&
-              history.map((chat) => (
-                <SidebarMenuItem key={chat.id}>
-                  <SidebarMenuButton 
-                    asChild 
-                    isActive={chat.id === id}
-                    className="min-h-[38px] py-0"
-                  >
-                    <Link
-                      href={`/chat/${chat.id}`}
-                      onClick={() => setOpenMobile(false)}
-                      className="py-2 w-full"
-                    >
-                      <span>{getTitleFromChat(chat)}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                  <DropdownMenu modal={isMobile}>
-                    <DropdownMenuTrigger asChild>
-                      <SidebarMenuAction
-                        className={cn(
-                          "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
-                          chat.id !== id ? "md:opacity-0 md:group-hover/menu-item:opacity-100 hidden md:block" : ""
-                        )}
-                        showOnHover={chat.id !== id}
-                      >
-                        <MoreHorizontalIcon />
-                        <span className="sr-only">More</span>
-                      </SidebarMenuAction>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent side="bottom" align="end">
-                      <DropdownMenuItem
-                        className="text-destructive focus:bg-destructive/15 focus:text-destructive"
-                        onSelect={() => {
-                          setDeleteId(chat.id);
-                          setShowDeleteDialog(true);
-                        }}
-                      >
-                        <TrashIcon />
-                        <span>Delete</span>
-                      </DropdownMenuItem>
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </SidebarMenuItem>
-              ))}
+            {Object.entries(groupedHistory).map(([period, chats]) => 
+              chats.length > 0 && (
+                <div key={period} className="mb-4">
+                  <div className="px-2 mb-2 text-xs font-medium text-muted-foreground">
+                    {period}
+                  </div>
+                  {chats.map(renderChatItem)}
+                </div>
+              )
+            )}
           </SidebarMenu>
         </SidebarGroupContent>
       </SidebarGroup>
