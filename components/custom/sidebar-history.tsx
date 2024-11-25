@@ -169,10 +169,15 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
             {history &&
               history.map((chat) => (
                 <SidebarMenuItem key={chat.id}>
-                  <SidebarMenuButton asChild isActive={chat.id === id}>
+                  <SidebarMenuButton 
+                    asChild 
+                    isActive={chat.id === id}
+                    className="min-h-[38px]"
+                  >
                     <Link
                       href={`/chat/${chat.id}`}
                       onClick={() => setOpenMobile(false)}
+                      className="py-2"
                     >
                       <span>{getTitleFromChat(chat)}</span>
                     </Link>
@@ -181,7 +186,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
                     <DropdownMenuTrigger asChild>
                       <SidebarMenuAction
                         className={cn(
-                          "hover:bg-transparent active:bg-transparent",
+                          "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
                           chat.id !== id ? "md:opacity-0 md:group-hover/menu-item:opacity-100 hidden md:block" : ""
                         )}
                         showOnHover={chat.id !== id}
