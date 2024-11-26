@@ -130,11 +130,12 @@ export function Chat({
         {messages.map((message) => (
           <PreviewMessage
             key={message.id}
+            id={message.id}
             role={message.role}
             content={message.content}
             attachments={message.experimental_attachments}
             toolInvocations={message.toolInvocations}
-            onEdit={async (newContent) => handleMessageEdit(message.id, newContent)}
+            onEdit={handleMessageEdit}
           />
         ))}
 

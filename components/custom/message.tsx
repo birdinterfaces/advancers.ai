@@ -20,23 +20,25 @@ export const Message = ({
   toolInvocations,
   attachments,
   onEdit,
+  id,
 }: {
   role: string;
   content: string | ReactNode;
   toolInvocations: Array<ToolInvocation> | undefined;
   attachments?: Array<Attachment>;
-  onEdit?: (newContent: string) => Promise<boolean>;
+  onEdit?: (messageId: string, newContent: string) => Promise<boolean>;
+  id?: string;
 }) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(content as string);
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = async () => {
-    if (!onEdit) return;
+    if (!onEdit || !id) return;
     
     setIsLoading(true);
     try {
-      const success = await onEdit(editedContent);
+      const success = await onEdit(id, editedContent);
       if (success) {
         setIsEditing(false);
         setIsLoading(false);
@@ -55,11 +57,11 @@ export const Message = ({
       data-role={role}
     >
       <div className={cn(
-        "flex gap-4 group-data-[role=user]/message:px-5 w-full overflow-hidden",
+        "flex gap-4 w-full relative",
         isEditing 
           ? "group-data-[role=user]/message:w-full group-data-[role=user]/message:max-w-3xl" 
           : "group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl",
-        "group-data-[role=user]/message:py-3.5 group-data-[role=user]/message:bg-muted rounded-xl relative"
+        "group-data-[role=user]/message:py-3.5 group-data-[role=user]/message:px-5 group-data-[role=user]/message:bg-muted rounded-xl"
       )}>
         {role === 'assistant' && (
           <img
@@ -75,7 +77,7 @@ export const Message = ({
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -left-12 opacity-0 group-hover/message:opacity-100 transition-opacity"
+            className="absolute -left-12 top-1/2 -translate-y-1/2 opacity-0 group-hover/message:opacity-100 transition-opacity"
             onClick={() => setIsEditing(true)}
           >
             <PencilIcon className="h-4 w-4" />
