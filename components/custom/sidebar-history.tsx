@@ -118,7 +118,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
     <SidebarMenuItem key={chat.id} className="group/menu-item">
       <div className={cn(
         "flex w-full rounded-md",
-        "group-hover/menu-item:bg-sidebar-accent",
+        "md:group-hover/menu-item:bg-sidebar-accent",
         openMenuId === chat.id && "bg-sidebar-accent"
       )}>
         <SidebarMenuButton 
@@ -126,7 +126,8 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
           isActive={chat.id === id}
           className={cn(
             "min-h-[38px] py-0 flex-grow",
-            "@media (hover: none) {active:bg-transparent hover:bg-transparent}"
+            "@media (hover: none) {active:bg-transparent hover:bg-transparent}",
+            "@media (hover: hover) {hover:bg-sidebar-accent}"
           )}
         >
           <Link
