@@ -84,6 +84,10 @@ export function Chat({
           toast.error(errorMessage);
         }
       },
+      api: '/api/chat',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
   const [messagesContainerRef, messagesEndRef] =
