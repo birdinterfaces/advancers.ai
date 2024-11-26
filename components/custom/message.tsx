@@ -55,7 +55,7 @@ export const Message = ({
       data-role={role}
     >
       <div className={cn(
-        "flex gap-4 group-data-[role=user]/message:px-5 w-full",
+        "flex gap-4 group-data-[role=user]/message:px-5 w-full overflow-hidden",
         isEditing 
           ? "group-data-[role=user]/message:w-full group-data-[role=user]/message:max-w-3xl" 
           : "group-data-[role=user]/message:w-fit group-data-[role=user]/message:ml-auto group-data-[role=user]/message:max-w-2xl",
@@ -82,9 +82,9 @@ export const Message = ({
           </Button>
         )}
 
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-2 w-full min-w-0">
           {content && (
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-4 overflow-hidden">
               {isEditing ? (
                 <div className="flex flex-col gap-2">
                   <Textarea
@@ -110,7 +110,9 @@ export const Message = ({
                   </div>
                 </div>
               ) : (
-                <Markdown>{content as string}</Markdown>
+                <div className="overflow-x-auto">
+                  <Markdown>{content as string}</Markdown>
+                </div>
               )}
             </div>
           )}
