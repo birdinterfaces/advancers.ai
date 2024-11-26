@@ -2,6 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 
 import { StreamingTextResponse, Message } from 'ai';
+import { OpenAIStream } from 'ai';
 
 import { auth } from '@/app/(auth)/auth';
 import { deleteChatById, getChatById, saveChat, getUser, updateUserUsage } from '@/db/queries';
@@ -98,12 +99,10 @@ export async function POST(request: Request) {
       throw new Error(JSON.stringify(error));
     }
 
-    const stream = response.body;
-    if (!stream) {
-      throw new Error('No response stream available');
-    }
+    // Create a proper stream using OpenAIStream
+    const stream = OpenAIStream(response);
 
-    // Update usage and save chat after successful response
+    // Update usage and save chat
     if (session.user?.id && session.user?.email) {
       try {
         const outputTokens = JSON.stringify(messages).length / 4;
@@ -118,11 +117,6 @@ export async function POST(request: Request) {
         console.log('Total usage:', newUsage);
 
         await updateUserUsage(session.user.id, newUsage);
-
-        // Log after update to verify
-        const [updatedUser] = await getUser(session.user.email);
-        console.log('Updated usage in DB:', updatedUser?.usage);
-
         await saveChat({
           id,
           messages: formattedMessages,
@@ -133,6 +127,7 @@ export async function POST(request: Request) {
       }
     }
 
+    // Return the properly formatted streaming response
     return new StreamingTextResponse(stream);
   } catch (error) {
     console.error('Chat API Error:', error);
