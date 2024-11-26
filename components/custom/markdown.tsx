@@ -22,10 +22,17 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
       if (!inline) {
         return (
           <div className="relative group w-full">
-            <CopyButton content={String(children).replace(/\n$/, "")} />
+            <div className="flex items-center justify-between px-4 py-2 bg-muted/50 dark:bg-muted border-t border-x rounded-t-lg">
+              {language && (
+                <span className="text-sm text-muted-foreground">
+                  {language}
+                </span>
+              )}
+              <CopyButton content={String(children).replace(/\n$/, "")} />
+            </div>
             <div className="max-w-[calc(100vw-4rem)] md:max-w-full">
               <pre className={cn(
-                "mb-4 mt-6 rounded-lg border bg-muted px-4 py-4",
+                "mb-4 rounded-b-lg border-b border-x bg-muted px-4 py-4",
                 "dark:bg-muted/50",
                 "overflow-x-auto",
                 "[&_*]:!text-[14px]",
@@ -111,7 +118,7 @@ const CopyButton = ({ content }: { content: string }) => {
 
   return (
     <button
-      className="absolute right-3 top-3 p-2 rounded-md bg-background transition-colors hover:bg-muted"
+      className="p-2 rounded-md hover:bg-background/100 transition-colors"
       onClick={handleCopy}
     >
       {copied ? (
