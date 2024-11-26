@@ -3,30 +3,27 @@ import { StreamingTextResponse, Message as VercelChatMessage } from 'ai';
 export async function POST(req: Request) {
   const { messages, attachments } = await req.json();
   
-  // Process any image attachments
-  const imageAttachments = attachments?.filter(
-    (att: any) => att.contentType?.startsWith('image/')
-  ) || [];
-  
-  // Format messages for Grok
+  // Format messages for Grok - keeping only text content
   const formattedMessages = messages.map((message: VercelChatMessage) => {
-    if (message.role === 'user' && imageAttachments.length > 0) {
+    if (message.role === 'user' && attachments?.length) {
+      // Include image URLs in the text content
+      const imageUrls = attachments
+        .filter((att: any) => att.contentType?.startsWith('image/'))
+        .map((att: any) => att.url)
+        .join('\n');
+      
       return {
-        role: 'user',
-        content: [
-          { type: 'text', text: message.content },
-          ...imageAttachments.map((att: any) => ({
-            type: 'image_url',
-            image_url: { url: att.url }
-          }))
-        ]
+        role: message.role,
+        content: `${message.content}\n[Image URLs: ${imageUrls}]`
       };
     }
-    return message;
+    return {
+      role: message.role,
+      content: message.content
+    };
   });
 
-  // Make API request to Grok
-  const response = await fetch('https://api.grok.x.ai/v1/chat/completions', {
+  const response = await fetch('https://api.x.ai/v1/chat/completions', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,16 +32,17 @@ export async function POST(req: Request) {
     body: JSON.stringify({
       model: 'grok-beta',
       messages: formattedMessages,
+      max_tokens: 72000,
+      temperature: 0,
       stream: true,
     }),
   });
 
-  // Handle error if response isn't ok
   if (!response.ok) {
-    throw new Error(`Grok API error: ${response.statusText}`);
+    const error = await response.json();
+    throw new Error(`Grok API error: ${JSON.stringify(error)}`);
   }
 
-  // Ensure stream exists before creating StreamingTextResponse
   const stream = response.body;
   if (!stream) {
     throw new Error('No response stream available');
