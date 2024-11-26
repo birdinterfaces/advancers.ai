@@ -1,24 +1,51 @@
 import Link from "next/link";
-import React, { memo } from "react";
+import React, { memo, useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
+import { cn } from "@/lib/utils";
 
 const NonMemoizedMarkdown = ({ children }: { children: string }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(String(children).replace(/\n$/, ''));
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   const components = {
     code: ({ node, inline, className, children, ...props }: any) => {
       const match = /language-(\w+)/.exec(className || "");
-      return !inline && match ? (
-        <pre
-          {...props}
-          className={`${className} text-sm w-[80dvw] md:max-w-[500px] overflow-x-scroll bg-zinc-100 p-3 rounded-lg mt-2 dark:bg-zinc-800`}
-        >
-          <code className={match[1]}>{children}</code>
-        </pre>
-      ) : (
-        <code
-          className={`${className} text-sm bg-zinc-100 dark:bg-zinc-800 py-0.5 px-1 rounded-md`}
-          {...props}
-        >
+      const language = match ? match[1] : "";
+      
+      if (!inline) {
+        return (
+          <div className="relative group w-full">
+            <CopyButton content={String(children).replace(/\n$/, "")} />
+            <div className="max-w-[calc(100vw-4rem)] md:max-w-full">
+              <pre className={cn(
+                "mb-4 mt-6 rounded-lg border bg-muted px-4 py-4",
+                "dark:bg-muted/50",
+                "overflow-x-auto",
+                "[&_*]:!text-[14px]",
+                "[&_*]:!leading-5",
+                className
+              )}>
+                <code className={cn(
+                  "!text-[14px]",
+                  "!leading-5",
+                  className
+                )} {...props}>
+                  {children}
+                </code>
+              </pre>
+            </div>
+          </div>
+        );
+      }
+      
+      return (
+        <code className={cn("rounded-md border px-1.5 py-0.5", className)} {...props}>
           {children}
         </code>
       );
@@ -69,6 +96,50 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
     <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
       {children}
     </ReactMarkdown>
+  );
+};
+
+const CopyButton = ({ content }: { content: string }) => {
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = async () => {
+    await navigator.clipboard.writeText(content);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
+  return (
+    <button
+      className="absolute right-3 top-3 p-2 rounded-md bg-background transition-colors hover:bg-muted"
+      onClick={handleCopy}
+    >
+      {copied ? (
+        <svg 
+          viewBox="0 0 24 24"
+          className="h-4 w-4 text-green-500"
+          fill="none" 
+          stroke="currentColor" 
+          strokeWidth="2"
+        >
+          <path 
+            strokeLinecap="round" 
+            strokeLinejoin="round" 
+            d="M5 13l4 4L19 7"
+          />
+        </svg>
+      ) : (
+        <svg
+          viewBox="0 0 24 24"
+          className="h-4 w-4 text-muted-foreground"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
+          <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+        </svg>
+      )}
+    </button>
   );
 };
 

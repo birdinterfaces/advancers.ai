@@ -84,7 +84,7 @@ export const Message = ({
 
         <div className="flex flex-col gap-2 w-full min-w-0">
           {content && (
-            <div className="flex flex-col gap-4 overflow-hidden">
+            <div className="flex flex-col gap-4 w-full min-w-0">
               {isEditing ? (
                 <div className="flex flex-col gap-2">
                   <Textarea
@@ -110,7 +110,7 @@ export const Message = ({
                   </div>
                 </div>
               ) : (
-                <div className="overflow-x-auto">
+                <div className="w-full min-w-0">
                   <Markdown>{content as string}</Markdown>
                 </div>
               )}
