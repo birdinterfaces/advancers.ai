@@ -1,5 +1,4 @@
 import { StreamingTextResponse, Message as VercelChatMessage } from 'ai';
-import { AIMessage, HumanMessage, SystemMessage } from '@langchain/core/messages';
 
 export async function POST(req: Request) {
   const { messages, attachments } = await req.json();
@@ -9,23 +8,47 @@ export async function POST(req: Request) {
     (att: any) => att.contentType?.startsWith('image/')
   ) || [];
   
-  // Convert messages and include image URLs in the content
+  // Format messages for Grok
   const formattedMessages = messages.map((message: VercelChatMessage) => {
     if (message.role === 'user' && imageAttachments.length > 0) {
-      // Include image URLs in the message content
-      const imageUrls = imageAttachments.map((att: any) => att.url).join('\n');
-      return new HumanMessage({
+      return {
+        role: 'user',
         content: [
           { type: 'text', text: message.content },
           ...imageAttachments.map((att: any) => ({
             type: 'image_url',
-            image_url: att.url
+            image_url: { url: att.url }
           }))
         ]
-      });
+      };
     }
-    // ... rest of message formatting
+    return message;
   });
 
-  // ... rest of chat processing logic
+  // Make API request to Grok
+  const response = await fetch('https://api.grok.x.ai/v1/chat/completions', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.GROK_API_KEY}`,
+    },
+    body: JSON.stringify({
+      model: 'grok-beta',
+      messages: formattedMessages,
+      stream: true,
+    }),
+  });
+
+  // Handle error if response isn't ok
+  if (!response.ok) {
+    throw new Error(`Grok API error: ${response.statusText}`);
+  }
+
+  // Ensure stream exists before creating StreamingTextResponse
+  const stream = response.body;
+  if (!stream) {
+    throw new Error('No response stream available');
+  }
+
+  return new StreamingTextResponse(stream);
 }
