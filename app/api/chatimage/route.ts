@@ -1,56 +1,31 @@
 import { StreamingTextResponse, Message as VercelChatMessage } from 'ai';
+import { AIMessage, HumanMessage, SystemMessage } from '@langchain/core/messages';
 
 export async function POST(req: Request) {
-  try {
-    const { messages, attachments } = await req.json();
-    
-    // Process any image attachments
-    const imageAttachments = attachments?.filter(
-      (att: any) => att.contentType?.startsWith('image/')
-    ) || [];
-
-    // Format messages for Grok, including image URLs
-    const formattedMessages = messages.map((message: VercelChatMessage) => {
-      if (message.role === 'user' && imageAttachments.length > 0) {
-        return {
-          role: 'user',
-          content: `${message.content}\n[Attached images: ${imageAttachments.map((att: { url: string }) => att.url).join(', ')}]`
-        };
-      }
-      return message;
-    });
-
-    const response = await fetch('https://api.x.ai/v1/chat/completions', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.XAI_API_KEY}`,
-      },
-      body: JSON.stringify({
-        model: 'grok-vision-beta',
-        messages: formattedMessages,
-        stream: true,
-        max_tokens: 72000,
-        temperature: 0
-      })
-    });
-
-    if (!response.ok) {
-      const error = await response.json();
-      throw new Error(JSON.stringify(error));
+  const { messages, attachments } = await req.json();
+  
+  // Process any image attachments
+  const imageAttachments = attachments?.filter(
+    (att: any) => att.contentType?.startsWith('image/')
+  ) || [];
+  
+  // Convert messages and include image URLs in the content
+  const formattedMessages = messages.map((message: VercelChatMessage) => {
+    if (message.role === 'user' && imageAttachments.length > 0) {
+      // Include image URLs in the message content
+      const imageUrls = imageAttachments.map((att: any) => att.url).join('\n');
+      return new HumanMessage({
+        content: [
+          { type: 'text', text: message.content },
+          ...imageAttachments.map((att: any) => ({
+            type: 'image_url',
+            image_url: att.url
+          }))
+        ]
+      });
     }
+    // ... rest of message formatting
+  });
 
-    const stream = response.body;
-    if (!stream) {
-      throw new Error('No response stream available');
-    }
-
-    return new StreamingTextResponse(stream);
-  } catch (error) {
-    console.error('Chat API Error:', error);
-    return new Response(
-      JSON.stringify({ error: 'Failed to process chat request' }), 
-      { status: 500, headers: { 'Content-Type': 'application/json' } }
-    );
-  }
+  // ... rest of chat processing logic
 }

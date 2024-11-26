@@ -84,10 +84,6 @@ export function Chat({
           toast.error(errorMessage);
         }
       },
-      api: '/api/chat',
-      headers: {
-        'Content-Type': 'application/json',
-      },
     });
 
   const [messagesContainerRef, messagesEndRef] =
@@ -134,12 +130,11 @@ export function Chat({
         {messages.map((message) => (
           <PreviewMessage
             key={message.id}
-            id={message.id}
             role={message.role}
             content={message.content}
             attachments={message.experimental_attachments}
             toolInvocations={message.toolInvocations}
-            onEdit={handleMessageEdit}
+            onEdit={async (newContent) => handleMessageEdit(message.id, newContent)}
           />
         ))}
 
