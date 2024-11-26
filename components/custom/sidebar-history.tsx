@@ -6,6 +6,7 @@ import { type User } from 'next-auth';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import useSWR from 'swr';
+import { useTheme } from 'next-themes';
 
 import {
   InfoIcon,
@@ -61,6 +62,7 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
   const [deleteId, setDeleteId] = useState<string | null>(null);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const router = useRouter();
+  const { theme } = useTheme();
   const handleDelete = async () => {
     try {
       await fetch(`/api/chat?id=${deleteId}`, {
@@ -75,7 +77,13 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
         }
       }, false);
 
-      toast.success('Chat deleted successfully');
+      toast.success('Chat deleted successfully', {
+        style: {
+          background: theme === 'dark' ? 'black' : 'white',
+          border: theme === 'dark' ? '1px solid rgb(31,41,55)' : '1px solid rgb(229,231,235)',
+          color: theme === 'dark' ? 'white' : 'black',
+        }
+      });
 
       if (deleteId === id) {
         router.push('/');
