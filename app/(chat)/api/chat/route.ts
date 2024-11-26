@@ -30,7 +30,7 @@ async function getProcessedKnowledgeContent(userId: string) {
 }
 
 export async function POST(request: Request) {
-  const { id, messages } = await request.json();
+  const { id, messages, attachments } = await request.json();
   const session = await auth();
 
   if (!session?.user?.email || !session?.user?.id) {
@@ -64,11 +64,24 @@ export async function POST(request: Request) {
   const relevantKnowledge = await getRelevantKnowledge(session.user.id, lastMessage);
 
   try {
-    // Format messages for Grok
-    const formattedMessages = messages.map((message: Message) => ({
-      role: message.role,
-      content: message.content
-    }));
+    // Process any image attachments
+    const imageAttachments = attachments?.filter(
+      (att: any) => att.contentType?.startsWith('image/')
+    ) || [];
+
+    // Format messages for Grok, including image URLs
+    const formattedMessages = messages.map((message: Message) => {
+      if (message.role === 'user' && imageAttachments.length > 0) {
+        return {
+          role: 'user',
+          content: `${message.content}\n[Attached images: ${imageAttachments.map((att: { url: string }) => att.url).join(', ')}]`
+        };
+      }
+      return {
+        role: message.role,
+        content: message.content
+      };
+    });
 
     // Add system message at the start
     formattedMessages.unshift({
@@ -85,7 +98,8 @@ export async function POST(request: Request) {
         'Authorization': `Bearer ${process.env.XAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'grok-beta',
+        // Use grok-vision-beta when images are present, otherwise use grok-beta
+        model: imageAttachments.length > 0 ? 'grok-vision-beta' : 'grok-beta',
         messages: formattedMessages,
         stream: true,
         max_tokens: 72000,

@@ -9,7 +9,7 @@ export async function POST(req: Request) {
       (att: any) => att.contentType?.startsWith('image/')
     ) || [];
 
-    // Format messages for Grok, including image URLs in the system message
+    // Format messages for Grok, including image URLs
     const formattedMessages = messages.map((message: VercelChatMessage) => {
       if (message.role === 'user' && imageAttachments.length > 0) {
         return {
@@ -20,7 +20,6 @@ export async function POST(req: Request) {
       return message;
     });
 
-    // Use the existing xAI instance from your code
     const response = await fetch('https://api.x.ai/v1/chat/completions', {
       method: 'POST',
       headers: {
@@ -28,7 +27,7 @@ export async function POST(req: Request) {
         'Authorization': `Bearer ${process.env.XAI_API_KEY}`,
       },
       body: JSON.stringify({
-        model: 'grok-beta',
+        model: 'grok-vision-beta',
         messages: formattedMessages,
         stream: true,
         max_tokens: 72000,
