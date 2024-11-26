@@ -103,52 +103,63 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
 
   const groupedHistory = history ? groupChatsByDate(history) : {};
 
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+
   // Render function for chat items
   const renderChatItem = (chat: Chat) => (
-    <SidebarMenuItem key={chat.id}>
-      <SidebarMenuButton 
-        asChild 
-        isActive={chat.id === id}
-        className={cn(
-          "min-h-[38px] py-0",
-          "@media (hover: hover) and (pointer: fine) {hover:bg-sidebar-accent}",
-          "@media (hover: none) {active:bg-transparent hover:bg-transparent}"
-        )}
-      >
-        <Link
-          href={`/chat/${chat.id}`}
-          onClick={() => setOpenMobile(false)}
-          className="py-2 w-full"
+    <SidebarMenuItem key={chat.id} className="group/menu-item">
+      <div className={cn(
+        "flex w-full rounded-md",
+        "group-hover/menu-item:bg-sidebar-accent",
+        openMenuId === chat.id && "bg-sidebar-accent"
+      )}>
+        <SidebarMenuButton 
+          asChild 
+          isActive={chat.id === id}
+          className={cn(
+            "min-h-[38px] py-0 flex-grow",
+            "@media (hover: none) {active:bg-transparent hover:bg-transparent}"
+          )}
         >
-          <span>{getTitleFromChat(chat)}</span>
-        </Link>
-      </SidebarMenuButton>
-      <DropdownMenu modal={isMobile}>
-        <DropdownMenuTrigger asChild>
-          <SidebarMenuAction
-            className={cn(
-              "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
-              chat.id !== id ? "hidden md:opacity-0 md:group-hover/menu-item:opacity-100 md:block" : ""
-            )}
-            showOnHover={chat.id !== id}
+          <Link
+            href={`/chat/${chat.id}`}
+            onClick={() => setOpenMobile(false)}
+            className="py-2 w-full"
           >
-            <MoreHorizontalIcon />
-            <span className="sr-only">More</span>
-          </SidebarMenuAction>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent side="bottom" align="end">
-          <DropdownMenuItem
-            className="text-destructive focus:bg-destructive/15 focus:text-destructive"
-            onSelect={() => {
-              setDeleteId(chat.id);
-              setShowDeleteDialog(true);
-            }}
-          >
-            <TrashIcon />
-            <span>Delete</span>
-          </DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
+            <span>{getTitleFromChat(chat)}</span>
+          </Link>
+        </SidebarMenuButton>
+        <DropdownMenu 
+          modal={isMobile} 
+          open={openMenuId === chat.id}
+          onOpenChange={(open) => setOpenMenuId(open ? chat.id : null)}
+        >
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuAction
+              className={cn(
+                "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
+                chat.id !== id ? "hidden md:opacity-0 md:group-hover/menu-item:opacity-100 md:block" : ""
+              )}
+              showOnHover={chat.id !== id}
+            >
+              <MoreHorizontalIcon />
+              <span className="sr-only">More</span>
+            </SidebarMenuAction>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="bottom" align="end">
+            <DropdownMenuItem
+              className="text-destructive focus:bg-destructive/15 focus:text-destructive"
+              onSelect={() => {
+                setDeleteId(chat.id);
+                setShowDeleteDialog(true);
+              }}
+            >
+              <TrashIcon />
+              <span>Delete</span>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
     </SidebarMenuItem>
   );
 
@@ -231,13 +242,17 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete your
-              chat and remove it from our servers.
+              This action cannot be undone. This will permanently delete your chat and remove it from our servers.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={handleDelete}>
+            <AlertDialogAction
+              type="button"
+              autoFocus
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={handleDelete}
+            >
               Continue
             </AlertDialogAction>
           </AlertDialogFooter>
