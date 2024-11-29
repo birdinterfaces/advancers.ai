@@ -104,8 +104,7 @@ export async function POST(request: Request) {
       if (session.user?.id && session.user?.email) {
         try {
           const outputTokens = JSON.stringify(responseMessages).length / 4;
-          const knowledgeTokens = relevantKnowledge.length / 4;
-          const cost = calculateCost(inputTokens, outputTokens, knowledgeTokens);
+          const cost = calculateCost(inputTokens, outputTokens);
           
           // Convert user.usage to number, defaulting to 0 if NaN
           const currentUsage = Number(user.usage) || 0;

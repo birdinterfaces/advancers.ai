@@ -12,10 +12,9 @@ export const USAGE_LIMITS = {
 
 export function calculateCost(
   inputTokens: number, 
-  outputTokens: number, 
-  knowledgeTokens: number // New parameter for knowledge base tokens
+  outputTokens: number
 ): number {
-  const totalInputTokens = inputTokens + SYSTEM_PROMPT_TOKENS + knowledgeTokens;
+  const totalInputTokens = inputTokens + SYSTEM_PROMPT_TOKENS;
   const cost = (totalInputTokens * COST_PER_INPUT_TOKEN) + 
                (outputTokens * COST_PER_OUTPUT_TOKEN);
   return Number(cost.toFixed(4));
