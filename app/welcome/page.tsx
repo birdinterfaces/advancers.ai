@@ -284,11 +284,11 @@ const Welcome = () => {
               <div className="textholdernova">
                 <div className="textpoint">
                   <div className="text-block-34">Runs on Grok from xAI</div>
-                  <div className="text-block-35">Get all the functionality from Grok</div>
+                  <div className="text-block-35">Use the power of the biggest AI cluster in the world</div>
                 </div>
                 <div className="textpoint">
-                  <div className="text-block-34">Real-time data</div>
-                  <div className="text-block-35">Knows what is currently going on in the world</div>
+                  <div className="text-block-34">Innovator</div>
+                  <div className="text-block-35">Can assist with idea generation and innovation</div>
                 </div>
               </div>
             </div>

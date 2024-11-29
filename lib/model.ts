@@ -3,7 +3,7 @@ export const models = [
   {
     label: 'Grok 2',
     name: 'Grok-beta',
-    description: 'Truth-seeking AI and real-time data from X',
+    description: 'Truth-seeking AI from xAI',
     maxTokens: 72000,
     temperature: 0,
   },
