@@ -1,7 +1,7 @@
 // Define your models here.
 export const models = [
   {
-    label: 'Grok-beta',
+    label: 'Grok 2',
     name: 'Grok-beta',
     description: 'Truth-seeking AI and real-time data from X',
     maxTokens: 72000,
