@@ -13,7 +13,7 @@ import React, {
 } from 'react';
 import { toast } from 'sonner';
 
-import { ArrowUpIcon, PaperclipIcon, StopIcon } from './icons';
+import { ArrowUpIcon, StopIcon } from './icons';
 import { PreviewAttachment } from './preview-attachment';
 import useWindowSize from './use-window-size';
 import { Button } from '../ui/button';
@@ -261,18 +261,6 @@ export function MultimodalInput({
           <ArrowUpIcon size={14} />
         </Button>
       )}
-
-      <Button
-        className="rounded-full p-1.5 h-fit absolute bottom-2 left-2 m-0.5 dark:border-zinc-700"
-        onClick={(event) => {
-          event.preventDefault();
-          fileInputRef.current?.click();
-        }}
-        variant="outline"
-        disabled={isLoading}
-      >
-        <PaperclipIcon size={14} />
-      </Button>
     </div>
   );
 }
