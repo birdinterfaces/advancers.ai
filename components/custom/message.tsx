@@ -34,17 +34,20 @@ export const Message = ({
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSave = async () => {
-    if (!onEdit || !id) return;
+    if (!onEdit || !id) {
+      toast.error('Cannot edit message');
+      return;
+    }
     
     setIsLoading(true);
     try {
       const success = await onEdit(id, editedContent);
       if (success) {
         setIsEditing(false);
-        setIsLoading(false);
       }
     } catch (error) {
       toast.error('Failed to update message');
+    } finally {
       setIsLoading(false);
     }
   };
