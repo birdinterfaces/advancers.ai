@@ -98,6 +98,22 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
         </Link>
       );
     },
+    p: ({ node, children, ...props }: any) => {
+      if (React.Children.toArray(children).every(child => 
+        typeof child === 'string' && child.trim() === ''
+      )) {
+        return <br />;
+      }
+      
+      return (
+        <p 
+          className="whitespace-pre-wrap mb-2 [&:last-child]:mb-0" 
+          {...props}
+        >
+          {children}
+        </p>
+      );
+    },
   };
 
   return (
