@@ -230,7 +230,7 @@ const Welcome = () => {
                       textAlign: 'center',
                       maxWidth: '800px',
                       margin: '0 auto'
-                    }}>AI that accelerates the unlock of human potential</h1>
+                    }}>AI that assists in innovation and aids in research</h1>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
@@ -266,7 +266,7 @@ const Welcome = () => {
               <div className="textholdernova">
                 <div className="textpoint">
                   <div className="text-block-34">Output focused</div>
-                  <div className="text-block-35">Tries to make you most productive for civilization</div>
+                  <div className="text-block-35">Aims to make you most productive for civilization</div>
                 </div>
                 <div className="textpoint">
                   <div className="text-block-34">Truth-seeking</div>
@@ -288,7 +288,7 @@ const Welcome = () => {
                 </div>
                 <div className="textpoint">
                   <div className="text-block-34">Innovator</div>
-                  <div className="text-block-35">Can assist with idea generation and innovation</div>
+                  <div className="text-block-35">Assists with innovation and idea generation</div>
                 </div>
               </div>
             </div>
