@@ -73,11 +73,11 @@ const Welcome = () => {
       <PreloadImages />
       <Head>
         <title>AdvancersAI</title>
-        <meta name="description" content="AI that accelerates the unlock of human potential" />
+        <meta name="description" content="AI that assists in innovation and aids in research" />
         <meta property="og:title" content="AdvancersAI" />
-        <meta property="og:description" content="AI that accelerates the unlock of human potential" />
+        <meta property="og:description" content="AI that assists in innovation and aids in research" />
         <meta property="twitter:title" content="AdvancersAI" />
-        <meta property="twitter:description" content="AI that accelerates the unlock of human potential" />
+        <meta property="twitter:description" content="AI that assists in innovation and aids in research" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -287,8 +287,8 @@ const Welcome = () => {
                   <div className="text-block-35">Use the power of the biggest AI cluster in the world</div>
                 </div>
                 <div className="textpoint">
-                  <div className="text-block-34">Innovator</div>
-                  <div className="text-block-35">Assists with innovation and idea generation</div>
+                  <div className="text-block-34">Unlocks human potential</div>
+                  <div className="text-block-35">Accelerates the unlock of human potential</div>
                 </div>
               </div>
             </div>
