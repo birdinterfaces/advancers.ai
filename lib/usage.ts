@@ -6,8 +6,8 @@ const SYSTEM_PROMPT_TOKENS = 100; // Approximate tokens in base system prompt
 
 export const USAGE_LIMITS = {
   free: 0.25,     // $0.10 per month
-  pro: 4.00,      // $3.00 per month
-  ultimate: 10.00  // $6.00 per month
+  pro: 10.00,      // $3.00 per month
+  ultimate: 150.00  // $6.00 per month
 } as const;
 
 export function calculateCost(

@@ -322,7 +322,7 @@ const Welcome = () => {
                               <div className="totalvalue">
                                 <div className="totalvaluetext">Pro</div>
                               </div>
-                              <div className="price">$15<span className="annualy">/ month</span></div>
+                              <div className="price">$20<span className="annualy">/ month</span></div>
                             </div>
                             <ul role="list" className="list-2 w-list-unstyled">
                               <li>

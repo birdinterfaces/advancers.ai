@@ -140,7 +140,7 @@ export function SidebarUserNavContent({ user }: { user: ExtendedUser }) {
             {selectedPlan.charAt(0).toUpperCase() + selectedPlan.slice(1)}
           </h3>
           <p className="text-xl text-gray-900 dark:text-white">
-            ${selectedPlan === 'free' ? '0 ' : selectedPlan === 'pro' ? '15 ' : '25 '}
+            ${selectedPlan === 'free' ? '0 ' : selectedPlan === 'pro' ? '20 ' : '200 '}
             <span className="text-sm text-[#000000] dark:text-white">/ month</span>
           </p>
         </div>
