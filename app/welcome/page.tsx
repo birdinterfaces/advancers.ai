@@ -73,11 +73,11 @@ const Welcome = () => {
       <PreloadImages />
       <Head>
         <title>AdvancersAI</title>
-        <meta name="description" content="AI that assists in innovation and aids in research" />
+        <meta name="description" content="AI that assists in innovation and research" />
         <meta property="og:title" content="AdvancersAI" />
-        <meta property="og:description" content="AI that assists in innovation and aids in research" />
+        <meta property="og:description" content="AI that assists in innovation and research" />
         <meta property="twitter:title" content="AdvancersAI" />
-        <meta property="twitter:description" content="AI that assists in innovation and aids in research" />
+        <meta property="twitter:description" content="AI that assists in innovation and research" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -230,7 +230,7 @@ const Welcome = () => {
                       textAlign: 'center',
                       maxWidth: '800px',
                       margin: '0 auto'
-                    }}>AI that assists in innovation and aids in research</h1>
+                    }}>AI that assists in innovation and research</h1>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
