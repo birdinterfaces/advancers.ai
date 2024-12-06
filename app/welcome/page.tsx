@@ -287,7 +287,7 @@ const Welcome = () => {
                   <div className="text-block-35">Use the power of the biggest AI cluster in the world</div>
                 </div>
                 <div className="textpoint">
-                  <div className="text-block-34">Unlocks human potential</div>
+                  <div className="text-block-34">Empowers</div>
                   <div className="text-block-35">Accelerates the unlock of human potential</div>
                 </div>
               </div>
