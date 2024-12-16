@@ -519,7 +519,7 @@ const Welcome = () => {
           </div>
         </div>
       </div>
-      <style jsx global>{`
+      <style jsx>{`
         @media screen and (max-width: 479px) {
           .hero-title {
             font-size: 32px;
@@ -552,49 +552,6 @@ const Welcome = () => {
           .price .annualy {
             font-size: 16px;
           }
-        }
-
-        .navbar {
-          border: none !important;
-        }
-
-        .fixednavbar {
-          border-bottom: none !important;
-        }
-
-        .nav-link, 
-        .w-nav-link,
-        .nav-link._2,
-        .w-nav-link._2 {
-          border: none !important;
-          border-bottom: none !important;
-          background: none !important;
-          text-decoration: none !important;
-        }
-
-        .nav-link:hover, 
-        .w-nav-link:hover,
-        .nav-link._2:hover,
-        .w-nav-link._2:hover {
-          border: none !important;
-          border-bottom: none !important;
-          background: none !important;
-        }
-
-        .w-nav-link:after {
-          display: none !important;
-        }
-
-        .nav-link {
-          border-bottom: none !important;
-        }
-
-        .nav-link:hover {
-          border-bottom: none !important;
-        }
-
-        .nav-link:after {
-          display: none !important;
         }
       `}</style>
     </>
