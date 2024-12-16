@@ -1,16 +1,14 @@
 "use client";
 
 import { Bold } from 'lucide-react';
+import { Montserrat } from 'next/font/google';
 import Head from 'next/head';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-
 import '../../public/css/normalize.css';
 import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
 import '../../public/css/stars.css';
-
-import { Montserrat } from 'next/font/google';
 
 const montserrat = Montserrat({
   subsets: ['latin'],
