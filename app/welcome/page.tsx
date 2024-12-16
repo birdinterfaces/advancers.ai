@@ -285,7 +285,7 @@ const Welcome = () => {
               <div className="textholdernova">
                 <div className="textpoint">
                   <div className="text-block-34">Runs on Grok from xAI</div>
-                  <div className="text-block-35">Use the power of the biggest AI cluster in the world</div>
+                  <div className="text-block-35">Uses the power of the biggest AI cluster in the world</div>
                 </div>
               </div>
             </div>
@@ -552,6 +552,45 @@ const Welcome = () => {
           .price .annualy {
             font-size: 16px;
           }
+        }
+
+        .navbar {
+          border: none !important;
+        }
+
+        .fixednavbar {
+          border-bottom: none !important;
+        }
+
+        .w-nav-link {
+          border-bottom: none !important;
+        }
+
+        .w-nav-link:hover {
+          border-bottom: none !important;
+        }
+
+        .w-nav-link:after {
+          display: none !important;
+        }
+
+        .nav-link {
+          border-bottom: none !important;
+        }
+
+        .nav-link:hover {
+          border-bottom: none !important;
+        }
+
+        .nav-link:after {
+          display: none !important;
+        }
+      `}</style>
+    </>
+  );
+};
+
+export default Welcome; 
         }
       `}</style>
     </>
