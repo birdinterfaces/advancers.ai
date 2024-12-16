@@ -10,6 +10,13 @@ import '../../public/css/webflow.css';
 import '../../public/css/advancers-club-ef3cf37311bfc4b53cc064fc.webflow.css';
 import '../../public/css/stars.css';
 
+import { Montserrat } from 'next/font/google';
+
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  display: 'swap',
+});
+
 import { PreloadImages } from '@/components/PreloadImages';
 import { criticalImages } from '@/lib/images';
 
@@ -84,7 +91,7 @@ const Welcome = () => {
         <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
         <link rel="apple-touch-icon" href="/images/webclip.png" />
       </Head>
-      <div className="body-2">
+      <div className={`body-2 ${montserrat.className}`}>
         <div className="fixednavbar">
           <div data-animation="default" data-collapse="medium" data-duration="400" data-easing="ease" data-easing2="ease" role="banner" className="navbar pricingg w-nav">
             <div className="container navbar-container">
@@ -265,12 +272,8 @@ const Welcome = () => {
             <div className="holdingnova">
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Output focused</div>
-                  <div className="text-block-35">Aims to make you most productive for civilization</div>
-                </div>
-                <div className="textpoint">
-                  <div className="text-block-34">Truth-seeking</div>
-                  <div className="text-block-35">Aspires to understand the nature of things</div>
+                  <div className="text-block-34">Co-architect</div>
+                  <div className="text-block-35">Helps you ground your ideas in the real world</div>
                 </div>
               </div>
               <div className="diamondholdernnova">
@@ -285,10 +288,6 @@ const Welcome = () => {
                 <div className="textpoint">
                   <div className="text-block-34">Runs on Grok from xAI</div>
                   <div className="text-block-35">Use the power of the biggest AI cluster in the world</div>
-                </div>
-                <div className="textpoint">
-                  <div className="text-block-34">Empowers</div>
-                  <div className="text-block-35">Accelerates the unlock of human potential</div>
                 </div>
               </div>
             </div>
