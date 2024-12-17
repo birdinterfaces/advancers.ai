@@ -246,7 +246,7 @@ const Welcome = () => {
                       fontSize: '20px',
                       lineHeight: '1.4',
                       color: '#9BA1A6'
-                    }}>Built to accelerate the unlock of human potential. Together, let's build an exciting future!</p>
+                    }}>Built to accelerate the unlock of human potential. Together, let&apos;s build an exciting future!</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
