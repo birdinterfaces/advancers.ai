@@ -6,6 +6,14 @@
   --royal-blue: #0266ff;
 }
 
+body {
+  font-family: var(--headings);
+  color: #fff;
+  background-color: #000;
+  font-size: 14px;
+  line-height: 1.2;
+}
+
 .w-commerce-commercecartwrapper {
   display: inline-block;
   position: relative;
@@ -796,11 +804,6 @@
   color: #999;
 }
 
-.w-commerce-commercecheckoutbillingzippostalcode:focus {
-  border-color: #3898ec;
-  outline-style: none;
-}
-
 .w-commerce-commercecheckoutbillingcountryselector {
   -webkit-appearance: none;
   appearance: none;
@@ -1270,7 +1273,7 @@
 body {
   font-family: var(--headings);
   color: #fff;
-  background-color: #070c1b;
+  background-color: #000;
   font-size: 14px;
   line-height: 1.2;
 }
