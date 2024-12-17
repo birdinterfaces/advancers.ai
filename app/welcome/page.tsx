@@ -78,11 +78,11 @@ const Welcome = () => {
       <PreloadImages />
       <Head>
         <title>AdvancersAI</title>
-        <meta name="description" content="AI that assists in innovation and research" />
+        <meta name="description" content="AI that assists in research and innovation" />
         <meta property="og:title" content="AdvancersAI" />
-        <meta property="og:description" content="AI that assists in innovation and research" />
+        <meta property="og:description" content="AI that assists in research and innovation" />
         <meta property="twitter:title" content="AdvancersAI" />
-        <meta property="twitter:description" content="AI that assists in innovation and research" />
+        <meta property="twitter:description" content="AI that assists in research and innovation" />
         <meta property="og:type" content="website" />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -234,8 +234,19 @@ const Welcome = () => {
                     <h1 className="hero-title" style={{
                       textAlign: 'center',
                       maxWidth: '800px',
-                      margin: '0 auto'
-                    }}>AI that assists in innovation and research</h1>
+                      margin: '0 auto',
+                      fontSize: '48px',
+                      lineHeight: '1.2',
+                      fontWeight: 300
+                    }}>Fundamental AI that assists in research and innovation</h1>
+                    <p className="hero-subtitle" style={{
+                      textAlign: 'center',
+                      maxWidth: '600px',
+                      margin: '24px auto 0',
+                      fontSize: '20px',
+                      lineHeight: '1.4',
+                      color: '#9BA1A6'
+                    }}>Built to accelerate the unlock of human potential. Together, let's build an exciting future!</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
@@ -524,6 +535,13 @@ const Welcome = () => {
           .hero-title {
             font-size: 32px;
             line-height: 1.2;
+            font-weight: 300;
+          }
+
+          .hero-subtitle {
+            font-size: 18px;
+            line-height: 1.4;
+            margin-top: 20px;
           }
 
           .paragraph-4 {
