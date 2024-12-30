@@ -14,10 +14,15 @@ export function calculateCost(
   inputTokens: number, 
   outputTokens: number
 ): number {
-  const totalInputTokens = inputTokens + SYSTEM_PROMPT_TOKENS;
-  const cost = (totalInputTokens * COST_PER_INPUT_TOKEN) + 
-               (outputTokens * COST_PER_OUTPUT_TOKEN);
-  return Number(cost.toFixed(4));
+  // Actual Grok-2 pricing
+  const INPUT_COST_PER_1K_TOKENS = 0.002;   // $2 per 1M tokens = $0.002 per 1K tokens
+  const OUTPUT_COST_PER_1K_TOKENS = 0.01;   // $10 per 1M tokens = $0.01 per 1K tokens
+
+  const inputCost = (inputTokens / 1000) * INPUT_COST_PER_1K_TOKENS;
+  const outputCost = (outputTokens / 1000) * OUTPUT_COST_PER_1K_TOKENS;
+
+  // Return total cost rounded to 4 decimal places
+  return Number((inputCost + outputCost).toFixed(4));
 }
 
 export function hasExceededLimit(currentUsage: number, membership: string): boolean {

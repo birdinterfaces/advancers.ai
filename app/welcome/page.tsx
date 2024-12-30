@@ -238,7 +238,7 @@ const Welcome = () => {
                       fontSize: '48px',
                       lineHeight: '1.2',
                       fontWeight: 300
-                    }}>Fundamental AI that assists in research and innovation</h1>
+                    }}>Grok re-engineered</h1>
                     <p className="hero-subtitle" style={{
                       textAlign: 'center',
                       maxWidth: '600px',
@@ -246,7 +246,7 @@ const Welcome = () => {
                       fontSize: '20px',
                       lineHeight: '1.4',
                       color: '#9BA1A6'
-                    }}>Built to accelerate the unlock of human potential. Together, let&apos;s build an exciting future!</p>
+                    }}>Built to give better answers.</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
@@ -275,14 +275,11 @@ const Welcome = () => {
         </div>
         <div className="section">
           <div id="features" className="container sneakpeakcontainer">
-            <div className="titlenova">
-              <div className="text-block-33">Introducing AdvancersAI</div>
-            </div>
             <div className="holdingnova">
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Co-architect</div>
-                  <div className="text-block-35">Helps you ground your ideas in the real world</div>
+                  <div className="text-block-34">Truth-seeking</div>
+                  <div className="text-block-35">Aspires to understand the nature of reality</div>
                 </div>
               </div>
               <div className="diamondholdernnova">
@@ -295,8 +292,8 @@ const Welcome = () => {
               </div>
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Runs on Grok from xAI</div>
-                  <div className="text-block-35">Uses the power of the biggest AI cluster in the world</div>
+                  <div className="text-block-34">Empowering</div>
+                  <div className="text-block-35">Accelerates the unlock of human potential</div>
                 </div>
               </div>
             </div>
