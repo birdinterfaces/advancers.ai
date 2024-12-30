@@ -54,7 +54,7 @@ function getContextFromKnowledge(userMessage: string, knowledgeContent: string) 
   
   // Return only one most relevant paragraph, with increased character limit
   const relevantText = relevantParagraphs[0] || '';
-  return relevantText.slice(0, 3000); // Increased from 500 to 3000
+  return relevantText.slice(0, 6000); // Increased from 3000 to 6000 for testing
 }
 
 function estimateTokens(text: string): number {
