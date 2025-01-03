@@ -30,6 +30,16 @@ const suggestedActions = [
     label: 'the next 50 years',
     action: "Describe the next 50 years",
   },
+  {
+    title: "How can I",
+    label: 'be useful?',
+    action: "How can I be useful?",
+  },
+  {
+    title: "What are the",
+    label: 'misaligned structures?',
+    action: "What are the misaligned structures?",
+  },
 ];
 
 export function MultimodalInput({
