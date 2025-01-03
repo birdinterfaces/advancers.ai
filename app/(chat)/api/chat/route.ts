@@ -117,6 +117,49 @@ export async function POST(request: Request) {
       ...coreMessages
     ] as CoreMessage[],
     maxSteps: 10,
+    onFinish: async ({ responseMessages }) => {
+      if (session.user?.id && session.user?.email) {
+        try {
+          // Calculate input and output tokens
+          const inputTokens = estimateTokens(
+            systemMessage + 
+            JSON.stringify(messages) +
+            (contextualKnowledge ? contextualKnowledge : '')
+          );
+          
+          const outputTokens = estimateTokens(
+            JSON.stringify(responseMessages)
+          );
+          
+          const cost = calculateCost(inputTokens, outputTokens);
+          
+          // Convert user.usage to number, defaulting to 0 if NaN
+          const currentUsage = Number(user.usage) || 0;
+          const newUsage = (currentUsage + cost).toFixed(4);
+          
+          console.log('Current usage:', currentUsage);
+          console.log('New cost:', cost);
+          console.log('Total usage:', newUsage);
+
+          await updateUserUsage(
+            session.user.id, 
+            newUsage
+          );
+
+          // Log after update to verify
+          const [updatedUser] = await getUser(session.user.email);
+          console.log('Updated usage in DB:', updatedUser?.usage);
+
+          await saveChat({
+            id,
+            messages: [...coreMessages, ...responseMessages],
+            userId: session.user.id,
+          });
+        } catch (error) {
+          console.error('Failed to save chat or update usage:', error);
+        }
+      }
+    },
   });
 
   return result.toDataStreamResponse({});
