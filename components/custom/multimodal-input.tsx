@@ -21,9 +21,9 @@ import { Textarea } from '../ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'What\'s',  
-    label: 'Advancers?',
-    action: 'What is Advancers?',
+    title: 'What\'s Advancers',  
+    label: 'in 500 words',    
+    action: 'What is Advancers in 500 words?', 
   },
   {
     title: "Describe",
