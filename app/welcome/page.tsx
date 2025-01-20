@@ -238,7 +238,7 @@ const Welcome = () => {
                       fontSize: '48px',
                       lineHeight: '1.2',
                       fontWeight: 300
-                    }}>Grok re-engineered</h1>
+                    }}>Intelligence for Advancers</h1>
                     <p className="hero-subtitle" style={{
                       textAlign: 'center',
                       maxWidth: '600px',
@@ -246,7 +246,7 @@ const Welcome = () => {
                       fontSize: '20px',
                       lineHeight: '1.4',
                       color: '#9BA1A6'
-                    }}>Built to give better answers.</p>
+                    }}>Built on the Advancers Philosophy (<a href="https://advancers.org" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>View</a>).</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
