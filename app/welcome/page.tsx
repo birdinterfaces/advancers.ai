@@ -519,7 +519,7 @@ const Welcome = () => {
                 <div className="footermiddle"></div>
                 <div className="footerright">
                   <div className="footer-holder">
-                    <a href="/welcome" className="link-20 pagelink w--current">© 2024 Bird Interfaces, GmbH.</a>
+                    <a href="/welcome" className="link-20 pagelink w--current">© 2025 Bird Interfaces, GmbH.</a>
                   </div>
                 </div>
               </div>

@@ -287,7 +287,7 @@ const Imprint = () => {
                 <div className="footermiddle"></div>
                 <div className="footerright">
                   <div className="footer-copyright-holder">
-                    <a href="/welcome" className="link-20 pagelink">© 2024 Bird Interfaces, GmbH.</a>
+                    <a href="/welcome" className="link-20 pagelink">© 2025 Bird Interfaces, GmbH.</a>
                   </div>
                 </div>
               </div>
