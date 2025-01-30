@@ -64,6 +64,19 @@ export async function saveChat({
     }
 
 
+    // Ensure experimental_attachments are properly serialized
+    const processedMessages = messages.map((msg: any) => {
+      // If the message is already stringified, parse it first
+      const message = typeof msg === 'string' ? JSON.parse(msg) : msg;
+      return {
+        ...message,
+        experimental_attachments: Array.isArray(message.experimental_attachments) 
+          ? message.experimental_attachments 
+          : undefined
+      };
+    });
+
+
     const selectedChats = await db.select().from(chat).where(eq(chat.id, id));
 
 
@@ -71,7 +84,7 @@ export async function saveChat({
       return await db
         .update(chat)
         .set({
-          messages: JSON.stringify(messages),
+          messages: processedMessages,
           updatedAt: new Date(),
         })
         .where(eq(chat.id, id))
@@ -83,7 +96,7 @@ export async function saveChat({
       id,
       createdAt: new Date(),
       updatedAt: new Date(),
-      messages: JSON.stringify(messages),
+      messages: processedMessages,
       userId,
     }).returning();
   } catch (error) {
@@ -105,14 +118,42 @@ export async function deleteChatById({ id }: { id: string }) {
 
 export async function getChatsByUserId({ id }: { id: string }) {
   try {
-    return await db
+    const chats = await db
       .select()
       .from(chat)
       .where(eq(chat.userId, id))
       .orderBy(desc(chat.updatedAt));
+      
+    // Parse messages and ensure experimental_attachments are properly handled
+    return chats.map(chat => {
+      try {
+        // Handle both string and object message formats
+        const messages = Array.isArray(chat.messages) 
+          ? chat.messages 
+          : JSON.parse(chat.messages as string);
+
+        return {
+          ...chat,
+          messages: messages.map((msg: any) => {
+            // If the message is a string, parse it
+            const message = typeof msg === 'string' ? JSON.parse(msg) : msg;
+            return {
+              ...message,
+              experimental_attachments: message.experimental_attachments || undefined
+            };
+          })
+        };
+      } catch (e) {
+        console.error('Error parsing messages for chat:', chat.id, e);
+        return {
+          ...chat,
+          messages: []
+        };
+      }
+    });
   } catch (error) {
-    console.error("Failed to get chats by user from database");
-    throw error;
+    console.error("Failed to get chats by user from database:", error);
+    return [];
   }
 }
 
@@ -120,9 +161,34 @@ export async function getChatsByUserId({ id }: { id: string }) {
 export async function getChatById({ id }: { id: string }) {
   try {
     const [selectedChat] = await db.select().from(chat).where(eq(chat.id, id));
-    return selectedChat;
+    if (!selectedChat) return null;
+
+    try {
+      // Handle both string and object message formats
+      const messages = Array.isArray(selectedChat.messages) 
+        ? selectedChat.messages 
+        : JSON.parse(selectedChat.messages as string);
+
+      return {
+        ...selectedChat,
+        messages: messages.map((msg: any) => {
+          // If the message is a string, parse it
+          const message = typeof msg === 'string' ? JSON.parse(msg) : msg;
+          return {
+            ...message,
+            experimental_attachments: message.experimental_attachments || undefined
+          };
+        })
+      };
+    } catch (e) {
+      console.error('Error parsing messages for chat:', id, e);
+      return {
+        ...selectedChat,
+        messages: []
+      };
+    }
   } catch (error) {
-    console.error("Failed to get chat by id from database");
+    console.error("Failed to get chat by id from database:", error);
     throw error;
   }
 }

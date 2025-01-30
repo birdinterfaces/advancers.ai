@@ -127,15 +127,56 @@ export function convertToUIMessages(
   }, []);
 }
 
-export function getTitleFromChat(chat: Chat) {
-  const messages = convertToUIMessages(chat.messages as Array<CoreMessage>);
-  const firstMessage = messages[0];
+export interface ChatTitle {
+  text: string;
+  hasAttachments: boolean;
+}
 
-  if (!firstMessage) {
-    return "Untitled";
+export function getTitleFromChat(chat: Chat): ChatTitle {
+  try {
+    // Handle both string and object message formats
+    const rawMessages = Array.isArray(chat.messages) 
+      ? chat.messages 
+      : JSON.parse(chat.messages as string);
+
+    // Convert each message, handling string messages
+    const messages = rawMessages.map((msg: Message | string) => {
+      const message = typeof msg === 'string' ? JSON.parse(msg) : msg;
+      return {
+        ...message,
+        experimental_attachments: message.experimental_attachments || undefined
+      };
+    });
+
+    // Check if any message has attachments
+    const hasAttachments = messages.some(msg => 
+      msg.experimental_attachments && msg.experimental_attachments.length > 0
+    );
+
+    // Get the first user message for the title
+    const firstUserMessage = messages.find((msg: any) => msg.role === 'user');
+    if (firstUserMessage && firstUserMessage.content) {
+      const content = typeof firstUserMessage.content === 'string' 
+        ? firstUserMessage.content 
+        : firstUserMessage.content.text || 'Untitled';
+      
+      return {
+        text: content.length > 50 ? content.substring(0, 47) + '...' : content,
+        hasAttachments
+      };
+    }
+
+    return {
+      text: 'Untitled',
+      hasAttachments
+    };
+  } catch (e) {
+    console.error('Error getting title from chat:', e);
+    return {
+      text: 'Untitled',
+      hasAttachments: false
+    };
   }
-
-  return firstMessage.content;
 }
 
 export function groupChatsByDate(chats: Chat[]) {

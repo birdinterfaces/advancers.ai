@@ -7,6 +7,7 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import useSWR from 'swr';
+import { PaperclipIcon } from 'lucide-react';
 
 import {
   InfoIcon,
@@ -114,63 +115,70 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
 
   // Render function for chat items
-  const renderChatItem = (chat: Chat) => (
-    <SidebarMenuItem key={chat.id} className="group/menu-item">
-      <div className={cn(
-        "flex w-full rounded-md",
-        "md:group-hover/menu-item:bg-sidebar-accent",
-        openMenuId === chat.id && "bg-sidebar-accent"
-      )}>
-        <SidebarMenuButton 
-          asChild 
-          isActive={chat.id === id}
-          className={cn(
-            "min-h-[38px] py-0 flex-grow",
-            "@media (hover: none) {active:bg-transparent hover:bg-transparent}",
-            "@media (hover: hover) {hover:bg-sidebar-accent}"
-          )}
-        >
-          <Link
-            href={`/chat/${chat.id}`}
-            onClick={() => setOpenMobile(false)}
-            className="py-2 w-full"
+  const renderChatItem = (chat: Chat) => {
+    const title = getTitleFromChat(chat);
+    
+    return (
+      <SidebarMenuItem key={chat.id} className="group/menu-item">
+        <div className={cn(
+          "flex w-full rounded-md",
+          "md:group-hover/menu-item:bg-sidebar-accent",
+          openMenuId === chat.id && "bg-sidebar-accent"
+        )}>
+          <SidebarMenuButton 
+            asChild 
+            isActive={chat.id === id}
+            className={cn(
+              "min-h-[38px] py-0 flex-grow",
+              "@media (hover: none) {active:bg-transparent hover:bg-transparent}",
+              "@media (hover: hover) {hover:bg-sidebar-accent}"
+            )}
           >
-            <span>{getTitleFromChat(chat)}</span>
-          </Link>
-        </SidebarMenuButton>
-        <DropdownMenu 
-          modal={isMobile} 
-          open={openMenuId === chat.id}
-          onOpenChange={(open) => setOpenMenuId(open ? chat.id : null)}
-        >
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuAction
-              className={cn(
-                "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
-                chat.id !== id ? "hidden md:opacity-0 md:group-hover/menu-item:opacity-100 md:block" : ""
+            <Link
+              href={`/chat/${chat.id}`}
+              onClick={() => setOpenMobile(false)}
+              className="py-2 w-full flex items-center gap-2"
+            >
+              <span className="flex-grow">{title.text}</span>
+              {title.hasAttachments && (
+                <PaperclipIcon className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
               )}
-              showOnHover={chat.id !== id}
-            >
-              <MoreHorizontalIcon />
-              <span className="sr-only">More</span>
-            </SidebarMenuAction>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side="bottom" align="end">
-            <DropdownMenuItem
-              className="text-destructive focus:bg-destructive/15 focus:text-destructive"
-              onSelect={() => {
-                setDeleteId(chat.id);
-                setShowDeleteDialog(true);
-              }}
-            >
-              <TrashIcon />
-              <span>Delete</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </div>
-    </SidebarMenuItem>
-  );
+            </Link>
+          </SidebarMenuButton>
+          <DropdownMenu 
+            modal={isMobile} 
+            open={openMenuId === chat.id}
+            onOpenChange={(open) => setOpenMenuId(open ? chat.id : null)}
+          >
+            <DropdownMenuTrigger asChild>
+              <SidebarMenuAction
+                className={cn(
+                  "hover:bg-transparent active:bg-transparent h-[25px] flex items-center",
+                  chat.id !== id ? "hidden md:opacity-0 md:group-hover/menu-item:opacity-100 md:block" : ""
+                )}
+                showOnHover={chat.id !== id}
+              >
+                <MoreHorizontalIcon />
+                <span className="sr-only">More</span>
+              </SidebarMenuAction>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="bottom" align="end">
+              <DropdownMenuItem
+                className="text-destructive focus:bg-destructive/15 focus:text-destructive"
+                onSelect={() => {
+                  setDeleteId(chat.id);
+                  setShowDeleteDialog(true);
+                }}
+              >
+                <TrashIcon />
+                <span>Delete</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </SidebarMenuItem>
+    );
+  };
 
   if (!user) {
     return (

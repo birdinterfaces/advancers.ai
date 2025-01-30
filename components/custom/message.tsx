@@ -148,12 +148,13 @@ export const Message = ({
             </div>
           ) : null}
 
-          {attachments && (
-            <div className="flex flex-row gap-2">
+          {attachments && attachments.length > 0 && (
+            <div className="flex flex-wrap gap-4 mt-2">
               {attachments.map((attachment) => (
                 <PreviewAttachment
                   key={attachment.url}
                   attachment={attachment}
+                  className="shrink-0"
                 />
               ))}
             </div>

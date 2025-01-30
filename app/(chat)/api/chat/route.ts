@@ -2,7 +2,7 @@ import { promises as fs } from 'fs';
 import path from 'path';
 
 import { createOpenAI } from '@ai-sdk/openai';
-import { convertToCoreMessages, Message, streamText, CoreMessage } from 'ai';
+import { convertToCoreMessages, Message, streamText, CoreMessage, generateId } from 'ai';
 import { z } from 'zod';
 
 import { auth } from '@/app/(auth)/auth';
@@ -58,6 +58,18 @@ function estimateTokens(text: string): number {
   // But this can vary based on the content. Here's a more conservative estimate:
   return Math.ceil(text.length / 3);
 }
+
+interface ImageUrlContent {
+  type: 'image_url';
+  image_url: { url: string };
+}
+
+interface TextContent {
+  type: 'text';
+  text: string;
+}
+
+type MessageContent = string | (TextContent | ImageUrlContent)[];
 
 export async function POST(request: Request) {
   const { id, messages, model } = await request.json();
@@ -144,23 +156,15 @@ When analyzing images or files:
           // Convert user.usage to number, defaulting to 0 if NaN
           const currentUsage = Number(user.usage) || 0;
           const newUsage = (currentUsage + cost).toFixed(4);
-          
-          console.log('Current usage:', currentUsage);
-          console.log('New cost:', cost);
-          console.log('Total usage:', newUsage);
 
           await updateUserUsage(
             session.user.id, 
             newUsage
           );
 
-          // Log after update to verify
-          const [updatedUser] = await getUser(session.user.email);
-          console.log('Updated usage in DB:', updatedUser?.usage);
-
           await saveChat({
             id,
-            messages: [...coreMessages, ...responseMessages],
+            messages: [...messages, ...responseMessages],
             userId: session.user.id,
           });
         } catch (error) {
@@ -189,6 +193,9 @@ export async function DELETE(request: Request) {
 
   try {
     const chat = await getChatById({ id });
+    if (!chat) {
+      return new Response('Not Found', { status: 404 });
+    }
 
     if (chat.userId !== session.user.id) {
       return new Response('Unauthorized', { status: 401 });
