@@ -5,7 +5,7 @@ import remarkGfm from "remark-gfm";
 
 import { cn } from "@/lib/utils";
 
-const NonMemoizedMarkdown = ({ children }: { children: string }) => {
+const NonMemoizedMarkdown = ({ children, className }: { children: string, className?: string }) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
@@ -66,15 +66,19 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
       );
     },
     li: ({ node, children, ...props }: any) => {
+      const hasParentUl = node.parent?.type === 'list' && node.parent?.ordered === false;
       return (
-        <li className="py-1" {...props}>
+        <li className={cn(
+          "py-1",
+          hasParentUl && "marker:text-muted-foreground"
+        )} {...props}>
           {children}
         </li>
       );
     },
     ul: ({ node, children, ...props }: any) => {
       return (
-        <ul className="list-decimal list-outside ml-4" {...props}>
+        <ul className="list-disc list-outside ml-4" {...props}>
           {children}
         </ul>
       );
@@ -107,7 +111,10 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
       
       return (
         <p 
-          className="whitespace-pre-wrap mb-2 [&:last-child]:mb-0" 
+          className={cn(
+            "whitespace-pre-wrap mb-4 last:mb-0",
+            "tracking-wide leading-relaxed"
+          )}
           {...props}
         >
           {children}
@@ -117,7 +124,11 @@ const NonMemoizedMarkdown = ({ children }: { children: string }) => {
   };
 
   return (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} components={components}>
+    <ReactMarkdown 
+      remarkPlugins={[remarkGfm]} 
+      components={components}
+      className={className}
+    >
       {children}
     </ReactMarkdown>
   );

@@ -116,7 +116,7 @@ export const Message = ({
                 </div>
               ) : (
                 <div className="w-full min-w-0">
-                  <Markdown>{content as string}</Markdown>
+                  <Markdown className="dark:text-zinc-300 text-zinc-700 [&_h1]:dark:text-white [&_h2]:dark:text-white [&_h3]:dark:text-white [&_h1]:text-black [&_h2]:text-black [&_h3]:text-black [&_p]:leading-7 [&_p]:mb-4 [&_ul]:mb-4 [&_ol]:mb-4">{content as string}</Markdown>
                 </div>
               )}
             </div>
