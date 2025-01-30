@@ -162,9 +162,18 @@ When analyzing images or files:
             newUsage
           );
 
+          // Save messages while preserving attachments
           await saveChat({
             id,
-            messages: [...messages, ...responseMessages],
+            messages: [
+              ...messages,  // Keep original messages with attachments
+              ...responseMessages.map(msg => ({
+                id: generateId(),
+                role: msg.role,
+                content: msg.content,
+                experimental_attachments: undefined
+              }))
+            ],
             userId: session.user.id,
           });
         } catch (error) {
