@@ -19,6 +19,13 @@ const FileSchema = z.object({
     ),
 });
 
+function generateUniqueFilename(originalFilename: string): string {
+  const timestamp = Date.now();
+  const random = Math.random().toString(36).substring(2, 15);
+  const extension = originalFilename.split('.').pop();
+  return `${timestamp}-${random}.${extension}`;
+}
+
 export async function POST(request: Request) {
   const session = await auth();
 
@@ -48,21 +55,34 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: errorMessage }, { status: 400 });
     }
 
-    const filename = file.name;
+    const uniqueFilename = generateUniqueFilename(file.name);
     const fileBuffer = await file.arrayBuffer();
 
     try {
-      const data = await put(`${filename}`, fileBuffer, {
+      const data = await put(uniqueFilename, fileBuffer, {
         access: "public",
+        contentType: file.type,
       });
 
-      return NextResponse.json(data);
+      return NextResponse.json({
+        url: data.url,
+        pathname: file.name, // Return original filename for display
+        contentType: file.type,
+      });
     } catch (error) {
-      return NextResponse.json({ error: "Upload failed" }, { status: 500 });
+      console.error('Blob storage error:', error);
+      return NextResponse.json({ 
+        error: "Failed to store file",
+        details: error instanceof Error ? error.message : 'Unknown error'
+      }, { status: 500 });
     }
   } catch (error) {
+    console.error('Request processing error:', error);
     return NextResponse.json(
-      { error: "Failed to process request" },
+      { 
+        error: "Failed to process request",
+        details: error instanceof Error ? error.message : 'Unknown error'
+      },
       { status: 500 },
     );
   }
