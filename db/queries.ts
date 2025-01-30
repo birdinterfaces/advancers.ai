@@ -5,6 +5,7 @@ import { genSaltSync, hashSync } from "bcrypt-ts";
 import { desc, eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/postgres-js";
 import postgres from "postgres";
+import { generateId } from 'ai';
 
 
 import { user, chat, User } from "./schema";
@@ -64,15 +65,33 @@ export async function saveChat({
     }
 
 
-    // Ensure experimental_attachments are properly serialized
+    // Process messages to ensure attachments are properly stored
     const processedMessages = messages.map((msg: any) => {
       // If the message is already stringified, parse it first
       const message = typeof msg === 'string' ? JSON.parse(msg) : msg;
+      
+      // Preserve the original message ID
+      const messageId = message.id || generateId();
+      
+      // Ensure experimental_attachments are properly handled
+      if (message.experimental_attachments && Array.isArray(message.experimental_attachments)) {
+        return {
+          id: messageId,
+          role: message.role,
+          content: message.content,
+          experimental_attachments: message.experimental_attachments.map((attachment: any) => ({
+            url: attachment.url,
+            name: attachment.name || '',
+            contentType: attachment.contentType || ''
+          }))
+        };
+      }
+      
       return {
-        ...message,
-        experimental_attachments: Array.isArray(message.experimental_attachments) 
-          ? message.experimental_attachments 
-          : undefined
+        id: messageId,
+        role: message.role,
+        content: message.content,
+        experimental_attachments: undefined
       };
     });
 
@@ -139,7 +158,14 @@ export async function getChatsByUserId({ id }: { id: string }) {
             const message = typeof msg === 'string' ? JSON.parse(msg) : msg;
             return {
               ...message,
-              experimental_attachments: message.experimental_attachments || undefined
+              content: message.content,
+              experimental_attachments: message.experimental_attachments 
+                ? message.experimental_attachments.map((attachment: any) => ({
+                  url: attachment.url,
+                  name: attachment.name || '',
+                  contentType: attachment.contentType || ''
+                }))
+              : undefined
             };
           })
         };
@@ -174,9 +200,19 @@ export async function getChatById({ id }: { id: string }) {
         messages: messages.map((msg: any) => {
           // If the message is a string, parse it
           const message = typeof msg === 'string' ? JSON.parse(msg) : msg;
+          // Preserve the original message ID
+          const messageId = message.id || generateId();
           return {
-            ...message,
-            experimental_attachments: message.experimental_attachments || undefined
+            id: messageId,
+            role: message.role,
+            content: message.content,
+            experimental_attachments: message.experimental_attachments 
+              ? message.experimental_attachments.map((attachment: any) => ({
+                url: attachment.url,
+                name: attachment.name || '',
+                contentType: attachment.contentType || ''
+              }))
+              : undefined
           };
         })
       };
