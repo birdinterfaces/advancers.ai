@@ -229,48 +229,72 @@ export function MultimodalInput({
         </div>
       )}
 
-      <Textarea
-        ref={textareaRef}
-        placeholder="Ask AdvancersAI anything"
-        value={input}
-        onChange={handleInput}
-        className="min-h-[24px] overflow-hidden resize-none rounded-xl p-4 pb-12 focus-visible:ring-0 focus-visible:ring-offset-0 text-base bg-muted border-none"
-        rows={2}
-        onKeyDown={(event) => {
-          if (event.key === 'Enter' && !event.shiftKey) {
-            event.preventDefault();
+      <div className="relative">
+        <Textarea
+          ref={textareaRef}
+          placeholder="Ask AdvancersAI anything"
+          value={input}
+          onChange={handleInput}
+          className="min-h-[24px] overflow-hidden resize-none rounded-xl p-4 pb-12 focus-visible:ring-0 focus-visible:ring-offset-0 text-base bg-muted border-none"
+          rows={2}
+          onKeyDown={(event) => {
+            if (event.key === 'Enter' && !event.shiftKey) {
+              event.preventDefault();
 
-            if (isLoading) {
-              toast.error('Please wait for the model to finish its response!');
-            } else {
-              submitForm();
+              if (isLoading) {
+                toast.error('Please wait for the model to finish its response!');
+              } else {
+                submitForm();
+              }
             }
-          }
-        }}
-      />
+          }}
+        />
 
-      {isLoading ? (
-        <Button
-          className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5"
-          onClick={(event) => {
-            event.preventDefault();
-            stop();
-          }}
-        >
-          <StopIcon size={14} />
-        </Button>
-      ) : (
-        <Button
-          className="rounded-full p-1.5 h-fit absolute bottom-2 right-2 m-0.5"
-          onClick={(event) => {
-            event.preventDefault();
-            submitForm();
-          }}
-          disabled={input.length === 0 || uploadQueue.length > 0}
-        >
-          <ArrowUpIcon size={14} />
-        </Button>
-      )}
+        <div className="absolute bottom-2 right-2 flex items-center gap-2">
+          <Button
+            size="icon"
+            variant="ghost"
+            className="h-8 w-8"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={isLoading}
+            title="Attach files"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="none"
+              className="h-5 w-5"
+            >
+              <path
+                d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"
+                fill="currentColor"
+              />
+            </svg>
+          </Button>
+          {isLoading ? (
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8"
+              onClick={stop}
+              title="Stop generating"
+            >
+              <StopIcon />
+            </Button>
+          ) : (
+            <Button
+              size="icon"
+              variant="ghost"
+              className="h-8 w-8"
+              onClick={submitForm}
+              disabled={!input && attachments.length === 0}
+              title="Send message"
+            >
+              <ArrowUpIcon />
+            </Button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
