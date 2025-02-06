@@ -23,7 +23,7 @@ const suggestedActions = [
   {
     title: 'What\'s the',  
     label: 'Advancers Philosophy?',    
-    action: 'What\'s the Advancers Philosophy?', 
+    action: 'What\'s the Advancers Philosophy in detail?', 
   },
   {
     title: "Describe",
