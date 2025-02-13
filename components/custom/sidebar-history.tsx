@@ -1,5 +1,6 @@
 'use client';
 
+import { PaperclipIcon } from 'lucide-react';
 import Link from 'next/link';
 import { useParams, usePathname, useRouter } from 'next/navigation';
 import { type User } from 'next-auth';
@@ -7,7 +8,6 @@ import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import useSWR from 'swr';
-import { PaperclipIcon } from 'lucide-react';
 
 import {
   InfoIcon,

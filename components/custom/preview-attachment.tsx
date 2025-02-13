@@ -1,8 +1,8 @@
 import { Attachment } from 'ai';
 import { FileIcon, ImageIcon } from 'lucide-react';
 
-import { LoaderIcon } from './icons';
 import { cn } from '@/lib/utils';
+import { LoaderIcon } from './icons';
 
 export const PreviewAttachment = ({
   attachment,
