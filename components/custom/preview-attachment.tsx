@@ -1,6 +1,7 @@
 import { Attachment } from 'ai';
 import { FileIcon, ImageIcon } from 'lucide-react';
 
+
 import { cn } from '@/lib/utils';
 import { LoaderIcon } from './icons';
 
@@ -71,4 +72,4 @@ export const PreviewAttachment = ({
       <div className="text-xs text-muted-foreground max-w-24 truncate px-1">{name}</div>
     </div>
   );
-};
+}; 
