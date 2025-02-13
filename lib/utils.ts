@@ -149,7 +149,7 @@ export function getTitleFromChat(chat: Chat): ChatTitle {
     });
 
     // Check if any message has attachments
-    const hasAttachments = messages.some(msg => 
+    const hasAttachments = messages.some((msg: Message & { experimental_attachments?: Array<{ url: string; name?: string; contentType?: string }> }) => 
       msg.experimental_attachments && msg.experimental_attachments.length > 0
     );
 
