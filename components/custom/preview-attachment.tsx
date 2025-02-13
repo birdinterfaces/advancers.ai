@@ -3,6 +3,7 @@ import { FileIcon, ImageIcon } from 'lucide-react';
 
 
 import { cn } from '@/lib/utils';
+
 import { LoaderIcon } from './icons';
 
 export const PreviewAttachment = ({
