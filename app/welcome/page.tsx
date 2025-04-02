@@ -246,7 +246,7 @@ const Welcome = () => {
                       fontSize: '20px',
                       lineHeight: '1.4',
                       color: '#9BA1A6'
-                    }}>Built to unlock human potential and accelerate collective advancement. Based on the Advancers Philosophy (<a href="https://advancers.org" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>View</a>)</p>
+                    }}>Built to accelerate the unlock human potential. Based on the Advancers Philosophy (<a href="https://advancers.org" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>View</a>)</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
@@ -400,18 +400,6 @@ const Welcome = () => {
                                     className="list-icon"
                                   />
                                   <div className="list-text">Runs on Grok from xAI</div>
-                                </div>
-                              </li>
-                              <li>
-                                <div className="list">
-                                  <Image
-                                    src="/images/Vector_1Vector.png"
-                                    alt="Check icon"
-                                    width={18}
-                                    height={18}
-                                    className="list-icon"
-                                  />
-                                  <div className="list-text">Prompt engineered</div>
                                 </div>
                               </li>
                             </ul>
