@@ -130,7 +130,7 @@ When analyzing images or files:
   const result = await streamText({
     model: messages.some((msg: ExtendedMessage) => (msg.experimental_attachments ?? []).length > 0) 
       ? xai('grok-2-vision-1212')  // Use vision model when there are attachments
-      : xai('grok-2-1212'),        // Use regular model otherwise
+      : xai('grok-3-beta'),        // Use regular model otherwise
     maxTokens: 72000,
     system: systemMessage,
     messages: [
