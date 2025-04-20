@@ -31,9 +31,9 @@ const suggestedActions = [
     action: "Describe the next 50 years",
   },
   {
-    title: "How to build",
-    label: 'a tech empire?',
-    action: "How to build a tech empire?",
+    title: "How to approach",
+    label: 'creating new value?',
+    action: "How to approach creating new value?",
   },
   {
     title: "What are the",
