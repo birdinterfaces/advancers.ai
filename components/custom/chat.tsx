@@ -35,6 +35,24 @@ export function Chat({
         id,
         model: selectedModelName,
       },
+      onResponse: (response) => {
+        // Ensure the response is complete
+        if (!response.ok) {
+          return;
+        }
+      },
+      onFinish: (message) => {
+        // Handle any cleanup or UI updates after message completion
+        if (message.content.trim().endsWith('...')) {
+          // If message ends with ellipsis, it might be incomplete
+          // You can choose to automatically continue or show a button
+          append({
+            id: message.id,
+            content: 'Please continue',
+            role: 'user'
+          });
+        }
+      },
       onError: (error) => {
         // Handle the error response
         let errorMessage = '';
