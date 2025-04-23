@@ -235,10 +235,10 @@ const Welcome = () => {
                       textAlign: 'center',
                       maxWidth: '800px',
                       margin: '0 auto',
-                      fontSize: '48px',
+                      fontSize: '38px',
                       lineHeight: '1.2',
-                      fontWeight: 300
-                    }}>Your Personal Intelligence</h1>
+                      fontWeight: 400
+                    }}>An intelligence for highly productive individuals</h1>
                     <p className="hero-subtitle" style={{
                       textAlign: 'center',
                       maxWidth: '600px',
@@ -246,7 +246,7 @@ const Welcome = () => {
                       fontSize: '20px',
                       lineHeight: '1.4',
                       color: '#9BA1A6'
-                    }}>Built to accelerate the unlock human potential. Based on the Advancers Philosophy (<a href="https://advancers.org" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>View</a>)</p>
+                    }}>Grok 3 x The Advancers Philosophy (<a href="https://advancers.org" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>View</a>)</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
@@ -278,8 +278,8 @@ const Welcome = () => {
             <div className="holdingnova">
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Truth-seeking</div>
-                  <div className="text-block-35">Aspires to understand the nature of reality</div>
+                  <div className="text-block-34">Understands our reality</div>
+                  <div className="text-block-35">Only provides the most truthful answers</div>
                 </div>
               </div>
               <div className="diamondholdernnova">
@@ -292,8 +292,8 @@ const Welcome = () => {
               </div>
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Empowering</div>
-                  <div className="text-block-35">Accelerates the unlock of human potential</div>
+                  <div className="text-block-34">Pushes for excellence</div>
+                  <div className="text-block-35">Only provides the best possible answers</div>
                 </div>
               </div>
             </div>
