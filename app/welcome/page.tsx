@@ -279,7 +279,7 @@ const Welcome = () => {
               <div className="textholdernova">
                 <div className="textpoint">
                   <div className="text-block-34">Understands our reality</div>
-                  <div className="text-block-35">Only provides the most truthful answers</div>
+                  <div className="text-block-35">Aspires to provide the most truthful answers over time</div>
                 </div>
               </div>
               <div className="diamondholdernnova">
@@ -293,7 +293,7 @@ const Welcome = () => {
               <div className="textholdernova">
                 <div className="textpoint">
                   <div className="text-block-34">Pushes for excellence</div>
-                  <div className="text-block-35">Only provides the best possible answers</div>
+                  <div className="text-block-35">Aspires to provide the best possible answers over time</div>
                 </div>
               </div>
             </div>
