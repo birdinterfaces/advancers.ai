@@ -184,7 +184,6 @@ When analyzing images or files:
       }] : []),
       ...coreMessages
     ] as CoreMessage[],
-    maxSteps: 10,
     temperature: 0.7,
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id && session.user?.email) {
