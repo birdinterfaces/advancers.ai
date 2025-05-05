@@ -238,7 +238,7 @@ const Welcome = () => {
                       fontSize: '38px',
                       lineHeight: '1.2',
                       fontWeight: 400
-                    }}>An intelligence for highly productive individuals</h1>
+                    }}>AI with The Advancers Philosophy in its core</h1>
                     <p className="hero-subtitle" style={{
                       textAlign: 'center',
                       maxWidth: '600px',
@@ -246,7 +246,7 @@ const Welcome = () => {
                       fontSize: '20px',
                       lineHeight: '1.4',
                       color: '#9BA1A6'
-                    }}>Grok 3 x The Advancers Philosophy (<a href="https://advancers.org" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>View</a>)</p>
+                    }}>Which makes it a blessing to interact with. The Advancers Philosophy (<a href="https://advancers.org" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'underline' }}>View</a>)</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
@@ -278,8 +278,8 @@ const Welcome = () => {
             <div className="holdingnova">
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Understands our reality</div>
-                  <div className="text-block-35">Aspires to provide the most truthful answers over time</div>
+                  <div className="text-block-34">Fuels curiosity</div>
+                  <div className="text-block-35">Provides the most accurate answers based on our latest scientific understanding</div>
                 </div>
               </div>
               <div className="diamondholdernnova">
@@ -292,8 +292,8 @@ const Welcome = () => {
               </div>
               <div className="textholdernova">
                 <div className="textpoint">
-                  <div className="text-block-34">Pushes for excellence</div>
-                  <div className="text-block-35">Aspires to provide the best possible answers over time</div>
+                  <div className="text-block-34">Empowers</div>
+                  <div className="text-block-35">Enables anyone to become an Advancer and embrace our infinite creativity</div>
                 </div>
               </div>
             </div>
