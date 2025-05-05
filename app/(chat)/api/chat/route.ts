@@ -123,14 +123,58 @@ When analyzing images or files:
 - Answer questions about the content specifically
 - Maintain the same direct and specific tone`;
 
-  const lastMessage = messages[messages.length - 1]?.content || '';
-  const relevantKnowledge = await getRelevantKnowledge(session.user.id, lastMessage);
-  const contextualKnowledge = getContextFromKnowledge(lastMessage, knowledgeContent);
+  const lastMessageContent = messages[messages.length - 1]?.content || '';
+  const hasAttachments = messages.some((msg: ExtendedMessage) => (msg.experimental_attachments ?? []).length > 0);
+
+  // Define keywords for complexity and simplicity
+  const complexKeywords = ['explain', 'analyze', 'generate', 'code', 'debug', 'compare', 'contrast', 'plan', 'why', 'how', 'what if', 'create', 'write', 'elaborate', 'expand', 'detail', 'deeper'];
+  const simpleKeywords = ['yes', 'no', 'ok', 'okay', 'thanks', 'thank you', 'got it', 'sounds good', 'continue', 'great', 'cool'];
+  
+  // Function to check for keywords
+  const containsKeyword = (text: string, keywords: string[]): boolean => {
+    if (typeof text !== 'string') return false;
+    const lowerText = text.toLowerCase();
+    // Use word boundaries to avoid partial matches (e.g., 'how' in 'show')
+    return keywords.some(keyword => new RegExp(`\\b${keyword}\\b`, 'i').test(lowerText));
+  };
+  
+  // Regex patterns for detecting complex tasks like code or math
+  const codePattern = /```|\b(function|class|import|export|def|const|let|var|public|private|static|console\.log|System\.out\.print)\b/i;
+  const mathPattern = /\b(solve|integral|derivative|equation|calculate|\+|\-|\*|\/|\^|=)\b/i;
+  
+  // Function to check message content type (string or complex object)
+  const isSimpleStringContent = (content: any): content is string => {
+    return typeof content === 'string';
+  };
+  
+  // Determine the model based on attachments and request analysis
+  let selectedModel;
+  let selectedModelName: string; // Store the name for logging or potential future use
+  const messageContent = messages[messages.length - 1]?.content;
+  const wordCount = typeof messageContent === 'string' ? messageContent.split(/\s+/).length : 0;
+
+  if (hasAttachments) {
+    selectedModelName = 'grok-2-vision-1212'; // Vision model for attachments
+  } else if (isSimpleStringContent(messageContent) && (codePattern.test(messageContent) || mathPattern.test(messageContent))) {
+    selectedModelName = 'grok-3-beta'; // Standard model for code or math patterns
+  } else if (containsKeyword(lastMessageContent, complexKeywords)) {
+    selectedModelName = 'grok-3-beta'; // Standard model for complex keyword requests
+  } else if (containsKeyword(lastMessageContent, simpleKeywords)) {
+    selectedModelName = 'grok-3-mini-beta'; // Mini model for simple keyword requests
+  } else if (isSimpleStringContent(messageContent) && messageContent.length < 80 && wordCount < 15) {
+    selectedModelName = 'grok-3-mini-beta'; // Mini model for other short requests (fallback)
+  } else {
+    selectedModelName = 'grok-3-beta'; // Default model for longer/unclear requests
+  }
+  
+  console.log(`Using model: ${selectedModelName} for request ID: ${id}`);
+  selectedModel = xai(selectedModelName);
+
+  const relevantKnowledge = await getRelevantKnowledge(session.user.id, lastMessageContent);
+  const contextualKnowledge = getContextFromKnowledge(lastMessageContent, knowledgeContent);
 
   const result = await streamText({
-    model: messages.some((msg: ExtendedMessage) => (msg.experimental_attachments ?? []).length > 0) 
-      ? xai('grok-2-vision-1212')  // Use vision model when there are attachments
-      : xai('grok-3-beta'),        // Use regular model otherwise
+    model: selectedModel,
     maxTokens: 72000,
     system: systemMessage,
     messages: [
@@ -140,7 +184,6 @@ When analyzing images or files:
       }] : []),
       ...coreMessages
     ] as CoreMessage[],
-    maxSteps: 10,
     temperature: 0.7,
     onFinish: async ({ responseMessages }) => {
       if (session.user?.id && session.user?.email) {
@@ -156,7 +199,7 @@ When analyzing images or files:
             JSON.stringify(responseMessages)
           );
           
-          const cost = calculateCost(inputTokens, outputTokens);
+          const cost = calculateCost(inputTokens, outputTokens, selectedModelName);
           const currentUsage = Number(user.usage) || 0;
           const newUsage = (currentUsage + cost).toFixed(4);
 
