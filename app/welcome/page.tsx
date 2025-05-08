@@ -279,7 +279,7 @@ const Welcome = () => {
               <div className="textholdernova">
                 <div className="textpoint">
                   <div className="text-block-34">Fuels curiosity</div>
-                  <div className="text-block-35">Provides the most accurate answers based on our latest scientific understanding</div>
+                  <div className="text-block-35">Provides the most accurate answers based on the latest scientific understanding</div>
                 </div>
               </div>
               <div className="diamondholdernnova">
