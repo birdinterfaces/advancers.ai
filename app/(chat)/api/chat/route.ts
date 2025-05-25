@@ -156,15 +156,15 @@ When analyzing images or files:
   if (hasAttachments) {
     selectedModelName = 'grok-2-vision-1212'; // Vision model for attachments
   } else if (isSimpleStringContent(messageContent) && (codePattern.test(messageContent) || mathPattern.test(messageContent))) {
-    selectedModelName = 'grok-3-beta'; // Standard model for code or math patterns
+    selectedModelName = 'grok-3'; // Standard model for code or math patterns
   } else if (containsKeyword(lastMessageContent, complexKeywords)) {
-    selectedModelName = 'grok-3-beta'; // Standard model for complex keyword requests
+    selectedModelName = 'grok-3'; // Standard model for complex keyword requests
   } else if (containsKeyword(lastMessageContent, simpleKeywords)) {
-    selectedModelName = 'grok-3-mini-beta'; // Mini model for simple keyword requests
+    selectedModelName = 'grok-3-mini'; // Mini model for simple keyword requests
   } else if (isSimpleStringContent(messageContent) && messageContent.length < 80 && wordCount < 15) {
-    selectedModelName = 'grok-3-mini-beta'; // Mini model for other short requests (fallback)
+    selectedModelName = 'grok-3-mini'; // Mini model for other short requests (fallback)
   } else {
-    selectedModelName = 'grok-3-beta'; // Default model for longer/unclear requests
+    selectedModelName = 'grok-3'; // Default model for longer/unclear requests
   }
   
   console.log(`Using model: ${selectedModelName} for request ID: ${id}`);
