@@ -81,6 +81,8 @@ interface ExtendedMessage extends Message {
   experimental_attachments?: Attachment[];
 }
 
+export const experimental_maxDuration = 300;
+
 export async function POST(request: Request) {
   const { id, messages, model } = await request.json();
   const session = await auth();
