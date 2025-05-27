@@ -59,6 +59,8 @@ export async function saveChat({
   userId: string;
 }) {
   try {
+    console.log(`Starting saveChat for id: ${id}, userId: ${userId}, messages count: ${messages.length}`);
+     
     const users = await db.select().from(user).where(eq(user.id, userId));
     if (users.length === 0) {
       throw new Error("User not found");
@@ -96,11 +98,16 @@ export async function saveChat({
     });
 
 
+    console.log(`Processed ${processedMessages.length} messages for chat ${id}`);
+
+
     const selectedChats = await db.select().from(chat).where(eq(chat.id, id));
+    console.log(`Found ${selectedChats.length} existing chats with id ${id}`);
 
 
     if (selectedChats.length > 0) {
-      return await db
+      console.log(`Updating existing chat ${id}`);
+      const result = await db
         .update(chat)
         .set({
           messages: processedMessages,
@@ -108,18 +115,29 @@ export async function saveChat({
         })
         .where(eq(chat.id, id))
         .returning();
+      console.log(`Successfully updated chat ${id}`);
+      return result;
     }
 
 
-    return await db.insert(chat).values({
+    console.log(`Creating new chat ${id}`);
+    const result = await db.insert(chat).values({
       id,
       createdAt: new Date(),
-      updatedAt: new Date(),
       messages: processedMessages,
       userId,
     }).returning();
+    console.log(`Successfully created chat ${id}`);
+    return result;
   } catch (error) {
     console.error("Failed to save chat in database:", error);
+    console.error("Error details:", {
+      id,
+      userId,
+      messagesCount: messages?.length,
+      errorMessage: error instanceof Error ? error.message : 'Unknown error',
+      errorStack: error instanceof Error ? error.stack : undefined
+    });
     throw error;
   }
 }

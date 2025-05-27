@@ -3,8 +3,9 @@
 import { Attachment, Message } from 'ai';
 import { useChat } from 'ai/react';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { toast } from 'sonner';
+import { mutate } from 'swr';
 
 import { ChatHeader } from '@/components/custom/chat-header';
 import { Message as PreviewMessage } from '@/components/custom/message';
@@ -38,22 +39,17 @@ export function Chat({
         model: selectedModelName,
       },
       onResponse: (response) => {
-        // Ensure the response is complete
+        console.log('Chat response received:', response.status, response.ok);
         if (!response.ok) {
-          return;
+          console.error('Chat response error:', response.status, response.statusText);
         }
       },
       onFinish: (message) => {
-        // Handle any cleanup or UI updates after message completion
-        if (message.content.trim().endsWith('...')) {
-          // If message ends with ellipsis, it might be incomplete
-          // You can choose to automatically continue or show a button
-          append({
-            id: message.id,
-            content: 'Please continue',
-            role: 'user'
-          });
-        }
+        // Simple completion handling without auto-continuation
+        console.log('Message completed:', message.id, 'Content length:', message.content.length);
+        
+        // Refresh the sidebar history to show the updated chat
+        mutate('/api/history');
       },
       onError: (error) => {
         // Handle the error response
@@ -71,6 +67,8 @@ export function Chat({
         } catch (e) {
           errorMessage = error.message;
         }
+
+        console.error('Chat error:', errorMessage, 'Full error:', error);
 
         if (errorMessage.toLowerCase().includes('usage limit')) {
           // Set the input back to the last message
@@ -100,11 +98,22 @@ export function Chat({
               }
             }
           );
+        } else if (errorMessage.toLowerCase().includes('failed to generate response')) {
+          toast.error('Connection error. Please try again.');
+          // Refresh history in case the message was saved
+          mutate('/api/history');
         } else {
           toast.error(errorMessage);
         }
       },
     });
+
+  // Refresh history when component mounts with existing messages
+  useEffect(() => {
+    if (initialMessages.length > 0) {
+      mutate('/api/history');
+    }
+  }, []);
 
   const [messagesContainerRef, messagesEndRef] =
     useScrollToBottom<HTMLDivElement>(messages, isLoading);

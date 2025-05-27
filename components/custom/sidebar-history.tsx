@@ -78,19 +78,11 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
         }
       }, false);
 
-      toast.success('Chat deleted successfully', {
-        style: {
-          background: theme === 'dark' ? 'black' : 'white',
-          border: theme === 'dark' ? '1px solid rgb(31,41,55)' : '1px solid rgb(229,231,235)',
-          color: theme === 'dark' ? 'white' : 'black',
-        }
-      });
-
       if (deleteId === id) {
         router.push('/');
       }
     } catch (error) {
-      toast.error('Failed to delete chat');
+      // Silent error handling - no notification
     } finally {
       setShowDeleteDialog(false);
       setDeleteId(null);

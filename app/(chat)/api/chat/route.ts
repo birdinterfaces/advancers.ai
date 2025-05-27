@@ -199,73 +199,143 @@ When analyzing images or files:
   const relevantKnowledge = await getRelevantKnowledge(session.user.id, lastMessageContent);
   const contextualKnowledge = getContextFromKnowledge(lastMessageContent, knowledgeContent);
 
-  const result = await streamText({
-    model: selectedModel,
-    maxTokens: 72000,
-    system: systemMessage,
-    messages: [
-      ...(contextualKnowledge ? [{
-        role: 'assistant' as const,
-        content: `Context: ${contextualKnowledge}`
-      }] : []),
-      ...coreMessages
-    ] as CoreMessage[],
-    temperature: 0.7,
-    onFinish: async ({ responseMessages }) => {
-      if (session.user?.id && session.user?.email) {
-        try {
-          // Calculate input and output tokens
-          const inputTokens = estimateTokens(
-            systemMessage + 
-            JSON.stringify(messages) +
-            (contextualKnowledge ? contextualKnowledge : '')
-          );
-          
-          const outputTokens = estimateTokens(
-            JSON.stringify(responseMessages)
-          );
-          
-          const cost = calculateCost(inputTokens, outputTokens, selectedModelName);
-          const currentUsage = Number(user.usage) || 0;
-          const newUsage = (currentUsage + cost).toFixed(4);
+  // Save user messages immediately to ensure they're not lost
+  if (session.user?.id && messages.length > 0) {
+    try {
+      console.log(`Saving user messages for chat ${id} before AI response`);
+      await saveChat({
+        id,
+        messages: messages.map((msg: ExtendedMessage) => ({
+          id: msg.id || generateId(),
+          role: msg.role,
+          content: typeof msg.content === 'string' 
+            ? msg.content 
+            : Array.isArray(msg.content)
+              ? (msg.content as TextContent[]).find((c: TextContent) => c.type === 'text')?.text || (msg.content as TextContent[]).map(c => c.text).join(' ')
+              : msg.content,
+          experimental_attachments: msg.experimental_attachments?.map((attachment: Attachment) => ({
+            ...attachment,
+            url: attachment.url
+          }))
+        })),
+        userId: session.user.id,
+      });
+      console.log(`User messages saved for chat ${id}`);
+    } catch (error) {
+      console.error('Failed to save user messages:', error);
+      // Continue with AI response even if saving fails
+    }
+  }
 
-          await updateUserUsage(
-            session.user.id, 
-            newUsage
-          );
+  let result;
+  
+  try {
+    result = await streamText({
+      model: selectedModel,
+      maxTokens: 8192,
+      system: systemMessage,
+      messages: [
+        ...(contextualKnowledge ? [{
+          role: 'assistant' as const,
+          content: `Context: ${contextualKnowledge}`
+        }] : []),
+        ...coreMessages
+      ] as CoreMessage[],
+      temperature: 0.7,
+      onFinish: async ({ responseMessages }) => {
+        if (session.user?.id && session.user?.email) {
+          try {
+            console.log(`Saving chat ${id} for user ${session.user.id}`);
+            
+            // Calculate input and output tokens
+            const inputTokens = estimateTokens(
+              systemMessage + 
+              JSON.stringify(messages) +
+              (contextualKnowledge ? contextualKnowledge : '')
+            );
+            
+            const outputTokens = estimateTokens(
+              JSON.stringify(responseMessages)
+            );
+            
+            const cost = calculateCost(inputTokens, outputTokens, selectedModelName);
+            const currentUsage = Number(user.usage) || 0;
+            const newUsage = (currentUsage + cost).toFixed(4);
 
-          // Save messages with attachment URLs
-          await saveChat({
-            id,
-            messages: [
-              ...messages.map((msg: ExtendedMessage) => ({
-                id: msg.id || generateId(),
-                role: msg.role,
-                content: typeof msg.content === 'string' 
-                  ? msg.content 
-                  : Array.isArray(msg.content)
-                    ? (msg.content as TextContent[]).find((c: TextContent) => c.type === 'text')?.text || (msg.content as TextContent[]).map(c => c.text).join(' ')
-                    : msg.content,
-                experimental_attachments: msg.experimental_attachments?.map((attachment: Attachment) => ({
-                  ...attachment,
-                  url: attachment.url // Ensure URL is saved
+            // Update usage first
+            await updateUserUsage(
+              session.user.id, 
+              newUsage
+            );
+
+            // Save messages with attachment URLs
+            const savedChat = await saveChat({
+              id,
+              messages: [
+                ...messages.map((msg: ExtendedMessage) => ({
+                  id: msg.id || generateId(),
+                  role: msg.role,
+                  content: typeof msg.content === 'string' 
+                    ? msg.content 
+                    : Array.isArray(msg.content)
+                      ? (msg.content as TextContent[]).find((c: TextContent) => c.type === 'text')?.text || (msg.content as TextContent[]).map(c => c.text).join(' ')
+                      : msg.content,
+                  experimental_attachments: msg.experimental_attachments?.map((attachment: Attachment) => ({
+                    ...attachment,
+                    url: attachment.url // Ensure URL is saved
+                  }))
+                })),
+                ...responseMessages.map((msg: CoreMessage) => ({
+                  id: generateId(),
+                  role: msg.role,
+                  content: msg.content,
+                  experimental_attachments: undefined
                 }))
-              })),
-              ...responseMessages.map((msg: CoreMessage) => ({
-                id: generateId(),
-                role: msg.role,
-                content: msg.content,
-                experimental_attachments: undefined
-              }))
-            ],
-            userId: session.user.id,
-          });
-        } catch (error) {
-          console.error('Failed to save chat or update usage:', error);
+              ],
+              userId: session.user.id,
+            });
+            
+            console.log(`Chat ${id} saved successfully:`, savedChat.length > 0 ? 'Updated' : 'Created');
+          } catch (error) {
+            console.error('Failed to save chat or update usage:', error);
+            // Don't throw the error to avoid breaking the stream
+          }
         }
+      },
+    });
+  } catch (error) {
+    console.error('Stream creation error:', error);
+    
+    // Try to save the chat even if streaming failed
+    if (session.user?.id && messages.length > 0) {
+      try {
+        console.log(`Attempting to save chat ${id} after stream creation error`);
+        await saveChat({
+          id,
+          messages: messages.map((msg: ExtendedMessage) => ({
+            id: msg.id || generateId(),
+            role: msg.role,
+            content: typeof msg.content === 'string' 
+              ? msg.content 
+              : Array.isArray(msg.content)
+                ? (msg.content as TextContent[]).find((c: TextContent) => c.type === 'text')?.text || (msg.content as TextContent[]).map(c => c.text).join(' ')
+                : msg.content,
+            experimental_attachments: msg.experimental_attachments?.map((attachment: Attachment) => ({
+              ...attachment,
+              url: attachment.url
+            }))
+          })),
+          userId: session.user.id,
+        });
+        console.log(`Chat ${id} saved after stream creation error`);
+      } catch (saveError) {
+        console.error('Failed to save chat after stream creation error:', saveError);
       }
-    },
-  });
+    }
+    
+    // Return error response
+    return Response.json({ error: 'Failed to generate response' }, { status: 500 });
+  }
 
   return result.toDataStreamResponse({});
 }
