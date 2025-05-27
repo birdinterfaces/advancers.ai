@@ -11,7 +11,7 @@ import { getRelevantKnowledge } from '@/lib/knowledge';
 import { Model, models } from '@/lib/model';
 import { calculateCost, hasExceededLimit, getNextResetDate } from '@/lib/usage';
 
-export const maxDuration = 300; // Set max duration for Vercel functions
+export const maxDuration = 60; // Set max duration for Vercel functions (Hobby plan limit)
 
 // Create xAI provider instance
 const xai = createOpenAI({
