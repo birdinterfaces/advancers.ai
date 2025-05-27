@@ -11,22 +11,29 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { type Model, models } from '@/lib/model';
+import { type Model, getAvailableModels } from '@/lib/model';
 import { cn } from '@/lib/utils';
 
 export function ModelSelector({
   selectedModelName,
+  userMembership = 'free',
   className,
 }: {
   selectedModelName: Model['name'];
+  userMembership?: string;
 } & React.ComponentProps<typeof Button>) {
   const [open, setOpen] = useState(false);
   const [optimisticModelName, setOptimisticModelName] =
     useOptimistic(selectedModelName);
 
+  const availableModels = useMemo(
+    () => getAvailableModels(userMembership),
+    [userMembership]
+  );
+
   const selectModel = useMemo(
-    () => models.find((model) => model.name === optimisticModelName),
-    [optimisticModelName]
+    () => availableModels.find((model) => model.name === optimisticModelName),
+    [optimisticModelName, availableModels]
   );
 
   return (
@@ -44,7 +51,7 @@ export function ModelSelector({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="start" className="min-w-[300px]">
-        {models.map((model) => (
+        {availableModels.map((model) => (
           <DropdownMenuItem
             key={model.name}
             onSelect={() => {

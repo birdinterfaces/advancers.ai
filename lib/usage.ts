@@ -4,12 +4,20 @@ const COST_PER_OUTPUT_TOKEN = 0.000015; // $15 per million tokens
 // Pricing per 1K tokens
 const PRICING = {
   default: { // Assumes grok-3, grok-2-vision-1212 (Update if vision model has different pricing)
-    input: 0.002, // $2 per 1M tokens
-    output: 0.01,  // $10 per 1M tokens
+    input: 0.003, // $3 per 1M tokens
+    output: 0.015, // $15 per 1M tokens
   },
   'grok-3-mini': {
     input: 0.0003, // $0.30 per 1M tokens
     output: 0.0005, // $0.50 per 1M tokens
+  },
+  'grok-3-fast': {
+    input: 0.005, // $5 per 1M tokens
+    output: 0.025, // $25 per 1M tokens
+  },
+  'grok-3-mini-fast': {
+    input: 0.0006, // $0.60 per 1M tokens
+    output: 0.004, // $4 per 1M tokens
   },
 };
 

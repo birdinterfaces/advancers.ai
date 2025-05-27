@@ -46,7 +46,7 @@ export default function Page() {
             <img
               src="/images/blur.png"
               alt="Logo"
-              className="h-[80px] w-[80px]"
+              className="size-[80px]"
               style={{ filter: 'blur(15px)' }}
               draggable={false}
             />

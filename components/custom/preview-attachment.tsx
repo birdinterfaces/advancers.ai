@@ -46,18 +46,18 @@ export const PreviewAttachment = ({
             />
           ) : contentType === 'application/pdf' ? (
             <div className="flex flex-col items-center justify-center gap-1">
-              <FileIcon className="h-8 w-8 text-primary" />
+              <FileIcon className="size-8 text-primary" />
               <span className="text-[10px] text-muted-foreground">PDF</span>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center gap-1">
-              <FileIcon className="h-8 w-8 text-muted-foreground" />
+              <FileIcon className="size-8 text-muted-foreground" />
               <span className="text-[10px] text-muted-foreground">File</span>
             </div>
           )
         ) : (
           <div className="flex flex-col items-center justify-center gap-1">
-            <ImageIcon className="h-8 w-8 text-muted-foreground" />
+            <ImageIcon className="size-8 text-muted-foreground" />
             <span className="text-[10px] text-muted-foreground">Loading</span>
           </div>
         )}

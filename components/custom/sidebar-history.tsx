@@ -41,8 +41,8 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { Chat } from '@/db/schema';
-import { fetcher, getTitleFromChat, groupChatsByDate } from '@/lib/utils';
-import { cn } from '@/lib/utils';
+import { fetcher, getTitleFromChat, groupChatsByDate , cn } from '@/lib/utils';
+
 
 export function SidebarHistory({ user }: { user: User | undefined }) {
   const { setOpenMobile } = useSidebar();
@@ -139,9 +139,9 @@ export function SidebarHistory({ user }: { user: User | undefined }) {
               onClick={() => setOpenMobile(false)}
               className="py-2 w-full flex items-center gap-2"
             >
-              <span className="flex-grow">{title.text}</span>
+              <span className="grow">{title.text}</span>
               {title.hasAttachments && (
-                <PaperclipIcon className="h-4 w-4 flex-shrink-0 text-muted-foreground" />
+                <PaperclipIcon className="size-4 shrink-0 text-muted-foreground" />
               )}
             </Link>
           </SidebarMenuButton>

@@ -2,8 +2,8 @@
 
 import { Attachment, ToolInvocation } from 'ai';
 import { motion } from 'framer-motion';
-import { PencilIcon } from 'lucide-react';
-import { ReactNode, useState } from 'react';
+import { PencilIcon, CopyIcon, CheckIcon } from 'lucide-react';
+import { ReactNode, useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
 
 import { cn } from '@/lib/utils';
@@ -32,6 +32,8 @@ export const Message = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedContent, setEditedContent] = useState(content as string);
   const [isLoading, setIsLoading] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   const handleSave = async () => {
     if (!onEdit || !id) {
@@ -51,6 +53,33 @@ export const Message = ({
       setIsLoading(false);
     }
   };
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(content as string);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (error) {
+      toast.error('Failed to copy message');
+    }
+  };
+
+  const adjustTextareaHeight = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
+
+  useEffect(() => {
+    if (isEditing && textareaRef.current) {
+      adjustTextareaHeight();
+      // Set cursor to end of text
+      const textarea = textareaRef.current;
+      const length = textarea.value.length;
+      textarea.setSelectionRange(length, length);
+    }
+  }, [isEditing, editedContent]);
 
   return (
     <motion.div
@@ -77,36 +106,60 @@ export const Message = ({
         )}
         
         {role === 'user' && !isEditing && (
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute -left-12 top-1/2 -translate-y-1/2 opacity-0 group-hover/message:opacity-100 transition-opacity"
-            onClick={() => setIsEditing(true)}
-          >
-            <PencilIcon className="h-4 w-4" />
-          </Button>
+          <div className="absolute -bottom-[5px] -right-0 translate-y-full flex gap-1 opacity-0 group-hover/message:opacity-100 transition-opacity">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="size-6 p-0"
+              onClick={() => setIsEditing(true)}
+            >
+              <PencilIcon className="size-3 opacity-80" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="size-6 p-0"
+              onClick={handleCopy}
+            >
+              {copied ? (
+                <CheckIcon className="size-3 text-green-500" />
+              ) : (
+                <CopyIcon className="size-3 -scale-x-100 opacity-80" />
+              )}
+            </Button>
+          </div>
         )}
 
         <div className="flex flex-col gap-2 w-full min-w-0">
           {content && (
             <div className="flex flex-col gap-4 w-full min-w-0">
               {isEditing ? (
-                <div className="flex flex-col gap-2">
+                <div className="relative">
                   <Textarea
+                    ref={textareaRef}
                     value={editedContent}
-                    onChange={(e) => setEditedContent(e.target.value)}
-                    className="min-h-[100px] w-full"
+                    onChange={(e) => {
+                      setEditedContent(e.target.value);
+                      adjustTextareaHeight();
+                    }}
+                    className="w-full resize-none border-none bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0 overflow-hidden text-zinc-700 dark:text-zinc-300 leading-7"
+                    style={{ minHeight: 'auto', height: 'auto' }}
                     disabled={isLoading}
+                    autoFocus
                   />
-                  <div className="flex gap-2 justify-end">
+                  <div className="flex gap-1 mt-2 justify-end">
                     <Button 
                       variant="ghost" 
+                      size="sm"
+                      className="h-6 px-2 text-xs"
                       onClick={() => setIsEditing(false)}
                       disabled={isLoading}
                     >
                       Cancel
                     </Button>
                     <Button 
+                      size="sm"
+                      className="h-6 px-2 text-xs"
                       onClick={handleSave}
                       disabled={isLoading}
                     >

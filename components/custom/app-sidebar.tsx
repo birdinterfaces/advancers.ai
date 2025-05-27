@@ -29,7 +29,6 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/components/ui/sidebar';
-import { BetterTooltip } from '@/components/ui/tooltip';
 
 export function AppSidebar({ user }: { user: User | undefined }) {
   const { setOpenMobile } = useSidebar();
@@ -59,13 +58,11 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                 />
               </Link>
             </SidebarMenuButton>
-            <BetterTooltip content="New Chat">
-              <SidebarMenuAction asChild>
-                <Link href="/" onClick={() => setOpenMobile(false)}>
-                  <Plus />
-                </Link>
-              </SidebarMenuAction>
-            </BetterTooltip>
+            <SidebarMenuAction asChild>
+              <Link href="/" onClick={() => setOpenMobile(false)}>
+                <Plus />
+              </Link>
+            </SidebarMenuAction>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>

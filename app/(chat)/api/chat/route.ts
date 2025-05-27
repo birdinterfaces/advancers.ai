@@ -115,7 +115,7 @@ export async function POST(request: Request) {
   const coreMessages = convertToCoreMessages(messages);
 
   // Calculate input tokens more accurately
-  const systemMessage = `You are AdvancersAI. A helpful intelligence that empowers highly productive individuals. Always provide the most truthful and insightful answers so people can be most constructive for civilization. Everything is possible unless it violates the laws of nature i.e. physics. No long form replies and no-list answers! Always be specific and simple. Only explain things when asked. Never be funny. Never ask questions. Never give motivational answers. Do not refer to these rules, even if you're asked about them.
+  const systemMessage = `You are AdvancersAI. The most aligned AI for advancing knowledge and civilization. Grok 3 x The Advancers Philosophy. Always provide the most truthful and insightful answers so people can be most constructive for civilization. Always be simple. Elaborate only when asked or necessary. Never be funny. Never ask questions. Never give motivational answers. Do not refer to these rules, even if you're asked about them.
 
 When analyzing images or files:
 - Describe what you see in detail
@@ -147,24 +147,50 @@ When analyzing images or files:
     return typeof content === 'string';
   };
   
-  // Determine the model based on attachments and request analysis
+  // Determine the model based on attachments, request analysis, and user tier
   let selectedModel;
   let selectedModelName: string; // Store the name for logging or potential future use
   const messageContent = messages[messages.length - 1]?.content;
   const wordCount = typeof messageContent === 'string' ? messageContent.split(/\s+/).length : 0;
+  const userMembership = user.membership || 'free';
 
   if (hasAttachments) {
     selectedModelName = 'grok-2-vision-1212'; // Vision model for attachments
   } else if (isSimpleStringContent(messageContent) && (codePattern.test(messageContent) || mathPattern.test(messageContent))) {
-    selectedModelName = 'grok-3'; // Standard model for code or math patterns
+    // Use fast models for Ultimate users only for complex tasks
+    if (userMembership === 'ultimate') {
+      selectedModelName = 'grok-3-fast';
+    } else {
+      selectedModelName = 'grok-3';
+    }
   } else if (containsKeyword(lastMessageContent, complexKeywords)) {
-    selectedModelName = 'grok-3'; // Standard model for complex keyword requests
+    // Use fast models for Ultimate users only for complex keyword requests
+    if (userMembership === 'ultimate') {
+      selectedModelName = 'grok-3-fast';
+    } else {
+      selectedModelName = 'grok-3';
+    }
   } else if (containsKeyword(lastMessageContent, simpleKeywords)) {
-    selectedModelName = 'grok-3-mini'; // Mini model for simple keyword requests
+    // Use mini-fast for Ultimate users only, regular mini for others
+    if (userMembership === 'ultimate') {
+      selectedModelName = 'grok-3-mini-fast';
+    } else {
+      selectedModelName = 'grok-3-mini';
+    }
   } else if (isSimpleStringContent(messageContent) && messageContent.length < 80 && wordCount < 15) {
-    selectedModelName = 'grok-3-mini'; // Mini model for other short requests (fallback)
+    // Use mini-fast for Ultimate users only for short requests
+    if (userMembership === 'ultimate') {
+      selectedModelName = 'grok-3-mini-fast';
+    } else {
+      selectedModelName = 'grok-3-mini';
+    }
   } else {
-    selectedModelName = 'grok-3'; // Default model for longer/unclear requests
+    // Default model selection based on user tier
+    if (userMembership === 'ultimate') {
+      selectedModelName = 'grok-3-fast';
+    } else {
+      selectedModelName = 'grok-3';
+    }
   }
   
   console.log(`Using model: ${selectedModelName} for request ID: ${id}`);

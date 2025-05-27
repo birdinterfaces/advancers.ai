@@ -21,19 +21,19 @@ import { Textarea } from '../ui/textarea';
 
 const suggestedActions = [
   {
-    title: 'What\'s the',  
-    label: 'Advancers Philosophy?',    
-    action: 'What\'s the Advancers Philosophy?', 
+    title: 'Explain me',  
+    label: 'your philosophy',    
+    action: 'Explain me your philosophy', 
   },
   {
-    title: "Describe",
-    label: 'the next 50 years',
-    action: "Describe the next 50 years",
+    title: "How do you see",
+    label: 'the next 50 years?',
+    action: "How do you see the next 50 years?",
   },
   {
-    title: "How to approach",
-    label: 'creating new value?',
-    action: "How to approach creating new value?",
+    title: "How to be",
+    label: 'an Advancer?',
+    action: "How to be an Advancer?",
   },
   {
     title: "What are the",
@@ -188,7 +188,7 @@ export function MultimodalInput({
                       content: suggestedAction.action,
                     });
                   }}
-                  className="text-left border rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start break-words overflow-hidden"
+                  className="text-left bg-sidebar-accent rounded-xl px-4 py-3.5 text-sm flex-1 gap-1 sm:flex-col w-full h-auto justify-start items-start break-words overflow-hidden"
                 >
                   <span className="font-medium">{suggestedAction.title}</span>
                   <span className="text-muted-foreground">
@@ -210,7 +210,7 @@ export function MultimodalInput({
       />
 
       {(attachments.length > 0 || uploadQueue.length > 0) && (
-        <div className="flex flex-row gap-2 overflow-x-scroll">
+        <div className="flex flex-row gap-2 overflow-x-scroll scrollbar-hide" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
           {attachments.map((attachment) => (
             <PreviewAttachment key={attachment.url} attachment={attachment} />
           ))}
@@ -254,7 +254,7 @@ export function MultimodalInput({
           <Button
             size="icon"
             variant="ghost"
-            className="h-8 w-8"
+            className="size-8"
             onClick={() => fileInputRef.current?.click()}
             disabled={isLoading}
             title="Attach files"
@@ -263,7 +263,7 @@ export function MultimodalInput({
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 16 16"
               fill="none"
-              className="h-5 w-5"
+              className="size-5"
             >
               <path
                 d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"
@@ -275,7 +275,7 @@ export function MultimodalInput({
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8"
+              className="size-8"
               onClick={stop}
               title="Stop generating"
             >
@@ -285,7 +285,7 @@ export function MultimodalInput({
             <Button
               size="icon"
               variant="ghost"
-              className="h-8 w-8"
+              className="size-8"
               onClick={submitForm}
               disabled={!input && attachments.length === 0}
               title="Send message"

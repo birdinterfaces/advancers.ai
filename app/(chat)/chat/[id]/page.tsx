@@ -6,7 +6,7 @@ import { auth } from '@/app/(auth)/auth';
 import { Chat as PreviewChat } from '@/components/custom/chat';
 import { getChatById } from '@/db/queries';
 import { Chat } from '@/db/schema';
-import { DEFAULT_MODEL_NAME, models } from '@/lib/model';
+import { DEFAULT_MODEL_NAME, models, canAccessModel } from '@/lib/model';
 import { convertToUIMessages } from '@/lib/utils';
 
 export default async function Page(props: { params: Promise<any> }) {
@@ -34,16 +34,23 @@ export default async function Page(props: { params: Promise<any> }) {
     return notFound();
   }
 
+  const userMembership = session.user.membership || 'free';
+
   const cookieStore = await cookies();
   const value = cookieStore.get('model')?.value;
-  const selectedModelName =
-    models.find((m) => m.name === value)?.name || DEFAULT_MODEL_NAME;
+  let selectedModelName = models.find((m) => m.name === value)?.name || DEFAULT_MODEL_NAME;
+  
+  // Check if user can access the selected model, fallback to default if not
+  if (!canAccessModel(selectedModelName, userMembership)) {
+    selectedModelName = DEFAULT_MODEL_NAME;
+  }
 
   return (
     <PreviewChat
       id={chat.id}
       initialMessages={chat.messages}
       selectedModelName={selectedModelName}
+      userMembership={userMembership}
     />
   );
 }

@@ -19,10 +19,12 @@ export function Chat({
   id,
   initialMessages,
   selectedModelName,
+  userMembership = 'free',
 }: {
   id: string;
   initialMessages: Array<Message>;
   selectedModelName: Model['name'];
+  userMembership?: string;
 }) {
   const { theme } = useTheme();
   const { openModal } = useModal();
@@ -105,7 +107,7 @@ export function Chat({
     });
 
   const [messagesContainerRef, messagesEndRef] =
-    useScrollToBottom<HTMLDivElement>();
+    useScrollToBottom<HTMLDivElement>(messages, isLoading);
 
   const [attachments, setAttachments] = useState<Array<Attachment>>([]);
 
@@ -138,10 +140,14 @@ export function Chat({
 
   return (
     <div className="flex flex-col min-w-0 h-dvh bg-background">
-      <ChatHeader selectedModelName={selectedModelName} />
+      <ChatHeader selectedModelName={selectedModelName} userMembership={userMembership} />
       <div
         ref={messagesContainerRef}
-        className="flex flex-col min-w-0 gap-6 flex-1 overflow-y-scroll"
+        className="flex flex-col min-w-0 gap-10 flex-1 overflow-y-scroll scrollbar-transparent"
+        style={{
+          scrollbarWidth: 'thin',
+          scrollbarColor: 'rgb(156 163 175) transparent'
+        }}
       >
         {messages.length === 0 && <Overview />}
 
