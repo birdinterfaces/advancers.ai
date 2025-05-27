@@ -116,12 +116,20 @@ export function convertToUIMessages(
       }
     }
 
-    chatMessages.push({
-      id: generateId(),
+    // Preserve experimental_attachments if they exist
+    const messageWithAttachments: any = {
+      id: (message as any).id || generateId(),
       role: message.role,
       content: textContent,
       toolInvocations,
-    });
+    };
+
+    // Add experimental_attachments if they exist
+    if ((message as any).experimental_attachments) {
+      messageWithAttachments.experimental_attachments = (message as any).experimental_attachments;
+    }
+
+    chatMessages.push(messageWithAttachments);
 
     return chatMessages;
   }, []);

@@ -144,7 +144,7 @@ const Privacy = () => {
                 </div>
               </div>
               <div className="hero-section-paragraph-holder termsparagraph">
-                <p className="grey-text left">Effective Date: 22nd October 2024</p>
+                <p className="grey-text left">Last updated: 27th May 2025</p>
                 <p>Get to know our privacy practices, how we collect and process data, and how information is used.</p>
               </div>
             </div>

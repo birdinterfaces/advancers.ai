@@ -181,7 +181,7 @@ const Terms = () => {
                 </div>
               </div>
               <div className="hero-section-paragraph-holder termsparagraph">
-                <p className="grey-text left">Effective Date: 22nd October 2024</p>
+                <p className="grey-text left">Last updated: 27th May 2025</p>
                 <p>Welcome to Bird Interfaces, GmbH. Learn the rules and restrictions that govern your use of our products and services. If you have any questions please contact us at: <a href="mailto:contact@advancersclub.com" className="link-3">contact@advancers.ai</a></p>
               </div>
             </div>
@@ -202,7 +202,7 @@ const Terms = () => {
                 <h6>Advancers.ai Description</h6>
               </div>
               <div className="legal-text-holder">
-                <p>Advancers.ai provides an AI that is designed to help users be most useful.</p>
+                <p>Advancers.ai provides a chat interface to the latest model from xAI combined with The Advancers Philosophy from advancers.org.</p>
               </div>
             </div>
             <div className="container">
