@@ -11,6 +11,8 @@ import { getRelevantKnowledge } from '@/lib/knowledge';
 import { Model, models } from '@/lib/model';
 import { calculateCost, hasExceededLimit, getNextResetDate } from '@/lib/usage';
 
+export const maxDuration = 300; // Set max duration for Vercel functions
+
 // Create xAI provider instance
 const xai = createOpenAI({
   baseURL: 'https://api.x.ai/v1',
@@ -80,8 +82,6 @@ interface Attachment {
 interface ExtendedMessage extends Message {
   experimental_attachments?: Attachment[];
 }
-
-export const experimental_maxDuration = 300;
 
 export async function POST(request: Request) {
   const { id, messages, model } = await request.json();
