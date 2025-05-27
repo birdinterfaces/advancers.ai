@@ -8,13 +8,6 @@
       "when": 1728598022383,
       "tag": "0000_keen_devos",
       "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1748382763982,
-      "tag": "0001_broad_joystick",
-      "breakpoints": true
     }
   ]
 }
