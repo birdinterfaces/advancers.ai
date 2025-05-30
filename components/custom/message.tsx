@@ -74,12 +74,19 @@ export const Message = ({
   useEffect(() => {
     if (isEditing && textareaRef.current) {
       adjustTextareaHeight();
-      // Set cursor to end of text
+      // Set cursor to end of text only when entering edit mode
       const textarea = textareaRef.current;
       const length = textarea.value.length;
       textarea.setSelectionRange(length, length);
     }
-  }, [isEditing, editedContent]);
+  }, [isEditing]);
+
+  // Separate effect for adjusting height when content changes
+  useEffect(() => {
+    if (isEditing && textareaRef.current) {
+      adjustTextareaHeight();
+    }
+  }, [editedContent, isEditing]);
 
   return (
     <motion.div
@@ -140,7 +147,17 @@ export const Message = ({
                     value={editedContent}
                     onChange={(e) => {
                       setEditedContent(e.target.value);
-                      adjustTextareaHeight();
+                    }}
+                    onKeyDown={(e) => {
+                      // Handle keyboard shortcuts
+                      if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+                        e.preventDefault();
+                        handleSave();
+                      } else if (e.key === 'Escape') {
+                        e.preventDefault();
+                        setIsEditing(false);
+                      }
+                      // Allow spacebar and enter to work normally for editing
                     }}
                     className="w-full resize-none border-none bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0 overflow-hidden text-zinc-700 dark:text-zinc-300 leading-7"
                     style={{ minHeight: 'auto', height: 'auto' }}
