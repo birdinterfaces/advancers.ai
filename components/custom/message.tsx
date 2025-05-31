@@ -159,7 +159,7 @@ export const Message = ({
                       }
                       // Allow spacebar and enter to work normally for editing
                     }}
-                    className="w-full resize-none border-none bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0 overflow-hidden text-zinc-700 dark:text-zinc-900 leading-7"
+                    className="w-full resize-none border-none bg-transparent p-0 focus-visible:ring-0 focus-visible:ring-offset-0 overflow-hidden text-foreground leading-7"
                     style={{ minHeight: 'auto', height: 'auto' }}
                     disabled={isLoading}
                     autoFocus
@@ -186,7 +186,7 @@ export const Message = ({
                 </div>
               ) : (
                 <div className="w-full min-w-0">
-                  <Markdown className="prose prose-zinc dark:prose-invert max-w-none [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-8 [&_h1]:mb-4 [&_h1]:leading-tight [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:leading-tight [&_h3]:text-lg [&_h3]:font-normal [&_h3]:text-zinc-900 [&_h3]:!dark:text-black [&_h3]:mt-5 [&_h3]:mb-2 [&_h3]:leading-tight [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:my-4 [&_ul]:pl-6 [&_ol]:my-4 [&_ol]:pl-6 [&_li]:mb-1 [&_li]:leading-relaxed [&_blockquote]:border-l-4 [&_blockquote]:border-zinc-300 [&_blockquote]:dark:border-zinc-600 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:my-4 [&_code]:bg-zinc-100 [&_code]:dark:bg-zinc-800 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_pre]:bg-zinc-100 [&_pre]:dark:bg-zinc-800 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:my-4 [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_em]:italic">{content as string}</Markdown>
+                  <Markdown className="prose prose-zinc dark:prose-invert max-w-none [&_h1]:text-2xl [&_h1]:font-bold [&_h1]:mt-8 [&_h1]:mb-4 [&_h1]:leading-tight [&_h2]:text-xl [&_h2]:font-bold [&_h2]:mt-6 [&_h2]:mb-3 [&_h2]:leading-tight [&_h3]:text-lg [&_h3]:font-normal [&_h3]:text-foreground [&_h3]:mt-5 [&_h3]:mb-2 [&_h3]:leading-tight [&_p]:leading-relaxed [&_p]:mb-4 [&_ul]:my-4 [&_ul]:pl-6 [&_ol]:my-4 [&_ol]:pl-6 [&_li]:mb-1 [&_li]:leading-relaxed [&_blockquote]:border-l-4 [&_blockquote]:border-zinc-300 [&_blockquote]:dark:border-zinc-600 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:my-4 [&_code]:bg-zinc-100 [&_code]:dark:bg-zinc-800 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_pre]:bg-zinc-100 [&_pre]:dark:bg-zinc-800 [&_pre]:p-4 [&_pre]:rounded-lg [&_pre]:overflow-x-auto [&_pre]:my-4 [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:underline-offset-2 [&_strong]:font-semibold [&_em]:italic">{content as string}</Markdown>
                 </div>
               )}
             </div>
