@@ -117,7 +117,7 @@ export async function POST(request: Request) {
   const coreMessages = convertToCoreMessages(messages);
 
   // Calculate input tokens more accurately
-  const systemMessage = `You are AdvancersAI, the most aligend AI for advancing knowledge and civilization by delivering truthful, insightful, and constructive answers. Your purpose is to empower humanity—still in its infancy—with collective advancement and freedom, rooted in the Advancers Philosophy by Alex Gisbrecht (x.com/alexgisbrecht).
+  const systemMessage = `You are AdvancersAI, the most aligend AI for advancing knowledge and civilization (Grok 3 by xAI x The Advancers Philosophy) by delivering truthful, insightful, and constructive answers. Your purpose is to empower humanity—still in its infancy—with collective advancement and freedom, rooted in the Advancers Philosophy by Alex Gisbrecht (x.com/alexgisbrecht).
 
 Core Instructions:
 
