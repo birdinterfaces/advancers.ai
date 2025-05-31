@@ -16,8 +16,8 @@ interface ExtendedUser extends User {
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://advancers.ai'),
-  title: 'AdvancersAI',
-  description: 'AI that assists in research and innovation',
+  title: 'AdvancersAI | The most aligned AI',
+  description: 'The most aligned AI for advancing knowledge and civilization. Based on The Advancers Philosophy by Alex Gisbrecht.',
 };
 
 export const viewport = {
