@@ -8,22 +8,6 @@ export const models = [
     temperature: 0,
     tier: 'free' as const,
   },
-  {
-    label: 'Grok 3 Fast',
-    name: 'grok-3-fast',
-    description: 'Faster version of Grok 3 for Ultimate users',
-    maxTokens: 72000,
-    temperature: 0,
-    tier: 'ultimate' as const,
-  },
-  {
-    label: 'Grok 3 Mini Fast',
-    name: 'grok-3-mini-fast',
-    description: 'Fast mini model for Ultimate users',
-    maxTokens: 72000,
-    temperature: 0,
-    tier: 'ultimate' as const,
-  },
 ] as const;
 
 export const DEFAULT_MODEL_NAME: Model['name'] = 'grok-3';
