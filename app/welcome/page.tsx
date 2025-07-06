@@ -135,7 +135,7 @@ const Welcome = () => {
                       lineHeight: '1.2',
                       fontWeight: 400,
                       marginBottom: '24px'
-                    }}>The most aligned AI for advancing knowledge and civilization.</h1>
+                    }}>The most aligned AI for advancing knowledge and civilization</h1>
                     <p className="hero-subtitle" style={{
                       textAlign: 'left',
                       margin: '0',
