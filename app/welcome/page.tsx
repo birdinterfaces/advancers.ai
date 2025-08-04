@@ -143,7 +143,7 @@ const Welcome = () => {
                       lineHeight: '1.4',
                       color: '#9BA1A6',
                       marginBottom: '32px'
-                    }}>We present the most aligned AI for advancing knowledge and civilization. Based on The Advancers Philosophy.</p>
+                    }}>We present AdvancersAI. An AI that is aligned with advancing knowledge and civilization.</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
