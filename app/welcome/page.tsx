@@ -135,7 +135,7 @@ const Welcome = () => {
                       lineHeight: '1.2',
                       fontWeight: 400,
                       marginBottom: '24px'
-                    }}>The most aligned AI for advancing knowledge and civilization</h1>
+                    }}>We live in the greatest times with the greatest opportunities</h1>
                     <p className="hero-subtitle" style={{
                       textAlign: 'left',
                       margin: '0',
@@ -143,7 +143,7 @@ const Welcome = () => {
                       lineHeight: '1.4',
                       color: '#9BA1A6',
                       marginBottom: '32px'
-                    }}><a href="https://x.ai" target="_blank" rel="noopener noreferrer" className="hero-link">Grok 4</a> x <a href="https://advancers.org" target="_blank" rel="noopener noreferrer" className="hero-link">The Advancers Philosophy</a></p>
+                    }}>We present the most aligned AI for advancing knowledge and civilization. Based on The Advancers Philosophy.</p>
                   </div>
                 </div>
                 <div className="hero-section-paragraph-holder">
